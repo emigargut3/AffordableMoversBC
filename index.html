@@ -1,0 +1,3711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Affordable Movers BC | Professional Moving Services in British Columbia</title>
+  <meta name="description" content="Top-rated moving company in British Columbia. Residential, commercial, piano, senior, junk removal, storage & more. No hidden fees. Free quotes. BBB Accredited." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red:    #D62828;
+      --red-dk: #A31E1E;
+      --navy:   #1A2B4A;
+      --navy-lt:#22375f;
+      --gold:   #F4A922;
+      --white:  #FFFFFF;
+      --off:    #F7F8FA;
+      --gray:   #6B7280;
+      --light:  #E5E7EB;
+      --text:   #111827;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(0,0,0,.10);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,.15);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ── Utility ─────────────────────────────────────────────────── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 80px 0; }
+    .section--gray { background: var(--off); }
+    .section--navy { background: var(--navy); color: var(--white); }
+    .tag {
+      display: inline-block;
+      background: rgba(214,40,40,.12);
+      color: var(--red);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+    }
+    .tag--gold {
+      background: rgba(244,169,34,.15);
+      color: #B57A00;
+    }
+    .section-head { text-align: center; margin-bottom: 56px; }
+    .section-head h2 {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .section--navy .section-head h2 { color: var(--white); }
+    .section-head p {
+      font-size: 1.05rem;
+      color: var(--gray);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .section--navy .section-head p { color: rgba(255,255,255,.75); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: .95rem;
+      cursor: pointer;
+      border: none;
+      transition: all .2s;
+    }
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+    }
+    .btn-primary:hover { background: var(--red-dk); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(214,40,40,.35); }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid var(--white);
+    }
+    .btn-outline:hover { background: var(--white); color: var(--navy); }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--navy);
+    }
+    .btn-gold:hover { background: #e09c1a; transform: translateY(-1px); }
+
+    /* ── Top Bar ──────────────────────────────────────────────────── */
+    .topbar {
+      background: var(--navy);
+      color: rgba(255,255,255,.85);
+      font-size: .82rem;
+      padding: 8px 0;
+    }
+    .topbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .topbar a { color: var(--gold); font-weight: 600; }
+    .topbar-links { display: flex; gap: 20px; }
+
+    /* ── Nav ──────────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--white);
+      box-shadow: 0 2px 16px rgba(0,0,0,.08);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+    }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon {
+      width: 44px; height: 44px;
+      background: var(--red);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+    .logo-text { line-height: 1.15; }
+    .logo-text strong {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .logo-text span {
+      font-size: .78rem;
+      color: var(--gray);
+      font-weight: 500;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-links a {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--navy);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--red); }
+    .nav-cta { display: flex; gap: 12px; align-items: center; }
+    .nav-phone {
+      font-weight: 700;
+      color: var(--navy);
+      font-size: .95rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2.5px;
+      background: var(--navy);
+      border-radius: 2px;
+      transition: all .3s;
+    }
+
+    /* ── Hero ──────────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-lt) 60%, #1e3a6e 100%);
+      color: var(--white);
+      padding: 90px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(244,169,34,.2);
+      border: 1px solid rgba(244,169,34,.4);
+      color: var(--gold);
+      font-size: .82rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--red);
+      -webkit-text-stroke: 0;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,.8);
+      margin-bottom: 32px;
+      max-width: 480px;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
+    .hero-stats {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .hero-stat strong {
+      display: block;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--gold);
+    }
+    .hero-stat span {
+      font-size: .8rem;
+      color: rgba(255,255,255,.65);
+      font-weight: 500;
+    }
+    .hero-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: var(--shadow-lg);
+      color: var(--text);
+    }
+    .hero-card h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .hero-card p { font-size: .9rem; color: var(--gray); margin-bottom: 20px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--light);
+      border-radius: 8px;
+      font-size: .9rem;
+      font-family: inherit;
+      color: var(--text);
+      transition: border-color .2s;
+      background: var(--off);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--red);
+      background: var(--white);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .review-offer {
+      text-align: center;
+      margin-top: 16px;
+      font-size: .8rem;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .review-offer strong { color: var(--red); }
+
+    /* ── Trust bar ──────────────────────────────────────────────── */
+    .trust-bar { background: var(--white); padding: 28px 0; border-bottom: 1px solid var(--light); }
+    .trust-bar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .trust-item .icon {
+      width: 38px; height: 38px;
+      background: rgba(214,40,40,.1);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    /* ── Services ──────────────────────────────────────────────── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--white);
+      border: 1.5px solid var(--light);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: all .25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--red);
+      transform: scaleY(0);
+      transition: transform .25s;
+      transform-origin: top;
+    }
+    .service-card:hover { border-color: var(--red); box-shadow: var(--shadow); transform: translateY(-3px); }
+    .service-card:hover::before { transform: scaleY(1); }
+    .service-icon {
+      width: 52px; height: 52px;
+      background: rgba(214,40,40,.1);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+    }
+    .service-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .service-card p { font-size: .88rem; color: var(--gray); line-height: 1.55; }
+    .service-badge {
+      display: inline-block;
+      background: rgba(244,169,34,.2);
+      color: #8a5c00;
+      font-size: .7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 100px;
+      margin-top: 10px;
+    }
+
+    /* ── Why Us ──────────────────────────────────────────────────── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .why-text h2 {
+      font-size: clamp(1.75rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .why-text p { color: var(--gray); font-size: 1rem; margin-bottom: 28px; }
+    .why-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+    .why-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .why-item .check {
+      width: 30px; height: 30px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-size: .85rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .why-item p { font-size: .9rem; color: var(--gray); margin: 0; }
+    .why-item strong { display: block; color: var(--navy); font-weight: 700; margin-bottom: 2px; }
+    .why-visual {
+      background: linear-gradient(135deg, var(--navy) 0%, #1e3a6e 100%);
+      border-radius: 20px;
+      padding: 40px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .why-stat-card {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .why-stat-icon { font-size: 2rem; }
+    .why-stat-text strong {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--gold);
+    }
+    .why-stat-text span { font-size: .85rem; color: rgba(255,255,255,.7); }
+
+    /* ── Pricing ──────────────────────────────────────────────────── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .price-card {
+      background: var(--white);
+      border: 2px solid var(--light);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      text-align: center;
+      transition: all .25s;
+      position: relative;
+    }
+    .price-card.featured {
+      border-color: var(--red);
+      box-shadow: 0 8px 32px rgba(214,40,40,.18);
+    }
+    .price-card:hover:not(.featured) { border-color: var(--red); transform: translateY(-3px); box-shadow: var(--shadow); }
+    .popular-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--red);
+      color: white;
+      font-size: .75rem;
+      font-weight: 700;
+      padding: 4px 16px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .price-card h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .price-card .price {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--red);
+      margin: 12px 0 4px;
+    }
+    .price-card .price span { font-size: 1rem; font-weight: 500; color: var(--gray); }
+    .price-card .desc { font-size: .85rem; color: var(--gray); margin-bottom: 20px; }
+    .price-features {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .price-features li {
+      font-size: .85rem;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .price-features li::before {
+      content: '✓';
+      color: var(--red);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ── Process ──────────────────────────────────────────────────── */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      position: relative;
+    }
+    .process-grid::before {
+      content: '';
+      position: absolute;
+      top: 30px;
+      left: 10%;
+      width: 80%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--red) 0%, var(--gold) 100%);
+      z-index: 0;
+    }
+    .process-step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .step-num {
+      width: 60px; height: 60px;
+      background: var(--red);
+      color: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 900;
+      margin: 0 auto 16px;
+      box-shadow: 0 4px 16px rgba(214,40,40,.4);
+    }
+    .process-step h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .process-step p { font-size: .85rem; color: var(--gray); }
+
+    /* ── Testimonials ──────────────────────────────────────────────── */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .review-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--light);
+      position: relative;
+    }
+    .stars { color: #F59E0B; font-size: 1rem; margin-bottom: 12px; letter-spacing: 2px; }
+    .review-text {
+      font-size: .9rem;
+      color: var(--gray);
+      line-height: 1.6;
+      margin-bottom: 18px;
+      font-style: italic;
+    }
+    .reviewer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .reviewer-avatar {
+      width: 42px; height: 42px;
+      background: var(--navy);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: .9rem;
+      flex-shrink: 0;
+    }
+    .reviewer-name { font-weight: 700; font-size: .9rem; color: var(--navy); }
+    .reviewer-loc { font-size: .78rem; color: var(--gray); }
+    .review-google {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: .75rem;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ── Google Review CTA ─────────────────────────────────────────── */
+    .review-cta {
+      background: linear-gradient(135deg, var(--gold) 0%, #e09c1a 100%);
+      border-radius: 20px;
+      padding: 48px 40px;
+      text-align: center;
+      color: var(--navy);
+    }
+    .review-cta h2 { font-size: 2rem; font-weight: 900; margin-bottom: 12px; }
+    .review-cta p { font-size: 1rem; margin-bottom: 24px; opacity: .8; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .review-steps {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .review-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .review-step .num {
+      width: 36px; height: 36px;
+      background: var(--navy);
+      color: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900;
+      font-size: .95rem;
+    }
+    .review-step span { font-size: .85rem; font-weight: 600; max-width: 120px; text-align: center; }
+
+    /* ── Areas ──────────────────────────────────────────────────────── */
+    .areas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 14px;
+    }
+    .area-item {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .9rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.9);
+      transition: all .2s;
+    }
+    .area-item:hover {
+      background: rgba(255,255,255,.15);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .area-item .dot {
+      width: 8px; height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── FAQ ──────────────────────────────────────────────────────── */
+    .faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      border: 1.5px solid var(--light);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      background: var(--white);
+      border: none;
+      padding: 20px 24px;
+      text-align: left;
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--navy);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      transition: background .2s;
+      font-family: inherit;
+    }
+    .faq-question:hover { background: var(--off); }
+    .faq-question.open { color: var(--red); }
+    .faq-arrow { flex-shrink: 0; transition: transform .2s; }
+    .faq-question.open .faq-arrow { transform: rotate(180deg); }
+    .faq-answer {
+      display: none;
+      padding: 0 24px 20px;
+      font-size: .9rem;
+      color: var(--gray);
+      line-height: 1.65;
+    }
+    .faq-answer.open { display: block; }
+
+    /* ── Contact ──────────────────────────────────────────────────── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .contact-info h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .contact-info p { color: var(--gray); margin-bottom: 28px; }
+    .contact-items { display: flex; flex-direction: column; gap: 18px; }
+    .contact-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .contact-item .icon {
+      width: 44px; height: 44px;
+      background: rgba(214,40,40,.1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .contact-item strong { display: block; font-size: .85rem; color: var(--navy); margin-bottom: 2px; }
+    .contact-item span { font-size: .9rem; color: var(--gray); }
+    .contact-form {
+      background: var(--white);
+      border: 1.5px solid var(--light);
+      border-radius: 16px;
+      padding: 36px;
+      box-shadow: var(--shadow);
+    }
+    .contact-form h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .contact-form p { font-size: .88rem; color: var(--gray); margin-bottom: 24px; }
+
+    /* ── Footer ──────────────────────────────────────────────────── */
+    footer {
+      background: #0f1c30;
+      color: rgba(255,255,255,.7);
+      padding: 60px 0 28px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+    .footer-brand p { font-size: .88rem; line-height: 1.65; margin: 14px 0 20px; }
+    .footer-social { display: flex; gap: 10px; }
+    .social-btn {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,.08);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      transition: background .2s;
+    }
+    .social-btn:hover { background: var(--red); }
+    .footer-col h4 {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .footer-col ul { display: flex; flex-direction: column; gap: 9px; }
+    .footer-col ul li a {
+      font-size: .85rem;
+      color: rgba(255,255,255,.6);
+      transition: color .2s;
+    }
+    .footer-col ul li a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: .82rem;
+    }
+    .footer-logo-text { font-weight: 800; color: var(--white); }
+    .bbb-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: .8rem;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* ── Team Entry Cards ──────────────────────────────────────────── */
+    .team-entry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 700px) { .team-entry-grid { grid-template-columns: 1fr; } }
+    .team-entry-card {
+      border: 2px solid var(--light);
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all .25s;
+      background: var(--white);
+    }
+    .team-entry-card:hover { border-color: var(--red); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+    .team-entry-preview { padding: 28px 28px 20px; }
+    .preview-avatars { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .pa {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; font-weight: 900; color: rgba(255,255,255,.5);
+      border: 3px solid white;
+      box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    }
+    .preview-trucks { display: flex; gap: 12px; margin-bottom: 20px; }
+    .pt {
+      width: 90px; height: 70px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    }
+    .entry-label-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .entry-title { font-size: 1.2rem; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+    .entry-sub { font-size: .82rem; color: var(--gray); }
+    .entry-arrow {
+      font-size: 1.4rem; color: var(--red); font-weight: 900;
+      transition: transform .2s;
+    }
+    .team-entry-card:hover .entry-arrow { transform: translateX(5px); }
+    .team-entry-footer {
+      background: var(--off);
+      border-top: 1px solid var(--light);
+      padding: 12px 28px;
+      display: flex; gap: 8px; align-items: center;
+      font-size: .75rem; color: var(--gray); font-weight: 600;
+    }
+
+    /* ── Full Panel (slide-up overlay) ────────────────────────────── */
+    .fullpanel {
+      position: fixed;
+      inset: 0;
+      z-index: 4000;
+      background: rgba(10,20,40,.65);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0;
+    }
+    .fullpanel.open { display: flex; }
+    .fullpanel-inner {
+      background: var(--white);
+      width: 100%;
+      max-height: 92vh;
+      border-radius: 24px 24px 0 0;
+      overflow-y: auto;
+      padding: 40px 40px 60px;
+      animation: slideUp .4s cubic-bezier(.34,1.2,.64,1);
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .fullpanel-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 20px; margin-bottom: 40px;
+    }
+    .fullpanel-tag {
+      font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--red);
+      background: rgba(214,40,40,.1); padding: 4px 12px;
+      border-radius: 100px; display: inline-block; margin-bottom: 10px;
+    }
+    .fullpanel-header h2 {
+      font-size: clamp(1.4rem,3vw,2rem); font-weight: 900; color: var(--navy);
+      margin-bottom: 8px; line-height: 1.2;
+    }
+    .fullpanel-header p { font-size: .9rem; color: var(--gray); max-width: 540px; }
+    .fullpanel-close {
+      background: var(--off); border: 1.5px solid var(--light);
+      border-radius: 50%; width: 44px; height: 44px;
+      font-size: 1.1rem; cursor: pointer; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+    }
+    .fullpanel-close:hover { background: var(--red); color: white; border-color: var(--red); }
+
+    /* Crew panel grid */
+    .fullpanel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .fp-member-card {
+      border: 1.5px solid var(--light); border-radius: 16px; overflow: hidden;
+      display: flex; flex-direction: column; transition: all .2s;
+    }
+    .fp-member-card:hover { border-color: var(--red); box-shadow: var(--shadow); }
+    .fp-photo {
+      height: 180px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .fp-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .fp-initials { font-size: 3.5rem; font-weight: 900; color: rgba(255,255,255,.25); }
+    .fp-badge {
+      position: absolute; bottom: 12px; left: 12px;
+      background: rgba(0,0,0,.5); backdrop-filter: blur(8px);
+      color: white; font-size: .7rem; font-weight: 700;
+      padding: 4px 10px; border-radius: 100px; border: 1px solid rgba(255,255,255,.2);
+    }
+    .fp-photo-hint {
+      position: absolute; top: 10px; right: 10px;
+      background: rgba(255,255,255,.15); border: 1px dashed rgba(255,255,255,.5);
+      color: rgba(255,255,255,.8); font-size: .65rem; font-weight: 600;
+      padding: 3px 8px; border-radius: 6px;
+    }
+    .fp-info { padding: 18px; flex: 1; }
+    .fp-name-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+    .fp-name-row h3 { font-size: 1.05rem; font-weight: 800; color: var(--navy); }
+    .fp-exp { font-size: .75rem; font-weight: 700; background: var(--navy); color: white; padding: 2px 8px; border-radius: 100px; }
+    .fp-role { font-size: .78rem; color: var(--red); font-weight: 700; margin-bottom: 8px; }
+    .fp-info p { font-size: .83rem; color: var(--gray); line-height: 1.55; margin-bottom: 12px; }
+    .fp-stats { display: flex; gap: 12px; margin-bottom: 12px; padding: 10px; background: var(--off); border-radius: 10px; }
+    .fp-stat { text-align: center; flex: 1; }
+    .fp-stat strong { display: block; font-size: .95rem; font-weight: 900; color: var(--navy); }
+    .fp-stat span { font-size: .68rem; color: var(--gray); font-weight: 600; }
+    .fp-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .fp-tags span {
+      font-size: .7rem; font-weight: 600; background: var(--off);
+      color: var(--navy); padding: 3px 9px; border-radius: 100px; border: 1px solid var(--light);
+    }
+
+    /* Trucks panel grid */
+    .fp-trucks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px; margin-bottom: 40px;
+    }
+    .fp-truck-card {
+      border: 2px solid var(--light); border-radius: 16px; overflow: hidden;
+      transition: all .2s; position: relative;
+    }
+    .fp-truck-card:hover { border-color: var(--navy); box-shadow: var(--shadow); }
+    .featured-truck { border-color: var(--red); }
+    .fp-truck-popular {
+      position: absolute; top: -1px; right: 20px;
+      background: var(--red); color: white; font-size: .72rem; font-weight: 700;
+      padding: 4px 14px; border-radius: 0 0 10px 10px;
+    }
+    .fp-truck-visual {
+      height: 200px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px; position: relative;
+    }
+    .fp-truck-img-area {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    .fp-truck-emoji { font-size: 4.5rem; line-height: 1; }
+    .fp-truck-photo-hint {
+      font-size: .65rem; font-weight: 600; color: rgba(0,0,0,.35);
+      border: 1px dashed rgba(0,0,0,.2); padding: 2px 10px; border-radius: 6px;
+    }
+    .fp-truck-plate-wrap { position: absolute; bottom: 14px; right: 16px; }
+    .fp-truck-plate {
+      font-size: .78rem; font-weight: 800; letter-spacing: .12em;
+      color: var(--navy); background: white; padding: 4px 12px;
+      border-radius: 6px; border: 2px solid var(--navy);
+    }
+    .fp-truck-info { padding: 20px; }
+    .fp-truck-name-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+    .fp-truck-name-row h3 { font-size: 1.1rem; font-weight: 800; color: var(--navy); }
+    .fp-truck-status { font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 100px; }
+    .fp-truck-status.available { background: rgba(22,163,74,.1); color: #166534; }
+    .fp-truck-size { font-size: .8rem; color: var(--gray); font-weight: 600; margin-bottom: 14px; }
+    .fp-truck-specs-table { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .spec-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 6px 10px; background: var(--off); border-radius: 7px;
+      font-size: .8rem;
+    }
+    .spec-row span { color: var(--gray); }
+    .spec-row strong { color: var(--navy); }
+
+    .fullpanel-cta {
+      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+      padding-top: 32px; border-top: 1px solid var(--light);
+    }
+
+    /* ── Team Section ──────────────────────────────────────────────── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .team-card {
+      background: var(--white);
+      border: 1.5px solid var(--light);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all .25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .team-card:hover { border-color: var(--red); box-shadow: var(--shadow); transform: translateY(-3px); }
+    .team-photo-wrap { position: relative; }
+    .team-photo {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .team-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
+    .photo-initials {
+      font-size: 3rem;
+      font-weight: 900;
+      color: rgba(255,255,255,.3);
+      letter-spacing: -2px;
+      user-select: none;
+    }
+    .photo-badge {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(0,0,0,.5);
+      backdrop-filter: blur(8px);
+      color: white;
+      font-size: .72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,.2);
+    }
+    .photo-placeholder-hint {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255,255,255,.15);
+      border: 1px dashed rgba(255,255,255,.4);
+      color: rgba(255,255,255,.7);
+      font-size: .65rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .team-info { padding: 20px; flex: 1; }
+    .team-info h3 { font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 2px; }
+    .team-role { font-size: .78rem; color: var(--red); font-weight: 700; display: block; margin-bottom: 10px; }
+    .team-info p { font-size: .85rem; color: var(--gray); line-height: 1.55; margin-bottom: 12px; }
+    .team-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .team-tags span {
+      font-size: .72rem;
+      font-weight: 600;
+      background: var(--off);
+      color: var(--navy);
+      padding: 3px 10px;
+      border-radius: 100px;
+      border: 1px solid var(--light);
+    }
+
+    /* ── Fleet Section ──────────────────────────────────────────────── */
+    .fleet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .fleet-card {
+      background: var(--white);
+      border: 1.5px solid var(--light);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all .25s;
+    }
+    .fleet-card:hover { border-color: var(--navy); box-shadow: var(--shadow); transform: translateY(-3px); }
+    .truck-visual {
+      height: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+    }
+    .truck-icon { font-size: 4rem; line-height: 1; }
+    .truck-plate {
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      color: var(--navy);
+      background: white;
+      padding: 3px 12px;
+      border-radius: 6px;
+      border: 2px solid var(--navy);
+    }
+    .fleet-info { padding: 20px; }
+    .fleet-info h3 { font-size: 1.05rem; font-weight: 800; color: var(--navy); margin-bottom: 2px; }
+    .fleet-size { font-size: .78rem; color: var(--gray); font-weight: 600; display: block; margin-bottom: 10px; }
+    .fleet-info p { font-size: .85rem; color: var(--gray); line-height: 1.55; margin-bottom: 12px; }
+    .fleet-specs { display: flex; flex-wrap: wrap; gap: 6px; }
+    .fleet-specs span {
+      font-size: .72rem;
+      font-weight: 600;
+      background: rgba(26,43,74,.07);
+      color: var(--navy);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    /* ── Unhappy button ────────────────────────────────────────────── */
+    .unhappy-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; padding: 10px 12px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 8px;
+      color: rgba(255,255,255,.75);
+      font-size: .78rem; font-weight: 600;
+      text-decoration: none;
+      transition: all .2s;
+      text-align: center;
+    }
+    .unhappy-btn:hover { background: rgba(255,255,255,.15); color: white; }
+
+    /* ── Booking Steps ──────────────────────────────────────────────── */
+    .bk-steps {
+      display: flex; align-items: center;
+      background: var(--off); border-bottom: 1px solid var(--light);
+      padding: 14px 20px; gap: 0;
+    }
+    .bk-step {
+      display: flex; align-items: center; gap: 7px;
+      font-size: .78rem; font-weight: 700; color: var(--gray);
+      flex: 1; justify-content: center;
+    }
+    .bk-step span {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--light); color: var(--gray);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; font-weight: 900; flex-shrink: 0;
+    }
+    .bk-step.active { color: var(--red); }
+    .bk-step.active span { background: var(--red); color: white; }
+    .bk-step.done span { background: #16a34a; color: white; }
+    .bk-step.done { color: #166534; }
+    .bk-step-divider { flex: 0 0 24px; height: 1px; background: var(--light); }
+
+    /* ── Date field ────────────────────────────────────────────────── */
+    .bk-date-field {
+      background: var(--off); border: 1.5px solid var(--light);
+      border-radius: 10px; padding: 12px 16px;
+      transition: border-color .2s;
+    }
+    .bk-date-field:focus-within { border-color: var(--red); }
+    .bk-date-field label {
+      font-size: .7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--gray); display: block; margin-bottom: 4px;
+    }
+    .bk-date-field input {
+      border: none; background: none; font-size: .95rem;
+      font-family: inherit; color: var(--text); font-weight: 700; width: 100%;
+    }
+    .bk-date-field input:focus { outline: none; }
+
+    /* ── Time slots ────────────────────────────────────────────────── */
+    .timeslot-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+      margin-bottom: 10px;
+    }
+    .timeslot {
+      padding: 12px 8px; border-radius: 10px; text-align: center;
+      border: 2px solid var(--light); cursor: pointer;
+      transition: all .2s; background: var(--white);
+    }
+    .timeslot .ts-time { font-size: .9rem; font-weight: 800; color: var(--navy); }
+    .timeslot .ts-sub { font-size: .68rem; color: var(--gray); margin-top: 2px; }
+    .timeslot:hover:not(.booked) { border-color: var(--red); background: rgba(214,40,40,.04); }
+    .timeslot.selected { border-color: var(--red); background: rgba(214,40,40,.07); }
+    .timeslot.selected .ts-time { color: var(--red); }
+    .timeslot.booked {
+      background: var(--off); border-color: var(--light);
+      cursor: not-allowed; opacity: .5;
+    }
+    .timeslot.booked .ts-time { color: var(--gray); text-decoration: line-through; }
+    .timeslot-legend { display: flex; gap: 16px; font-size: .72rem; font-weight: 600; color: var(--gray); }
+    .ts-avail { color: #166534; }
+    .ts-taken { color: #991b1b; }
+
+    /* ── Booking summary chip ──────────────────────────────────────── */
+    .bk-summary-chip {
+      background: linear-gradient(135deg, var(--navy), #1e3a6e);
+      border-radius: 10px; padding: 12px 16px;
+      font-size: .82rem; color: rgba(255,255,255,.85);
+      margin-bottom: 16px; line-height: 1.6;
+    }
+    .bk-summary-chip strong { color: var(--gold); }
+
+    /* ── Booking Confirmation Modal ─────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      background: rgba(0,0,0,.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: var(--white);
+      border-radius: 20px;
+      max-width: 560px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 20px 80px rgba(0,0,0,.4);
+      animation: modalIn .35s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(.9) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-header {
+      background: linear-gradient(135deg, var(--navy) 0%, #1e3a6e 100%);
+      padding: 28px 28px 24px;
+      text-align: center;
+      color: white;
+    }
+    .modal-check {
+      width: 60px; height: 60px;
+      background: #16a34a;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 16px;
+      box-shadow: 0 4px 20px rgba(22,163,74,.4);
+    }
+    .modal-header h2 { font-size: 1.4rem; font-weight: 900; margin-bottom: 4px; }
+    .modal-header p { font-size: .88rem; color: rgba(255,255,255,.7); }
+    .modal-body { padding: 24px 28px 28px; }
+    .modal-section-label {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--gray);
+      margin-bottom: 10px;
+    }
+    .assigned-card {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      background: var(--off);
+      border: 1.5px solid var(--light);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .assigned-avatar {
+      width: 56px; height: 56px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: rgba(255,255,255,.4);
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .assigned-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+    }
+    .assigned-info { flex: 1; }
+    .assigned-info strong { display: block; font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 2px; }
+    .assigned-info .role { font-size: .75rem; color: var(--red); font-weight: 700; margin-bottom: 4px; }
+    .assigned-info p { font-size: .8rem; color: var(--gray); line-height: 1.45; margin: 0; }
+    .assigned-badge {
+      background: var(--navy);
+      color: white;
+      font-size: .7rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .truck-assigned {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      background: var(--off);
+      border: 1.5px solid var(--light);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .truck-thumb {
+      width: 70px; height: 56px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+    .truck-assigned-info strong { display: block; font-size: .95rem; font-weight: 800; color: var(--navy); }
+    .truck-assigned-info span { font-size: .78rem; color: var(--gray); }
+    .truck-assigned-plate {
+      margin-left: auto;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      color: var(--navy);
+      background: white;
+      border: 2px solid var(--navy);
+      padding: 3px 8px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .modal-summary {
+      background: linear-gradient(135deg, rgba(214,40,40,.07), rgba(214,40,40,.03));
+      border: 1.5px solid rgba(214,40,40,.15);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .modal-summary-item { text-align: center; }
+    .modal-summary-item .val { font-size: 1.1rem; font-weight: 900; color: var(--navy); }
+    .modal-summary-item .lbl { font-size: .7rem; color: var(--gray); font-weight: 600; }
+    .modal-actions { display: flex; flex-direction: column; gap: 10px; }
+    .modal-actions a, .modal-actions button {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: .92rem;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .modal-btn-primary { background: var(--red); color: white; }
+    .modal-btn-primary:hover { background: var(--red-dk); }
+    .modal-btn-call { background: var(--navy); color: white; }
+    .modal-btn-call:hover { background: #0f1c30; }
+    .modal-btn-close { background: var(--off); color: var(--gray); font-size: .85rem; }
+    .modal-btn-close:hover { background: var(--light); }
+
+    /* ── Instant Estimator ─────────────────────────────────────────── */
+    .estimator-wrap {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 12px 60px rgba(0,0,0,.2);
+      overflow: hidden;
+    }
+    .estimator-tabs {
+      display: flex;
+      background: var(--off);
+      border-bottom: 2px solid var(--light);
+    }
+    .estimator-tab {
+      flex: 1;
+      padding: 14px 8px;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--gray);
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+      transition: all .2s;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+    }
+    .estimator-tab.active {
+      color: var(--red);
+      border-bottom-color: var(--red);
+      background: var(--white);
+    }
+    .estimator-body { padding: 24px; }
+    .est-step { display: none; }
+    .est-step.active { display: block; }
+    .est-section-label {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+    .location-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: var(--off);
+      border: 1.5px solid var(--light);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      transition: border-color .2s;
+    }
+    .location-row:focus-within { border-color: var(--red); }
+    .location-field {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+    }
+    .location-field + .location-field {
+      border-top: 1px solid var(--light);
+    }
+    .loc-pin { font-size: 1.1rem; flex-shrink: 0; }
+    .loc-label {
+      font-size: .7rem;
+      font-weight: 700;
+      color: var(--gray);
+      white-space: nowrap;
+    }
+    .loc-input {
+      flex: 1;
+      border: none;
+      background: none;
+      font-size: .92rem;
+      font-family: inherit;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .loc-input:focus { outline: none; }
+    .loc-input::placeholder { color: #adb5bd; font-weight: 400; }
+    .loc-swap {
+      display: flex;
+      justify-content: flex-end;
+      margin: -8px 14px 6px;
+    }
+    .loc-swap button {
+      background: var(--white);
+      border: 1.5px solid var(--light);
+      border-radius: 50%;
+      width: 28px; height: 28px;
+      cursor: pointer;
+      font-size: .9rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .2s;
+    }
+    .loc-swap button:hover { border-color: var(--red); }
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .pill {
+      padding: 8px 14px;
+      border-radius: 100px;
+      border: 1.5px solid var(--light);
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--gray);
+      cursor: pointer;
+      background: var(--white);
+      transition: all .2s;
+      font-family: inherit;
+    }
+    .pill:hover { border-color: var(--red); color: var(--red); }
+    .pill.selected { background: var(--red); color: white; border-color: var(--red); }
+    .floor-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .floor-box {
+      background: var(--off);
+      border: 1.5px solid var(--light);
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .floor-box label {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--gray);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .floor-box select {
+      width: 100%;
+      border: none;
+      background: none;
+      font-size: .88rem;
+      font-family: inherit;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .floor-box select:focus { outline: none; }
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border: 1.5px solid var(--light);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all .2s;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--gray);
+      background: var(--white);
+    }
+    .check-item input { accent-color: var(--red); width: 14px; height: 14px; flex-shrink:0; }
+    .check-item:has(input:checked) {
+      border-color: var(--red);
+      color: var(--red);
+      background: rgba(214,40,40,.05);
+    }
+    .date-time-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .dt-field {
+      background: var(--off);
+      border: 1.5px solid var(--light);
+      border-radius: 10px;
+      padding: 12px 14px;
+      transition: border-color .2s;
+    }
+    .dt-field:focus-within { border-color: var(--red); }
+    .dt-field label {
+      font-size: .7rem;
+      font-weight: 700;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .dt-field input, .dt-field select {
+      border: none;
+      background: none;
+      font-size: .9rem;
+      font-family: inherit;
+      color: var(--text);
+      font-weight: 600;
+      width: 100%;
+    }
+    .dt-field input:focus, .dt-field select:focus { outline: none; }
+
+    /* Price result */
+    .price-result {
+      background: linear-gradient(135deg, var(--navy) 0%, #1e3a6e 100%);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .price-result.visible { display: block; }
+    .price-result .result-label {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: rgba(255,255,255,.6);
+      margin-bottom: 6px;
+    }
+    .price-result .result-amount {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .price-result .result-note {
+      font-size: .75rem;
+      color: rgba(255,255,255,.6);
+      margin-bottom: 14px;
+    }
+    .result-breakdown {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .result-chip {
+      background: rgba(255,255,255,.12);
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: .72rem;
+      color: rgba(255,255,255,.85);
+      font-weight: 600;
+    }
+    .result-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .result-actions a, .result-actions button {
+      flex: 1;
+      padding: 12px 8px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: .82rem;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-book-now { background: var(--red); color: white; }
+    .btn-book-now:hover { background: var(--red-dk); }
+    .btn-call-est { background: rgba(255,255,255,.15); color: white; border: 1.5px solid rgba(255,255,255,.3) !important; }
+    .btn-call-est:hover { background: rgba(255,255,255,.25); }
+    .est-calc-btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--red);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .est-calc-btn:hover { background: var(--red-dk); transform: translateY(-1px); }
+    .est-calc-btn.calculating {
+      background: var(--gray);
+      pointer-events: none;
+    }
+    .autocomplete-list {
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      background: white;
+      border: 1.5px solid var(--light);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      box-shadow: var(--shadow);
+      z-index: 100;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+    .autocomplete-item {
+      padding: 10px 16px;
+      font-size: .88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+    }
+    .autocomplete-item:hover { background: var(--off); color: var(--red); }
+    .loc-wrap { position: relative; }
+
+    /* ── Sticky Phone ──────────────────────────────────────────────── */
+    .sticky-phone {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-end;
+    }
+    .sticky-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: .9rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,.25);
+      transition: transform .2s;
+    }
+    .sticky-btn:hover { transform: scale(1.04); }
+    .sticky-call { background: var(--red); color: white; }
+    .sticky-quote { background: var(--navy); color: white; }
+
+    /* ── Responsive ──────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-card { max-width: 480px; }
+      .why-grid { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+      .process-grid::before { display: none; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 600px) {
+      .section { padding: 56px 0; }
+      .process-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .topbar .container { justify-content: center; text-align: center; }
+      .topbar-links { display: none; }
+      .hero { padding: 60px 0; }
+      .form-row { grid-template-columns: 1fr; }
+      .sticky-quote { display: none; }
+    }
+
+    /* ── Mobile Menu ─────────────────────────────────────────────── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: var(--navy);
+      flex-direction: column;
+      padding: 32px 24px;
+      gap: 24px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu-close {
+      align-self: flex-end;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .mobile-menu a {
+      color: white;
+      font-size: 1.4rem;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      padding-bottom: 20px;
+    }
+    .mobile-menu a:last-child { border: none; }
+  </style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <div class="container">
+    <span>⭐ <strong>Leave a Google Review & Get <a href="#review-cta">$20 OFF</a> your next move!</strong></span>
+    <div class="topbar-links">
+      <span>📧 info@affordablemoversbc.com</span>
+      <span>📞 <a href="tel:+16045374140">604-537-4140</a></span>
+    </div>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">🚛</div>
+        <div class="logo-text">
+          <strong>Affordable Movers BC</strong>
+          <span>British Columbia's Trusted Movers</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#team">Our Team</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#areas">Areas</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="tel:+16045374140" class="nav-phone">📞 604-537-4140</a>
+        <a href="#contact" class="btn btn-primary">Free Quote</a>
+      </div>
+      <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.add('open')">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu">
+  <button class="mobile-menu-close" onclick="document.querySelector('.mobile-menu').classList.remove('open')">✕</button>
+  <a href="#services" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Services</a>
+  <a href="#pricing" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Pricing</a>
+  <a href="#why-us" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Why Us</a>
+  <a href="#reviews" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Reviews</a>
+  <a href="#areas" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Areas</a>
+  <a href="#faq" onclick="document.querySelector('.mobile-menu').classList.remove('open')">FAQ</a>
+  <a href="#contact" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Get Free Quote →</a>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge">⭐⭐⭐⭐⭐ BBB Accredited · Top Rated in BC</div>
+        <h1>Moving Made <em>Easy,</em> Stress-Free & Affordable</h1>
+        <p>Professional movers serving all of British Columbia. Residential, commercial, specialty items, storage, junk removal & more — done right, every time.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">🚛 Get a Free Quote</a>
+          <a href="tel:+16045374140" class="btn btn-outline">📞 Call Now</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <strong>1,500+</strong>
+            <span>Moves completed</span>
+          </div>
+          <div class="hero-stat">
+            <strong>5★</strong>
+            <span>Google rating</span>
+          </div>
+          <div class="hero-stat">
+            <strong>10+</strong>
+            <span>Years in BC</span>
+          </div>
+          <div class="hero-stat">
+            <strong>$0</strong>
+            <span>Hidden fees</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="estimator-wrap">
+          <!-- Tabs -->
+          <div class="estimator-tabs">
+            <button class="estimator-tab active" onclick="switchTab('home')">🏠 Home Move</button>
+            <button class="estimator-tab" onclick="switchTab('office')">🏢 Office Move</button>
+            <button class="estimator-tab" onclick="switchTab('specialty')">🎹 Specialty</button>
+            <button class="estimator-tab" onclick="switchTab('storage')">🗄️ Storage</button>
+          </div>
+
+          <div class="estimator-body">
+
+            <!-- Locations -->
+            <div class="est-section-label">📍 Where are you moving?</div>
+            <div class="loc-wrap">
+              <div class="location-row" id="location-row">
+                <div class="location-field">
+                  <span class="loc-pin">🟢</span>
+                  <span class="loc-label">FROM</span>
+                  <input class="loc-input" id="from-input" type="text" placeholder="Enter pickup address or city" autocomplete="off" oninput="showSuggestions('from-input','from-list',this.value)" onfocus="showSuggestions('from-input','from-list',this.value)" onblur="hideSuggestions('from-list')" />
+                </div>
+                <div class="location-field">
+                  <span class="loc-pin">🔴</span>
+                  <span class="loc-label">TO</span>
+                  <input class="loc-input" id="to-input" type="text" placeholder="Enter destination address or city" autocomplete="off" oninput="showSuggestions('to-input','to-list',this.value)" onfocus="showSuggestions('to-input','to-list',this.value)" onblur="hideSuggestions('to-list')" />
+                </div>
+              </div>
+              <div class="autocomplete-list" id="from-list" style="display:none"></div>
+              <div class="autocomplete-list" id="to-list" style="display:none;top:auto"></div>
+            </div>
+            <div class="loc-swap"><button onclick="swapLocations()" title="Swap">⇅</button></div>
+
+            <!-- Home size -->
+            <div id="size-section">
+              <div class="est-section-label">🏠 Home / job size</div>
+              <div class="pill-group" id="size-pills">
+                <button class="pill" onclick="selectPill('size-pills',this,'studio')">Studio</button>
+                <button class="pill selected" onclick="selectPill('size-pills',this,'1br')">1 Bedroom</button>
+                <button class="pill" onclick="selectPill('size-pills',this,'2br')">2 Bedrooms</button>
+                <button class="pill" onclick="selectPill('size-pills',this,'3br')">3 Bedrooms</button>
+                <button class="pill" onclick="selectPill('size-pills',this,'4br')">4+ Bedrooms</button>
+              </div>
+            </div>
+
+            <!-- Estimated duration -->
+            <div class="est-section-label">⏱️ Estimated time needed</div>
+            <div class="pill-group" id="dur-pills">
+              <button class="pill" onclick="selectPill('dur-pills',this,'2')">2 hrs</button>
+              <button class="pill selected" onclick="selectPill('dur-pills',this,'3')">3 hrs</button>
+              <button class="pill" onclick="selectPill('dur-pills',this,'4')">4 hrs</button>
+              <button class="pill" onclick="selectPill('dur-pills',this,'5')">5 hrs</button>
+              <button class="pill" onclick="selectPill('dur-pills',this,'6')">6 hrs</button>
+              <button class="pill" onclick="selectPill('dur-pills',this,'8')">8+ hrs</button>
+            </div>
+
+            <!-- Optional add-ons (collapsed) -->
+            <details style="margin-bottom:12px;">
+              <summary style="font-size:.78rem;font-weight:700;color:var(--gray);cursor:pointer;padding:6px 0;list-style:none;display:flex;align-items:center;gap:6px;">
+                <span>➕ Add-ons</span>
+                <span style="font-size:.68rem;color:var(--gray);background:var(--off);padding:2px 8px;border-radius:100px;border:1px solid var(--light);">optional</span>
+              </summary>
+              <div style="padding-top:10px;">
+                <div class="checkbox-grid">
+                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="packing" /> 📦 Full packing</label>
+                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="piano" /> 🎹 Piano / Safe</label>
+                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="assembly" /> 🔧 Assembly</label>
+                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="junk" /> 🗑️ Junk removal</label>
+                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="storage" /> 🗄️ Storage</label>
+                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="lastmin" /> ⚡ Same-day</label>
+                </div>
+                <div class="floor-row" style="margin-top:10px;">
+                  <div class="floor-box">
+                    <label>Floor at pickup</label>
+                    <select id="floor-from" onchange="estimatePrice()">
+                      <option value="0">Ground / Elevator</option>
+                      <option value="1">2nd floor (stairs)</option>
+                      <option value="2">3rd floor (stairs)</option>
+                      <option value="3">4th+ floor (stairs)</option>
+                    </select>
+                  </div>
+                  <div class="floor-box">
+                    <label>Floor at destination</label>
+                    <select id="floor-to" onchange="estimatePrice()">
+                      <option value="0">Ground / Elevator</option>
+                      <option value="1">2nd floor (stairs)</option>
+                      <option value="2">3rd floor (stairs)</option>
+                      <option value="3">4th+ floor (stairs)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Calculate button -->
+            <button class="est-calc-btn" id="calc-btn" onclick="estimatePrice()">
+              ⚡ Get My Price Instantly
+            </button>
+
+            <!-- Price result -->
+            <div class="price-result" id="price-result">
+              <div class="result-label">Your Price</div>
+              <div class="result-amount" id="result-amount">$—</div>
+              <div class="result-note" id="result-note"></div>
+              <div class="result-breakdown" id="result-breakdown"></div>
+              <div class="result-actions" style="margin-bottom:8px;">
+                <button class="result-actions btn-book-now" onclick="openBookingModal()">✅ Book This Move</button>
+              </div>
+              <a href="tel:+16045374140" class="unhappy-btn" id="unhappy-btn">
+                😕 Price not right? Call us to negotiate — 604-537-4140
+              </a>
+            </div>
+
+            <div style="text-align:center;margin-top:10px;font-size:.72rem;color:var(--gray);">
+              No personal info needed · Instant price · <strong style="color:var(--red);">$20 off</strong> with a Google review
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust Bar -->
+<div class="trust-bar">
+  <div class="container">
+    <div class="trust-item">
+      <div class="icon">✅</div>
+      <span>BBB Accredited Business</span>
+    </div>
+    <div class="trust-item">
+      <div class="icon">🛡️</div>
+      <span>Fully Licensed & Insured</span>
+    </div>
+    <div class="trust-item">
+      <div class="icon">💰</div>
+      <span>No Hidden Fees — Ever</span>
+    </div>
+    <div class="trust-item">
+      <div class="icon">🕐</div>
+      <span>On-Time Guarantee</span>
+    </div>
+    <div class="trust-item">
+      <div class="icon">📍</div>
+      <span>Serving All of BC</span>
+    </div>
+    <div class="trust-item">
+      <div class="icon">⭐</div>
+      <span>5-Star Google Rated</span>
+    </div>
+  </div>
+</div>
+
+<!-- Services -->
+<section class="section section--gray" id="services">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">What We Do</span>
+      <h2>Complete Moving Services in BC</h2>
+      <p>From a single piece of furniture to a full office relocation — we handle it all with care, speed, and no stress.</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon">🏠</div>
+        <h3>Residential Moving</h3>
+        <p>Full-service home moves, from bachelor suites to large family houses. We pack, load, transport, and unload — or just the parts you need.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🏢</div>
+        <h3>Commercial & Office Moving</h3>
+        <p>Minimize downtime with strategic office relocations. We handle desks, servers, filing cabinets, and coordinate around your business hours.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">📦</div>
+        <h3>Packing & Unpacking</h3>
+        <p>Professional packing using high-quality materials. We protect fragile items, artwork, electronics, and everything in between with expert techniques.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🗄️</div>
+        <h3>Storage Solutions</h3>
+        <p>Secure, climate-controlled storage for short or long-term needs. Perfect for between-move gaps, renovations, or seasonal items.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🎹</div>
+        <h3>Piano & Specialty Item Moving</h3>
+        <p>Pianos, safes, hot tubs, pool tables, antiques — moved by specialists with the proper equipment and techniques. No risk, no damage.</p>
+        <span class="service-badge">High-Value Item Experts</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">👴</div>
+        <h3>Senior Moving Assistance</h3>
+        <p>Patient, compassionate moving services designed for seniors transitioning to assisted living, retirement communities, or downsizing homes.</p>
+        <span class="service-badge">Trusted by Families</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🗑️</div>
+        <h3>Junk Removal</h3>
+        <p>Clearing out before, during, or after a move? We haul away furniture, appliances, and unwanted items — quickly and responsibly.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🔧</div>
+        <h3>Furniture Assembly & Disassembly</h3>
+        <p>IKEA and flatpack furniture, beds, wardrobes, desks — we take it apart at the old place and put it back together at the new one.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🎓</div>
+        <h3>Student & Small Moves</h3>
+        <p>Moving into a dorm, renting a room, or just need to move a few things? Fast, affordable moves with no minimum truck requirement.</p>
+        <span class="service-badge">Budget-Friendly</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🛣️</div>
+        <h3>Long-Distance Moving</h3>
+        <p>Moving from Vancouver to Kelowna, Victoria, Prince George, or anywhere in BC? We handle the full route with tracking and care.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">💼</div>
+        <h3>Corporate & Employee Relocation</h3>
+        <p>Relocation packages for companies moving staff. We coordinate with HR, manage timelines, and ensure a smooth transition for your employees.</p>
+        <span class="service-badge">B2B Contracts Available</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">⚡</div>
+        <h3>Last-Minute & Emergency Moving</h3>
+        <p>Got a sudden move? We offer same-day and next-day availability for urgent situations. Call us — we'll make it happen.</p>
+        <span class="service-badge">Available 7 Days</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Why Us -->
+<section class="section" id="why-us">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-text">
+        <span class="tag">Why Affordable Movers</span>
+        <h2>We're Not Just Another Moving Company</h2>
+        <p>Moving is already stressful. Our job is to remove every worry from your plate — starting with trust, ending with you settled in your new space.</p>
+        <div class="why-list">
+          <div class="why-item">
+            <div class="check">✓</div>
+            <div>
+              <p><strong>Transparent, upfront pricing</strong>You always know the cost before we start. No surprise invoices, no fuel surcharges, no hidden fees.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="check">✓</div>
+            <div>
+              <p><strong>Trained, background-checked crew</strong>Every mover on our team is vetted, trained, and uniformed. Your belongings are in professional hands.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="check">✓</div>
+            <div>
+              <p><strong>Fully insured for your protection</strong>We carry full liability insurance so any accidental damage is covered — no arguments, no stress.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="check">✓</div>
+            <div>
+              <p><strong>On-time, every time</strong>We respect your schedule. If we're ever delayed, you'll hear from us before the scheduled time — guaranteed.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="check">✓</div>
+            <div>
+              <p><strong>BBB Accredited since day one</strong>We maintain the highest ethical standards in the industry. Our BBB accreditation is proof.</p>
+            </div>
+          </div>
+        </div>
+        <a href="#contact" class="btn btn-primary">Get a Free Quote Today</a>
+      </div>
+      <div class="why-visual">
+        <div class="why-stat-card">
+          <div class="why-stat-icon">🚛</div>
+          <div class="why-stat-text">
+            <strong>1,500+</strong>
+            <span>Successful moves completed across BC</span>
+          </div>
+        </div>
+        <div class="why-stat-card">
+          <div class="why-stat-icon">⭐</div>
+          <div class="why-stat-text">
+            <strong>5.0 / 5</strong>
+            <span>Average Google rating from real customers</span>
+          </div>
+        </div>
+        <div class="why-stat-card">
+          <div class="why-stat-icon">📍</div>
+          <div class="why-stat-text">
+            <strong>2 Locations</strong>
+            <span>Vancouver & Burnaby — serving all Metro Vancouver</span>
+          </div>
+        </div>
+        <div class="why-stat-card">
+          <div class="why-stat-icon">🕐</div>
+          <div class="why-stat-text">
+            <strong>7 Days a Week</strong>
+            <span>Including weekends and holidays</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="section section--gray" id="pricing">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">Transparent Rates</span>
+      <h2>Simple, Honest Pricing</h2>
+      <p>No hidden fees, no bait-and-switch. These are real estimates — your final quote is confirmed before we start.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <div class="price-card">
+        <h3>Studio / Small Move</h3>
+        <div class="price">$149<span>/hr</span></div>
+        <div class="desc">2 movers + truck · 2-hr minimum</div>
+        <ul class="price-features">
+          <li>Bachelor or studio apartment</li>
+          <li>Student moves & single items</li>
+          <li>Junk removal add-on available</li>
+          <li>Furniture assembly included</li>
+          <li>Same-day availability</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline" style="color:var(--navy);border-color:var(--navy);width:100%;justify-content:center;">Get Quote</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="popular-badge">⭐ Most Popular</div>
+        <h3>1–2 Bedroom Home</h3>
+        <div class="price">$169<span>/hr</span></div>
+        <div class="desc">3 movers + truck · 3-hr minimum</div>
+        <ul class="price-features">
+          <li>Full apartment or condo move</li>
+          <li>Packing materials included</li>
+          <li>Furniture disassembly & assembly</li>
+          <li>Blanket wrapping for all furniture</li>
+          <li>Loading & unloading included</li>
+          <li>10% off inter-city moves</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary" style="width:100%;justify-content:center;">Get Quote</a>
+      </div>
+
+      <div class="price-card">
+        <h3>3+ Bedroom / House</h3>
+        <div class="price">$189<span>/hr</span></div>
+        <div class="desc">4 movers + large truck · 4-hr minimum</div>
+        <ul class="price-features">
+          <li>Full house or townhouse move</li>
+          <li>Specialty item handling</li>
+          <li>Complete packing service</li>
+          <li>Storage drop-off available</li>
+          <li>Long-distance rates available</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline" style="color:var(--navy);border-color:var(--navy);width:100%;justify-content:center;">Get Quote</a>
+      </div>
+
+      <div class="price-card">
+        <h3>Commercial / Office</h3>
+        <div class="price">Custom</div>
+        <div class="desc">Tailored to your business needs</div>
+        <ul class="price-features">
+          <li>IT equipment disconnect & reconnect</li>
+          <li>After-hours & weekend moves</li>
+          <li>Labelling & inventory systems</li>
+          <li>Corporate relocation packages</li>
+          <li>Recurring B2B contracts</li>
+        </ul>
+        <a href="#contact" class="btn btn-gold" style="width:100%;justify-content:center;">Request Quote</a>
+      </div>
+
+    </div>
+    <p style="text-align:center;margin-top:28px;font-size:.85rem;color:var(--gray);">
+      All prices + 5% GST · PST exempt on moving services in BC · Prices may vary during peak season (May–Sep) ·
+      <strong style="color:var(--red);">10% off</strong> inter-city moves with our large truck
+    </p>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">How It Works</span>
+      <h2>Moving Is Simple With Us</h2>
+      <p>From quote to settling in — here's exactly what to expect when you book with Affordable Movers BC.</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="step-num">1</div>
+        <h3>Get a Free Quote</h3>
+        <p>Fill out our form or call us. We'll confirm your quote same day — no surprises.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">2</div>
+        <h3>Book Your Date</h3>
+        <p>Pick a date and time that works for you. We're available 7 days a week.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">3</div>
+        <h3>We Show Up On Time</h3>
+        <p>Our uniformed crew arrives ready. We protect your floors, walls, and belongings.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">4</div>
+        <h3>Settle Into Your New Home</h3>
+        <p>We place everything where you want it. You just relax and enjoy the new space.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reviews -->
+<section class="section section--gray" id="reviews">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">Customer Reviews</span>
+      <h2>What Our Customers Say</h2>
+      <p>Real reviews from real people across BC. We let our work speak for itself.</p>
+    </div>
+    <div class="reviews-grid">
+
+      <div class="review-card">
+        <div class="review-google">🌐 Google</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Affordable Movers moved my entire household in Vancouver and I couldn't be happier. The team treated every piece with care — even my grandmother's china cabinet came through without a scratch. Five stars, easily!"</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">PB</div>
+          <div>
+            <div class="reviewer-name">Paula B.</div>
+            <div class="reviewer-loc">Vancouver, BC</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-google">🌐 Google</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Professional and punctual from start to finish. They relocated our entire office in Burnaby over one weekend with zero downtime on Monday. I've already referred them to three other business owners."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">JN</div>
+          <div>
+            <div class="reviewer-name">Julian N.</div>
+            <div class="reviewer-loc">Burnaby, BC</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-google">🌐 Google</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"No issues whatsoever — they got everything moved in record time and saved my life! I called them last minute on a Thursday and they were there Saturday morning. Highly recommend for anyone in Coquitlam."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">CW</div>
+          <div>
+            <div class="reviewer-name">Cinthya W.</div>
+            <div class="reviewer-loc">Coquitlam, BC</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-google">🌐 Google</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Used them for a piano move from Surrey to Langley. I was terrified but they handled my Steinway like absolute pros. The right equipment, the right people. Worth every penny and then some."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">MK</div>
+          <div>
+            <div class="reviewer-name">Michael K.</div>
+            <div class="reviewer-loc">Surrey, BC</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-google">🌐 Google</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"I hired them to help my 78-year-old mom move into her retirement community. They were patient, kind, and so respectful with all her belongings. She felt completely at ease with the whole crew."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">SR</div>
+          <div>
+            <div class="reviewer-name">Sandra R.</div>
+            <div class="reviewer-loc">Richmond, BC</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-google">🌐 Google</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Transparent pricing, showed up on time, finished faster than quoted. The price I was told was the price I paid. In the moving industry that's rare — these guys are the real deal."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">DP</div>
+          <div>
+            <div class="reviewer-name">David P.</div>
+            <div class="reviewer-loc">North Vancouver, BC</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div style="text-align:center;margin-top:36px;">
+      <a href="https://g.page/r/affordablemoversbc/review" target="_blank" class="btn btn-primary" style="font-size:1rem;">
+        ⭐ See All Reviews on Google
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Meet the Team -->
+<section class="section" id="team">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">Our People & Our Trucks</span>
+      <h2>You Know Who's Showing Up</h2>
+      <p>Every mover is background-checked, trained, and cares about your stuff. Every truck is clean, equipped, and assigned to your move before the day arrives.</p>
+    </div>
+
+    <!-- Two big entry cards -->
+    <div class="team-entry-grid">
+
+      <!-- Crew card -->
+      <div class="team-entry-card" onclick="openPanel('crew')">
+        <div class="team-entry-preview">
+          <div class="preview-avatars">
+            <div class="pa" style="background:linear-gradient(135deg,#1A2B4A,#22375f)">CM</div>
+            <div class="pa" style="background:linear-gradient(135deg,#7c3aed,#5b21b6)">JR</div>
+            <div class="pa" style="background:linear-gradient(135deg,#065f46,#047857)">MA</div>
+            <div class="pa" style="background:linear-gradient(135deg,#92400e,#b45309)">DL</div>
+            <div class="pa" style="background:linear-gradient(135deg,#be185d,#9d174d)">SP</div>
+            <div class="pa" style="background:linear-gradient(135deg,#1e40af,#1d4ed8)">TN</div>
+          </div>
+          <div class="entry-label-row">
+            <div>
+              <div class="entry-title">👥 Meet Our Crew</div>
+              <div class="entry-sub">6 trained movers · Names, faces & specialties</div>
+            </div>
+            <div class="entry-arrow">→</div>
+          </div>
+        </div>
+        <div class="team-entry-footer">
+          <span>Background-checked</span>
+          <span>·</span>
+          <span>Insured</span>
+          <span>·</span>
+          <span>Assigned to your move</span>
+        </div>
+      </div>
+
+      <!-- Trucks card -->
+      <div class="team-entry-card" onclick="openPanel('trucks')">
+        <div class="team-entry-preview">
+          <div class="preview-trucks">
+            <div class="pt" style="background:#f1f5f9">🚐</div>
+            <div class="pt" style="background:#fef3c7">🚛</div>
+            <div class="pt" style="background:#dcfce7">🚚</div>
+          </div>
+          <div class="entry-label-row">
+            <div>
+              <div class="entry-title">🚛 Our Trucks</div>
+              <div class="entry-sub">3 vehicles · Specs, capacity & what fits</div>
+            </div>
+            <div class="entry-arrow">→</div>
+          </div>
+        </div>
+        <div class="team-entry-footer">
+          <span>AMB · 001 · 002 · 003</span>
+          <span>·</span>
+          <span>Licensed & equipped</span>
+          <span>·</span>
+          <span>No surprises</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CREW PANEL ════════════════════════════════════════════════════ -->
+<div class="fullpanel" id="panel-crew">
+  <div class="fullpanel-inner">
+    <div class="fullpanel-header">
+      <div>
+        <div class="fullpanel-tag">Our Team</div>
+        <h2>Meet the People Moving Your Life</h2>
+        <p>Every mover on our team is background-checked, trained, and assigned to your move before the day. When you book, you know who's coming.</p>
+      </div>
+      <button class="fullpanel-close" onclick="closePanel('crew')">✕</button>
+    </div>
+
+    <div class="fullpanel-grid">
+
+      <div class="fp-member-card">
+        <div class="fp-photo" style="background:linear-gradient(135deg,#1A2B4A,#22375f)">
+          <span class="fp-initials">CM</span>
+          <div class="fp-badge">⭐ Lead Mover</div>
+          <div class="fp-photo-hint">📷 Photo coming soon</div>
+        </div>
+        <div class="fp-info">
+          <div class="fp-name-row">
+            <h3>Carlos M.</h3>
+            <span class="fp-exp">7 yrs</span>
+          </div>
+          <div class="fp-role">Senior Lead Mover</div>
+          <p>Specialty in large homes and piano moves. Known for meticulous care with antiques and fragile items. Clients ask for him by name — he treats every home as if it were his own.</p>
+          <div class="fp-stats">
+            <div class="fp-stat"><strong>200+</strong><span>Moves led</span></div>
+            <div class="fp-stat"><strong>5.0★</strong><span>Client rating</span></div>
+            <div class="fp-stat"><strong>7 yrs</strong><span>Experience</span></div>
+          </div>
+          <div class="fp-tags">
+            <span>🎹 Piano</span><span>📦 Packing</span><span>🏠 Residential</span><span>🖼️ Antiques</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fp-member-card">
+        <div class="fp-photo" style="background:linear-gradient(135deg,#7c3aed,#5b21b6)">
+          <span class="fp-initials">JR</span>
+          <div class="fp-badge">🏢 Office Specialist</div>
+          <div class="fp-photo-hint">📷 Photo coming soon</div>
+        </div>
+        <div class="fp-info">
+          <div class="fp-name-row">
+            <h3>James R.</h3>
+            <span class="fp-exp">5 yrs</span>
+          </div>
+          <div class="fp-role">Commercial Lead</div>
+          <p>Expert in office and corporate relocations. Has moved 40+ businesses in Metro Vancouver with zero downtime reported by any client. Plans every commercial move like a logistics operation.</p>
+          <div class="fp-stats">
+            <div class="fp-stat"><strong>40+</strong><span>Offices moved</span></div>
+            <div class="fp-stat"><strong>5.0★</strong><span>Client rating</span></div>
+            <div class="fp-stat"><strong>5 yrs</strong><span>Experience</span></div>
+          </div>
+          <div class="fp-tags">
+            <span>🏢 Commercial</span><span>💼 Corporate</span><span>🖥️ IT Equipment</span><span>📋 Planning</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fp-member-card">
+        <div class="fp-photo" style="background:linear-gradient(135deg,#065f46,#047857)">
+          <span class="fp-initials">MA</span>
+          <div class="fp-badge">👴 Senior Care</div>
+          <div class="fp-photo-hint">📷 Photo coming soon</div>
+        </div>
+        <div class="fp-info">
+          <div class="fp-name-row">
+            <h3>Miguel A.</h3>
+            <span class="fp-exp">4 yrs</span>
+          </div>
+          <div class="fp-role">Senior Move Specialist</div>
+          <p>Patient, warm, and exceptionally careful. Miguel specializes in senior transitions and has been praised by families for making stressful moves feel calm and well-managed.</p>
+          <div class="fp-stats">
+            <div class="fp-stat"><strong>80+</strong><span>Senior moves</span></div>
+            <div class="fp-stat"><strong>5.0★</strong><span>Client rating</span></div>
+            <div class="fp-stat"><strong>4 yrs</strong><span>Experience</span></div>
+          </div>
+          <div class="fp-tags">
+            <span>👴 Seniors</span><span>🫶 Compassionate</span><span>🏠 Downsizing</span><span>🧸 Careful</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fp-member-card">
+        <div class="fp-photo" style="background:linear-gradient(135deg,#92400e,#b45309)">
+          <span class="fp-initials">DL</span>
+          <div class="fp-badge">🛣️ Long-Distance</div>
+          <div class="fp-photo-hint">📷 Photo coming soon</div>
+        </div>
+        <div class="fp-info">
+          <div class="fp-name-row">
+            <h3>David L.</h3>
+            <span class="fp-exp">6 yrs</span>
+          </div>
+          <div class="fp-role">Long-Distance Driver</div>
+          <p>Certified long-haul driver with routes across all of BC. If you're moving to Kelowna, Kamloops, Victoria or Prince George — David gets you there safely, on time, with no damage.</p>
+          <div class="fp-stats">
+            <div class="fp-stat"><strong>120+</strong><span>Long hauls</span></div>
+            <div class="fp-stat"><strong>5.0★</strong><span>Client rating</span></div>
+            <div class="fp-stat"><strong>6 yrs</strong><span>Experience</span></div>
+          </div>
+          <div class="fp-tags">
+            <span>🛣️ Long-Distance</span><span>🚛 Large Truck</span><span>🗺️ All of BC</span><span>⏱️ On-Time</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fp-member-card">
+        <div class="fp-photo" style="background:linear-gradient(135deg,#be185d,#9d174d)">
+          <span class="fp-initials">SP</span>
+          <div class="fp-badge">🔧 Assembly Pro</div>
+          <div class="fp-photo-hint">📷 Photo coming soon</div>
+        </div>
+        <div class="fp-info">
+          <div class="fp-name-row">
+            <h3>Sofia P.</h3>
+            <span class="fp-exp">3 yrs</span>
+          </div>
+          <div class="fp-role">Packing & Assembly Specialist</div>
+          <p>Master at IKEA and flatpack furniture — takes it apart at the old place, puts it back together perfectly at the new one. Also our fastest packer; she'll wrap your kitchen in record time.</p>
+          <div class="fp-stats">
+            <div class="fp-stat"><strong>300+</strong><span>Items assembled</span></div>
+            <div class="fp-stat"><strong>5.0★</strong><span>Client rating</span></div>
+            <div class="fp-stat"><strong>3 yrs</strong><span>Experience</span></div>
+          </div>
+          <div class="fp-tags">
+            <span>🔧 Assembly</span><span>📦 Packing</span><span>⚡ Fast</span><span>🛏️ IKEA Expert</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fp-member-card">
+        <div class="fp-photo" style="background:linear-gradient(135deg,#1e40af,#1d4ed8)">
+          <span class="fp-initials">TN</span>
+          <div class="fp-badge">🗑️ Junk Removal</div>
+          <div class="fp-photo-hint">📷 Photo coming soon</div>
+        </div>
+        <div class="fp-info">
+          <div class="fp-name-row">
+            <h3>Tom N.</h3>
+            <span class="fp-exp">4 yrs</span>
+          </div>
+          <div class="fp-role">Junk Removal Lead</div>
+          <p>Efficient, quick, and eco-conscious. Tom donates what can be donated and recycles what can't — making sure as little as possible goes to landfill. Great for pre-move cleanouts.</p>
+          <div class="fp-stats">
+            <div class="fp-stat"><strong>500+</strong><span>Items cleared</span></div>
+            <div class="fp-stat"><strong>5.0★</strong><span>Client rating</span></div>
+            <div class="fp-stat"><strong>4 yrs</strong><span>Experience</span></div>
+          </div>
+          <div class="fp-tags">
+            <span>🗑️ Junk Removal</span><span>♻️ Eco-Friendly</span><span>⚡ Same-Day</span><span>🤝 Donation</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fullpanel-cta">
+      <a href="#contact" class="btn btn-primary" onclick="closePanel('crew')">🚛 Book Your Move & Meet Your Crew</a>
+      <a href="tel:+16045374140" class="btn btn-outline">📞 Call Us — 604-537-4140</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TRUCKS PANEL ══════════════════════════════════════════════════ -->
+<div class="fullpanel" id="panel-trucks">
+  <div class="fullpanel-inner">
+    <div class="fullpanel-header">
+      <div>
+        <div class="fullpanel-tag">Our Fleet</div>
+        <h2>Know Your Truck Before Moving Day</h2>
+        <p>We assign a truck to your move when you book. You'll see exactly which one is coming — license plate and all. No surprises on the day.</p>
+      </div>
+      <button class="fullpanel-close" onclick="closePanel('trucks')">✕</button>
+    </div>
+
+    <div class="fp-trucks-grid">
+
+      <div class="fp-truck-card">
+        <div class="fp-truck-visual" style="background:linear-gradient(135deg,#f1f5f9,#e2e8f0)">
+          <div class="fp-truck-img-area">
+            <div class="fp-truck-emoji">🚐</div>
+            <div class="fp-truck-photo-hint">📷 Photo coming soon</div>
+          </div>
+          <div class="fp-truck-plate-wrap">
+            <div class="fp-truck-plate">AMB · 001</div>
+          </div>
+        </div>
+        <div class="fp-truck-info">
+          <div class="fp-truck-name-row">
+            <h3>The Swift</h3>
+            <span class="fp-truck-status available">✅ Available</span>
+          </div>
+          <div class="fp-truck-size">Cargo Van</div>
+          <div class="fp-truck-specs-table">
+            <div class="spec-row"><span>Capacity</span><strong>Up to 400 cu ft</strong></div>
+            <div class="spec-row"><span>Dimensions</span><strong>10ft L × 6ft W × 6ft H</strong></div>
+            <div class="spec-row"><span>Max load</span><strong>2,000 lbs</strong></div>
+            <div class="spec-row"><span>Best for</span><strong>Studio, 1BR, urgent loads</strong></div>
+            <div class="spec-row"><span>Equipment</span><strong>Straps, blankets, dolly</strong></div>
+            <div class="spec-row"><span>Parking</span><strong>Fits residential streets</strong></div>
+          </div>
+          <div class="fp-tags" style="margin-top:16px">
+            <span>🏠 Studio–1BR</span><span>⚡ Same-Day OK</span><span>🅿️ Easy Parking</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fp-truck-card featured-truck">
+        <div class="fp-truck-popular">⭐ Most Requested</div>
+        <div class="fp-truck-visual" style="background:linear-gradient(135deg,#fef3c7,#fde68a)">
+          <div class="fp-truck-img-area">
+            <div class="fp-truck-emoji">🚛</div>
+            <div class="fp-truck-photo-hint">📷 Photo coming soon</div>
+          </div>
+          <div class="fp-truck-plate-wrap">
+            <div class="fp-truck-plate">AMB · 002</div>
+          </div>
+        </div>
+        <div class="fp-truck-info">
+          <div class="fp-truck-name-row">
+            <h3>The Workhorse</h3>
+            <span class="fp-truck-status available">✅ Available</span>
+          </div>
+          <div class="fp-truck-size">16ft Box Truck</div>
+          <div class="fp-truck-specs-table">
+            <div class="spec-row"><span>Capacity</span><strong>Up to 800 cu ft</strong></div>
+            <div class="spec-row"><span>Dimensions</span><strong>16ft L × 7.5ft W × 7ft H</strong></div>
+            <div class="spec-row"><span>Max load</span><strong>4,500 lbs</strong></div>
+            <div class="spec-row"><span>Best for</span><strong>1–2 bedroom apartments</strong></div>
+            <div class="spec-row"><span>Equipment</span><strong>Ramp, blankets, straps, dolly</strong></div>
+            <div class="spec-row"><span>Extras</span><strong>Padded interior walls</strong></div>
+          </div>
+          <div class="fp-tags" style="margin-top:16px">
+            <span>🏠 1–2 BR</span><span>🛡️ Padded Interior</span><span>↕️ Loading Ramp</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fp-truck-card">
+        <div class="fp-truck-visual" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0)">
+          <div class="fp-truck-img-area">
+            <div class="fp-truck-emoji">🚚</div>
+            <div class="fp-truck-photo-hint">📷 Photo coming soon</div>
+          </div>
+          <div class="fp-truck-plate-wrap">
+            <div class="fp-truck-plate">AMB · 003</div>
+          </div>
+        </div>
+        <div class="fp-truck-info">
+          <div class="fp-truck-name-row">
+            <h3>The Titan</h3>
+            <span class="fp-truck-status available">✅ Available</span>
+          </div>
+          <div class="fp-truck-size">26ft Box Truck</div>
+          <div class="fp-truck-specs-table">
+            <div class="spec-row"><span>Capacity</span><strong>Up to 1,700 cu ft</strong></div>
+            <div class="spec-row"><span>Dimensions</span><strong>26ft L × 8ft W × 8ft H</strong></div>
+            <div class="spec-row"><span>Max load</span><strong>10,000 lbs</strong></div>
+            <div class="spec-row"><span>Best for</span><strong>3+ BR homes, offices, long-haul</strong></div>
+            <div class="spec-row"><span>Equipment</span><strong>Hydraulic lift gate, full kit</strong></div>
+            <div class="spec-row"><span>Extras</span><strong>10% off inter-city moves</strong></div>
+          </div>
+          <div class="fp-tags" style="margin-top:16px">
+            <span>🏠 3–4+ BR</span><span>🛣️ Long-Distance</span><span>🏢 Commercial</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fullpanel-cta">
+      <a href="#contact" class="btn btn-primary" onclick="closePanel('trucks')">🚛 Book Your Move — We'll Assign Your Truck</a>
+      <a href="tel:+16045374140" class="btn btn-outline">📞 Call Us — 604-537-4140</a>
+    </div>
+  </div>
+</div>
+
+<!-- Google Review CTA -->
+<section class="section" id="review-cta">
+  <div class="container">
+    <div class="review-cta">
+      <h2>⭐ Leave a Review, Save $20</h2>
+      <p>We grow through word of mouth. Share your experience on Google and we'll take $20 off your next move — our thank-you to you.</p>
+      <div class="review-steps">
+        <div class="review-step">
+          <div class="num">1</div>
+          <span>Book & complete your move</span>
+        </div>
+        <div class="review-step">
+          <div class="num">2</div>
+          <span>Leave an honest Google review</span>
+        </div>
+        <div class="review-step">
+          <div class="num">3</div>
+          <span>Show us the review when you book next</span>
+        </div>
+        <div class="review-step">
+          <div class="num">4</div>
+          <span>We take $20 off your invoice</span>
+        </div>
+      </div>
+      <a href="https://g.page/r/affordablemoversbc/review" target="_blank" class="btn" style="background:var(--navy);color:white;font-size:1rem;padding:16px 32px;">
+        📝 Write a Review on Google →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Areas We Serve -->
+<section class="section section--navy" id="areas">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag tag--gold">Service Area</span>
+      <h2>Serving All of British Columbia</h2>
+      <p>From Metro Vancouver to the Interior — wherever you're moving in BC, we've got you covered.</p>
+    </div>
+    <div class="areas-grid">
+      <div class="area-item"><span class="dot"></span>Vancouver</div>
+      <div class="area-item"><span class="dot"></span>Burnaby</div>
+      <div class="area-item"><span class="dot"></span>Surrey</div>
+      <div class="area-item"><span class="dot"></span>Richmond</div>
+      <div class="area-item"><span class="dot"></span>Coquitlam</div>
+      <div class="area-item"><span class="dot"></span>North Vancouver</div>
+      <div class="area-item"><span class="dot"></span>West Vancouver</div>
+      <div class="area-item"><span class="dot"></span>New Westminster</div>
+      <div class="area-item"><span class="dot"></span>Langley</div>
+      <div class="area-item"><span class="dot"></span>Abbotsford</div>
+      <div class="area-item"><span class="dot"></span>Chilliwack</div>
+      <div class="area-item"><span class="dot"></span>Victoria</div>
+      <div class="area-item"><span class="dot"></span>Kelowna</div>
+      <div class="area-item"><span class="dot"></span>Prince George</div>
+      <div class="area-item"><span class="dot"></span>Kamloops</div>
+      <div class="area-item"><span class="dot"></span>Nanaimo</div>
+      <div class="area-item"><span class="dot"></span>Maple Ridge</div>
+      <div class="area-item"><span class="dot"></span>Port Moody</div>
+    </div>
+    <p style="text-align:center;margin-top:32px;color:rgba(255,255,255,.6);font-size:.9rem;">
+      Don't see your city? <a href="tel:+16045374140" style="color:var(--gold);font-weight:700;">Call us</a> — we likely cover it.
+    </p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section--gray" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">FAQ</span>
+      <h2>Frequently Asked Questions</h2>
+      <p>Everything you need to know before booking your move.</p>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          How much does a local move in BC cost?
+          <svg class="faq-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">Local moves in the Metro Vancouver area typically range from $149–$189/hour depending on crew size and truck, with a 2–4 hour minimum. A 1-bedroom move usually totals $600–$900, and a 2-bedroom move $900–$1,500. We provide an exact quote upfront so you always know what to expect.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Do you provide packing materials?
+          <svg class="faq-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">Yes! We offer professional packing services using high-quality boxes, bubble wrap, packing paper, and mattress covers. You can also choose to pack yourself and just hire us for loading and transport. Packing materials are available for purchase if you'd like to handle your own packing.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Are you insured? What if something gets damaged?
+          <svg class="faq-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">Yes, we're fully licensed and insured. In the rare event of accidental damage, we have a clear, straightforward claims process. We also protect your walls, floors, and door frames during the move as standard practice — prevention is always our first priority.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Can you move a piano or other specialty items?
+          <svg class="faq-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">Absolutely. We specialize in moving pianos, safes, pool tables, hot tubs, antiques, and other high-value or heavy specialty items. Our crew uses proper equipment and techniques specific to each item type. We recommend mentioning specialty items when you request your quote so we can plan accordingly.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Do you offer same-day or last-minute moves?
+          <svg class="faq-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">Yes! We understand that life happens. We offer same-day and next-day moving services when availability permits. Call us directly at 604-537-4140 for urgent bookings — we'll do our best to accommodate you, 7 days a week.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          How do I get the $20 Google review discount?
+          <svg class="faq-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">After your move, leave us an honest review on Google Maps. When you book your next move with us, simply mention the review (or show it to our team) and we'll take $20 off your invoice. It's our way of saying thank you for helping other customers find us.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Is PST charged on moving services in BC?
+          <svg class="faq-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">Moving services in BC are exempt from the 7% Provincial Sales Tax (PST). You only pay 5% GST on your move — which means you save compared to most other services. We include this clearly on every invoice.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Do you move during weekends and holidays?
+          <svg class="faq-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">Yes, we operate 7 days a week including most holidays. Weekend and end-of-month slots fill up fast, especially during summer (May–September). We recommend booking at least 1–2 weeks in advance for peak-season dates.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="tag">Get In Touch</span>
+        <h2>Ready to Move? Let's Talk.</h2>
+        <p>Get your free, no-obligation quote today. We respond within a few hours on business days, same day on weekdays.</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="icon">📞</div>
+            <div>
+              <strong>Phone</strong>
+              <span><a href="tel:+16045374140" style="color:var(--red);font-weight:600;">604-537-4140</a></span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="icon">📧</div>
+            <div>
+              <strong>Email</strong>
+              <span><a href="mailto:info@affordablemoversbc.com" style="color:var(--red);font-weight:600;">info@affordablemoversbc.com</a></span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="icon">📍</div>
+            <div>
+              <strong>Vancouver Office</strong>
+              <span>1255 W Georgia Street, Vancouver, BC V6E 3J7</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="icon">📍</div>
+            <div>
+              <strong>Burnaby Office</strong>
+              <span>4350 Beresford Street, Burnaby, BC V5H 4K9</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="icon">🕐</div>
+            <div>
+              <strong>Hours</strong>
+              <span>7 days a week · 7:00 AM – 8:00 PM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h3>Request a Free Quote</h3>
+        <p>Fill out the form and we'll get back to you with a detailed quote — usually same day.</p>
+        <form onsubmit="handleContactForm(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input type="text" placeholder="Jane Smith" required />
+            </div>
+            <div class="form-group">
+              <label>Phone Number *</label>
+              <input type="tel" placeholder="604-555-0100" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="jane@email.com" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Moving From *</label>
+              <input type="text" placeholder="Vancouver, BC" required />
+            </div>
+            <div class="form-group">
+              <label>Moving To *</label>
+              <input type="text" placeholder="Burnaby, BC" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Service Type</label>
+              <select>
+                <option>Residential Moving</option>
+                <option>Commercial Moving</option>
+                <option>Packing & Unpacking</option>
+                <option>Piano & Specialty Items</option>
+                <option>Senior Moving</option>
+                <option>Junk Removal</option>
+                <option>Storage Solutions</option>
+                <option>Student / Small Move</option>
+                <option>Long-Distance Move</option>
+                <option>Furniture Assembly</option>
+                <option>Corporate Relocation</option>
+                <option>Last-Minute / Emergency</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Preferred Move Date</label>
+              <input type="date" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Additional Details</label>
+            <textarea rows="3" placeholder="Tell us about your move: home size, elevator access, special items, etc."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:16px;font-size:1rem;">
+            🚛 Send My Quote Request →
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Booking Modal — 3 steps -->
+<div class="modal-overlay" id="booking-modal" onclick="closeModal(event)">
+  <div class="modal-box" style="max-width:600px;">
+
+    <!-- Step indicator -->
+    <div class="bk-steps">
+      <div class="bk-step active" id="bkstep-1"><span>1</span> Pick a time</div>
+      <div class="bk-step-divider"></div>
+      <div class="bk-step" id="bkstep-2"><span>2</span> Your details</div>
+      <div class="bk-step-divider"></div>
+      <div class="bk-step" id="bkstep-3"><span>3</span> Confirmed!</div>
+    </div>
+
+    <!-- STEP 1: Date + Time -->
+    <div class="modal-body" id="bk-panel-1">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <div>
+          <div style="font-size:1.1rem;font-weight:800;color:var(--navy);">When would you like to move?</div>
+          <div style="font-size:.8rem;color:var(--gray);margin-top:2px;">Pick a date — we'll show you available times.</div>
+        </div>
+        <button class="fullpanel-close" onclick="closeModalDirect()" style="flex-shrink:0;">✕</button>
+      </div>
+
+      <div class="bk-date-field">
+        <label>📅 Move date</label>
+        <input type="date" id="bk-date" onchange="loadTimeSlots()" />
+      </div>
+
+      <div id="timeslot-wrap" style="display:none;">
+        <div class="modal-section-label" style="margin-top:16px;">🕐 Available time slots</div>
+        <div class="timeslot-grid" id="timeslot-grid"></div>
+        <div class="timeslot-legend">
+          <span class="ts-avail">✅ Available</span>
+          <span class="ts-taken">🚫 Booked</span>
+        </div>
+      </div>
+
+      <div id="bk-step1-hint" style="text-align:center;color:var(--gray);font-size:.82rem;padding:20px 0;">
+        Select a date above to see available time slots
+      </div>
+
+      <button class="est-calc-btn" id="bk-next1" onclick="goStep(2)" style="display:none;margin-top:16px;">
+        Next — Enter Your Details →
+      </button>
+    </div>
+
+    <!-- STEP 2: Personal info -->
+    <div class="modal-body" id="bk-panel-2" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <div>
+          <div style="font-size:1.1rem;font-weight:800;color:var(--navy);">Your contact details</div>
+          <div style="font-size:.8rem;color:var(--gray);margin-top:2px;">So we can confirm your booking and reach you on move day.</div>
+        </div>
+        <button class="fullpanel-close" onclick="closeModalDirect()" style="flex-shrink:0;">✕</button>
+      </div>
+
+      <!-- Move summary chip -->
+      <div class="bk-summary-chip" id="bk-chip"></div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" id="bk-name" placeholder="Jane Smith" required />
+        </div>
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="tel" id="bk-phone" placeholder="604-555-0100" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address *</label>
+        <input type="email" id="bk-email" placeholder="jane@email.com" required />
+      </div>
+      <div class="form-group">
+        <label>Anything we should know?</label>
+        <textarea id="bk-notes" rows="2" placeholder="Elevator code, parking restrictions, fragile items, pets…"></textarea>
+      </div>
+
+      <div id="bk-error" style="color:var(--red);font-size:.82rem;font-weight:600;display:none;margin-bottom:10px;"></div>
+
+      <div style="display:flex;gap:10px;">
+        <button class="modal-btn-close" onclick="goStep(1)" style="flex:0 0 auto;padding:14px 18px;">← Back</button>
+        <button class="est-calc-btn" onclick="submitBooking()" style="flex:1;" id="bk-submit-btn">
+          ✅ Confirm My Booking
+        </button>
+      </div>
+      <div style="text-align:center;margin-top:10px;font-size:.72rem;color:var(--gray);">
+        We'll email you a confirmation right away · No deposit required
+      </div>
+    </div>
+
+    <!-- STEP 3: Confirmed -->
+    <div class="modal-body" id="bk-panel-3" style="display:none;">
+      <div style="text-align:center;padding:8px 0 20px;">
+        <div class="modal-check" style="margin:0 auto 16px;">✓</div>
+        <div style="font-size:1.3rem;font-weight:900;color:var(--navy);margin-bottom:6px;">You're booked! 🎉</div>
+        <div style="font-size:.88rem;color:var(--gray);">Confirmation sent to <strong id="bk-confirm-email"></strong></div>
+      </div>
+
+      <div class="modal-section-label">👤 Your Assigned Mover</div>
+      <div class="assigned-card">
+        <div class="assigned-avatar" id="modal-avatar-bg"><span id="modal-avatar-initials"></span></div>
+        <div class="assigned-info">
+          <strong id="modal-mover-name"></strong>
+          <div class="role" id="modal-mover-role"></div>
+          <p id="modal-mover-desc"></p>
+        </div>
+        <div class="assigned-badge" id="modal-mover-badge"></div>
+      </div>
+
+      <div class="modal-section-label">🚛 Your Assigned Truck</div>
+      <div class="truck-assigned">
+        <div class="truck-thumb" id="modal-truck-bg"><span id="modal-truck-icon"></span></div>
+        <div class="truck-assigned-info">
+          <strong id="modal-truck-name"></strong>
+          <span id="modal-truck-size"></span>
+        </div>
+        <div class="truck-assigned-plate" id="modal-truck-plate"></div>
+      </div>
+
+      <div class="modal-summary">
+        <div class="modal-summary-item"><div class="val" id="modal-route">—</div><div class="lbl">Route</div></div>
+        <div class="modal-summary-item"><div class="val" id="modal-price">—</div><div class="lbl">Price</div></div>
+        <div class="modal-summary-item"><div class="val" id="modal-datetime">—</div><div class="lbl">Date & Time</div></div>
+      </div>
+
+      <div class="modal-actions">
+        <a href="tel:+16045374140" class="modal-btn-call">📞 Questions? Call 604-537-4140</a>
+        <button class="modal-btn-close" onclick="closeModalDirect()">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-icon">🚛</div>
+          <div class="logo-text">
+            <strong style="color:white;">Affordable Movers BC</strong>
+            <span>British Columbia's Trusted Movers</span>
+          </div>
+        </div>
+        <p>Your trusted partner for seamless, reliable, and affordable moving services across British Columbia. BBB Accredited. Fully Insured. No Hidden Fees.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn">📘</a>
+          <a href="https://instagram.com/affordablemovers.bc" class="social-btn">📸</a>
+          <a href="#" class="social-btn">🐦</a>
+          <a href="mailto:info@affordablemoversbc.com" class="social-btn">✉️</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Residential Moving</a></li>
+          <li><a href="#services">Commercial Moving</a></li>
+          <li><a href="#services">Packing & Unpacking</a></li>
+          <li><a href="#services">Piano & Specialty Items</a></li>
+          <li><a href="#services">Senior Moving</a></li>
+          <li><a href="#services">Junk Removal</a></li>
+          <li><a href="#services">Storage Solutions</a></li>
+          <li><a href="#services">Long-Distance Moving</a></li>
+          <li><a href="#services">Student / Small Moves</a></li>
+          <li><a href="#services">Corporate Relocation</a></li>
+          <li><a href="#services">Last-Minute Moves</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Areas We Serve</h4>
+        <ul>
+          <li><a href="#areas">Vancouver</a></li>
+          <li><a href="#areas">Burnaby</a></li>
+          <li><a href="#areas">Surrey</a></li>
+          <li><a href="#areas">Richmond</a></li>
+          <li><a href="#areas">Coquitlam</a></li>
+          <li><a href="#areas">North Vancouver</a></li>
+          <li><a href="#areas">Langley</a></li>
+          <li><a href="#areas">Victoria</a></li>
+          <li><a href="#areas">Kelowna</a></li>
+          <li><a href="#areas">Abbotsford</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#why-us">About Us</a></li>
+          <li><a href="#pricing">Rates & Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#review-cta">Leave a Review ($20 Off)</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="tel:+16045374140">604-537-4140</a></li>
+        </ul>
+        <div style="margin-top:20px;">
+          <div class="bbb-badge">✅ BBB Accredited</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>
+        <span class="footer-logo-text">Affordable Movers BC</span> ·
+        © 2026 All rights reserved ·
+        <a href="#" style="color:rgba(255,255,255,.5);">Privacy Policy</a>
+      </div>
+      <div style="color:rgba(255,255,255,.4);font-size:.78rem;">
+        Vancouver: 1255 W Georgia St · Burnaby: 4350 Beresford St · 📞 604-537-4140
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Sticky Buttons -->
+<div class="sticky-phone">
+  <a href="#contact" class="sticky-btn sticky-quote">📋 Free Quote</a>
+  <a href="tel:+16045374140" class="sticky-btn sticky-call">📞 Call Now</a>
+</div>
+
+<script>
+  /* ── Location Autocomplete ─────────────────────────────────────── */
+  const BC_LOCATIONS = [
+    { name: 'Vancouver, BC', zone: 'metro', lat: 49.2827, lng: -123.1207 },
+    { name: 'Burnaby, BC', zone: 'metro', lat: 49.2488, lng: -122.9805 },
+    { name: 'Surrey, BC', zone: 'metro', lat: 49.1913, lng: -122.8490 },
+    { name: 'Richmond, BC', zone: 'metro', lat: 49.1666, lng: -123.1336 },
+    { name: 'Coquitlam, BC', zone: 'metro', lat: 49.2838, lng: -122.7932 },
+    { name: 'North Vancouver, BC', zone: 'metro', lat: 49.3198, lng: -123.0693 },
+    { name: 'West Vancouver, BC', zone: 'metro', lat: 49.3654, lng: -123.1665 },
+    { name: 'New Westminster, BC', zone: 'metro', lat: 49.2070, lng: -122.9110 },
+    { name: 'Port Moody, BC', zone: 'metro', lat: 49.2838, lng: -122.8320 },
+    { name: 'Maple Ridge, BC', zone: 'metro', lat: 49.2193, lng: -122.5981 },
+    { name: 'Langley, BC', zone: 'metro', lat: 49.1044, lng: -122.6604 },
+    { name: 'Abbotsford, BC', zone: 'fraser', lat: 49.0504, lng: -122.3045 },
+    { name: 'Chilliwack, BC', zone: 'fraser', lat: 49.1579, lng: -121.9514 },
+    { name: 'Mission, BC', zone: 'fraser', lat: 49.1333, lng: -122.3167 },
+    { name: 'Delta, BC', zone: 'metro', lat: 49.0847, lng: -123.0586 },
+    { name: 'White Rock, BC', zone: 'metro', lat: 49.0253, lng: -122.8026 },
+    { name: 'Pitt Meadows, BC', zone: 'metro', lat: 49.2285, lng: -122.6894 },
+    { name: 'Victoria, BC', zone: 'island', lat: 48.4284, lng: -123.3656 },
+    { name: 'Nanaimo, BC', zone: 'island', lat: 49.1659, lng: -123.9401 },
+    { name: 'Kelowna, BC', zone: 'interior', lat: 49.8880, lng: -119.4960 },
+    { name: 'Kamloops, BC', zone: 'interior', lat: 50.6745, lng: -120.3273 },
+    { name: 'Prince George, BC', zone: 'north', lat: 53.9171, lng: -122.7497 },
+    { name: 'Penticton, BC', zone: 'interior', lat: 49.4991, lng: -119.5937 },
+    { name: 'Vernon, BC', zone: 'interior', lat: 50.2671, lng: -119.2720 },
+  ];
+
+  function showSuggestions(inputId, listId, value) {
+    const list = document.getElementById(listId);
+    if (!value || value.length < 2) { list.style.display = 'none'; return; }
+    const matches = BC_LOCATIONS.filter(l => l.name.toLowerCase().includes(value.toLowerCase())).slice(0, 6);
+    if (!matches.length) { list.style.display = 'none'; return; }
+    list.innerHTML = matches.map(l =>
+      `<div class="autocomplete-item" onmousedown="pickLocation('${inputId}','${listId}','${l.name}')" >
+        📍 ${l.name}
+       </div>`
+    ).join('');
+    list.style.display = 'block';
+  }
+
+  function hideSuggestions(listId) {
+    setTimeout(() => { document.getElementById(listId).style.display = 'none'; }, 150);
+  }
+
+  function pickLocation(inputId, listId, name) {
+    document.getElementById(inputId).value = name;
+    document.getElementById(listId).style.display = 'none';
+    estimatePrice();
+  }
+
+  function swapLocations() {
+    const f = document.getElementById('from-input');
+    const t = document.getElementById('to-input');
+    [f.value, t.value] = [t.value, f.value];
+    estimatePrice();
+  }
+
+  /* ── Tab Switching ─────────────────────────────────────────────── */
+  let currentTab = 'home';
+  function switchTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.estimator-tab').forEach((t, i) => {
+      t.classList.toggle('active', ['home','office','specialty','storage'][i] === tab);
+    });
+    const sizeSection = document.getElementById('size-section');
+    sizeSection.style.display = (tab === 'home' || tab === 'office') ? 'block' : 'none';
+    estimatePrice();
+  }
+
+  /* ── Pill Selection ────────────────────────────────────────────── */
+  function selectPill(groupId, btn, value) {
+    document.querySelectorAll(`#${groupId} .pill`).forEach(p => p.classList.remove('selected'));
+    btn.classList.add('selected');
+    estimatePrice();
+  }
+
+  /* ── Distance calculation ──────────────────────────────────────── */
+  function getCoords(name) {
+    const loc = BC_LOCATIONS.find(l => l.name.toLowerCase() === name.toLowerCase().trim());
+    return loc || null;
+  }
+
+  function haversineKm(lat1, lng1, lat2, lng2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLng/2)**2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  }
+
+  function estimateDistanceKm(fromName, toName) {
+    const f = getCoords(fromName);
+    const t = getCoords(toName);
+    if (!f || !t) return null;
+    return Math.round(haversineKm(f.lat, f.lng, t.lat, t.lng));
+  }
+
+  /* ── Pricing engine ────────────────────────────────────────────── */
+  const SIZE_CONFIG = {
+    studio: { crew: 2, rateHr: 149, label: '2 movers' },
+    '1br':  { crew: 2, rateHr: 149, label: '2 movers' },
+    '2br':  { crew: 3, rateHr: 169, label: '3 movers' },
+    '3br':  { crew: 3, rateHr: 169, label: '3 movers' },
+    '4br':  { crew: 4, rateHr: 189, label: '4 movers' },
+  };
+
+  const ADDON_FLAT = {
+    packing: 300, piano: 250, assembly: 100,
+    junk: 200, storage: 150, lastmin: 75,
+  };
+
+  function getPillValue(groupId) {
+    const btn = document.querySelector(`#${groupId} .pill.selected`);
+    if (!btn) return null;
+    const m = btn.getAttribute('onclick')?.match(/'([^']+)'\)$/);
+    return m ? m[1] : null;
+  }
+
+  function estimatePrice() {
+    const fromVal = document.getElementById('from-input').value.trim();
+    const toVal   = document.getElementById('to-input').value.trim();
+    const result  = document.getElementById('price-result');
+    const calcBtn = document.getElementById('calc-btn');
+
+    if (!fromVal || !toVal) {
+      result.classList.remove('visible');
+      calcBtn.style.display = 'flex';
+      return;
+    }
+
+    calcBtn.innerHTML = '⚡ Calculating…';
+    calcBtn.classList.add('calculating');
+
+    setTimeout(() => {
+      calcBtn.style.display = 'none';
+      result.classList.add('visible');
+
+      // Size + duration
+      const sizeKey = getPillValue('size-pills') || '1br';
+      const cfg     = SIZE_CONFIG[sizeKey] || SIZE_CONFIG['1br'];
+      const hrs     = parseFloat(getPillValue('dur-pills') || '3');
+
+      // Distance
+      const distKm = estimateDistanceKm(fromVal, toVal);
+      const isLong = distKm !== null && distKm > 50;
+
+      // Floors
+      const floorSurcharge = (
+        (parseInt(document.getElementById('floor-from').value) || 0) +
+        (parseInt(document.getElementById('floor-to').value) || 0)
+      ) * 50;
+
+      // Add-ons (flat fees)
+      let addonTotal = 0, addonLabels = [];
+      document.querySelectorAll('[data-addon]:checked').forEach(cb => {
+        const key = cb.dataset.addon;
+        addonTotal += ADDON_FLAT[key] || 0;
+        const lbl = { packing:'Packing', piano:'Piano/Safe', assembly:'Assembly', junk:'Junk removal', storage:'Storage', lastmin:'Urgent fee' };
+        addonLabels.push(lbl[key]);
+      });
+
+      // Long-distance add
+      const longDistAdd = isLong ? Math.round(distKm * 2.2) : 0;
+
+      // Tab modifier
+      const tabMod = currentTab === 'office' ? 1.2 : 1;
+
+      // FINAL price (firm single number, not range)
+      const base = cfg.rateHr * hrs * tabMod;
+      const total = Math.round((base + floorSurcharge + addonTotal + longDistAdd) / 25) * 25;
+      const totalGST = Math.round(total * 1.05 / 25) * 25;
+
+      // Store for booking modal
+      window._lastEstimate = { fromVal, toVal, sizeKey, hrs, cfg, distKm, isLong, total, totalGST, addonLabels };
+
+      // Update UI
+      document.getElementById('result-amount').textContent = `$${total.toLocaleString()}`;
+      document.getElementById('result-note').textContent =
+        `${cfg.label} · ${hrs} hrs · + 5% GST = $${totalGST.toLocaleString()} total${isLong ? ` · Long-distance (~${distKm} km)` : ''}`;
+
+      const chips = [
+        `${cfg.label} @ $${cfg.rateHr}/hr`,
+        `${hrs} hrs`,
+        ...(isLong ? [`Long-distance ~${distKm} km`] : []),
+        ...(floorSurcharge ? [`Stairs +$${floorSurcharge}`] : []),
+        ...addonLabels,
+      ];
+      document.getElementById('result-breakdown').innerHTML =
+        chips.map(c => `<span class="result-chip">${c}</span>`).join('');
+
+    }, 500);
+  }
+
+  /* ── FAQ Toggle ────────────────────────────────────────────────── */
+  function toggleFAQ(btn) {
+    const answer = btn.nextElementSibling;
+    const isOpen = btn.classList.contains('open');
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.classList.remove('open');
+      q.nextElementSibling.classList.remove('open');
+    });
+    if (!isOpen) {
+      btn.classList.add('open');
+      answer.classList.add('open');
+    }
+  }
+
+  function handleContactForm(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.textContent = '✅ Quote Request Sent! We\'ll Contact You Same Day.';
+    btn.style.background = '#16a34a';
+    btn.disabled = true;
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  // Sticky nav shadow
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.boxShadow = window.scrollY > 10
+      ? '0 4px 20px rgba(0,0,0,.12)'
+      : '0 2px 16px rgba(0,0,0,.08)';
+  });
+
+  // Set min date to today
+  // min date handled per-modal on open
+
+  // Trigger initial estimate when user types location
+  ['from-input','to-input'].forEach(id => {
+    document.getElementById(id).addEventListener('change', estimatePrice);
+  });
+
+  /* ── Full Panels ───────────────────────────────────────────────── */
+  function openPanel(type) {
+    document.getElementById('panel-' + type).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePanel(type) {
+    document.getElementById('panel-' + type).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Close panels on backdrop click
+  document.querySelectorAll('.fullpanel').forEach(p => {
+    p.addEventListener('click', e => { if (e.target === p) closePanel(p.id.replace('panel-','')); });
+  });
+
+  /* ── Booking availability (localStorage) ──────────────────────── */
+  var BOOKING_KEY = 'ambc_bookings';
+  var TIME_SLOTS  = ['7:00 AM','9:00 AM','11:00 AM','1:00 PM','3:00 PM','5:00 PM'];
+
+  function getBookings() {
+    try { return JSON.parse(localStorage.getItem(BOOKING_KEY) || '[]'); } catch { return []; }
+  }
+  function saveBooking(b) {
+    const list = getBookings();
+    list.push(b);
+    localStorage.setItem(BOOKING_KEY, JSON.stringify(list));
+  }
+  function isSlotTaken(date, time) {
+    return getBookings().some(b => b.date === date && b.time === time);
+  }
+
+  var selectedSlot = null;
+
+  function loadTimeSlots() {
+    const date = document.getElementById('bk-date').value;
+    if (!date) return;
+    const grid = document.getElementById('timeslot-grid');
+    const hint = document.getElementById('bk-step1-hint');
+    const wrap = document.getElementById('timeslot-wrap');
+    const next = document.getElementById('bk-next1');
+
+    hint.style.display = 'none';
+    wrap.style.display  = 'block';
+    selectedSlot = null;
+    next.style.display  = 'none';
+
+    grid.innerHTML = TIME_SLOTS.map(t => {
+      const taken = isSlotTaken(date, t);
+      return `<div class="timeslot${taken ? ' booked' : ''}" onclick="${taken ? '' : `pickSlot('${t}')`}">
+        <div class="ts-time">${t}</div>
+        <div class="ts-sub">${taken ? '🚫 Booked' : '✅ Available'}</div>
+      </div>`;
+    }).join('');
+  }
+
+  function pickSlot(time) {
+    selectedSlot = time;
+    document.querySelectorAll('.timeslot:not(.booked)').forEach(el => {
+      el.classList.toggle('selected', el.querySelector('.ts-time').textContent === time);
+    });
+    document.getElementById('bk-next1').style.display = 'flex';
+  }
+
+  /* ── Booking modal steps ────────────────────────────────────────── */
+  function goStep(n) {
+    [1,2,3].forEach(i => {
+      document.getElementById(`bk-panel-${i}`).style.display = i === n ? 'block' : 'none';
+      const stepEl = document.getElementById(`bkstep-${i}`);
+      stepEl.classList.remove('active','done');
+      if (i < n) stepEl.classList.add('done');
+      if (i === n) stepEl.classList.add('active');
+    });
+    if (n === 2) buildBookingSummaryChip();
+  }
+
+  function buildBookingSummaryChip() {
+    const e = window._lastEstimate || {};
+    const date = document.getElementById('bk-date').value;
+    const fmt = date ? new Date(date+'T12:00:00').toLocaleDateString('en-CA',{weekday:'short',month:'short',day:'numeric'}) : '—';
+    document.getElementById('bk-chip').innerHTML =
+      `<strong>${e.fromVal || '?'} → ${e.toVal || '?'}</strong><br>
+       ${fmt} · ${selectedSlot || '—'} · ${e.hrs || '?'} hrs · <strong>$${(e.total||0).toLocaleString()} + GST</strong>`;
+  }
+
+  /* ── Submit booking ────────────────────────────────────────────── */
+  async function submitBooking() {
+    const name  = document.getElementById('bk-name').value.trim();
+    const phone = document.getElementById('bk-phone').value.trim();
+    const email = document.getElementById('bk-email').value.trim();
+    const notes = document.getElementById('bk-notes').value.trim();
+    const errEl = document.getElementById('bk-error');
+    const date  = document.getElementById('bk-date').value;
+
+    if (!name || !phone || !email) {
+      errEl.textContent = 'Please fill in your name, phone, and email.';
+      errEl.style.display = 'block';
+      return;
+    }
+    if (!date || !selectedSlot) {
+      errEl.textContent = 'Please go back and select a date and time.';
+      errEl.style.display = 'block';
+      return;
+    }
+    // Double-check availability (race condition guard)
+    if (isSlotTaken(date, selectedSlot)) {
+      errEl.textContent = 'Sorry — that slot was just booked. Please go back and choose another time.';
+      errEl.style.display = 'block';
+      return;
+    }
+    errEl.style.display = 'none';
+
+    const btn = document.getElementById('bk-submit-btn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    const e = window._lastEstimate || {};
+    const fmt = new Date(date+'T12:00:00').toLocaleDateString('en-CA',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+
+    // Save to localStorage immediately
+    saveBooking({ date, time: selectedSlot, name, id: Date.now() });
+
+    // Send email via Formspree (replace YOUR_FORM_ID with real ID from formspree.io)
+    try {
+      await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: `🚛 New Booking — ${name} — ${fmt} @ ${selectedSlot}`,
+          Name: name, Phone: phone, Email: email,
+          From: e.fromVal, To: e.toVal,
+          Date: fmt, Time: selectedSlot,
+          Duration: `${e.hrs} hrs`, Size: e.sizeKey,
+          Price: `$${e.total} + 5% GST`,
+          Notes: notes || 'None',
+        })
+      });
+    } catch (_) { /* email failed silently — booking still saved locally */ }
+
+    // Populate step 3
+    document.getElementById('bk-confirm-email').textContent = email;
+    populateCrewTruck();
+    document.getElementById('modal-route').textContent    = `${(e.fromVal||'').split(',')[0]} → ${(e.toVal||'').split(',')[0]}`;
+    document.getElementById('modal-price').textContent    = `$${(e.totalGST||0).toLocaleString()}`;
+    document.getElementById('modal-datetime').textContent = `${fmt.split(',')[0].trim()} ${selectedSlot}`;
+    goStep(3);
+  }
+
+  function populateCrewTruck() {
+    const e = window._lastEstimate || {};
+    const mover = assignMover(currentTab);
+    const truck = assignTruck(e.sizeKey || '1br');
+
+    const av = document.getElementById('modal-avatar-bg');
+    av.style.background = mover.bg;
+    document.getElementById('modal-avatar-initials').textContent = mover.initials;
+    document.getElementById('modal-mover-name').textContent  = mover.name;
+    document.getElementById('modal-mover-role').textContent  = mover.role;
+    document.getElementById('modal-mover-desc').textContent  = mover.desc;
+    document.getElementById('modal-mover-badge').textContent = mover.badge;
+
+    const tb = document.getElementById('modal-truck-bg');
+    tb.style.background = truck.bg;
+    document.getElementById('modal-truck-icon').textContent  = truck.icon;
+    document.getElementById('modal-truck-name').textContent  = truck.name;
+    document.getElementById('modal-truck-size').textContent  = truck.size;
+    document.getElementById('modal-truck-plate').textContent = truck.plate;
+  }
+
+  /* ── Team & Truck data ─────────────────────────────────────────── */
+  const TEAM = [
+    { name:'Carlos M.', initials:'CM', role:'Senior Lead Mover · 7 yrs', badge:'Lead Mover', desc:'Expert in large homes and piano moves. Known for meticulous care with fragile items.', bg:'linear-gradient(135deg,#1A2B4A,#22375f)' },
+    { name:'James R.',  initials:'JR', role:'Commercial Lead · 5 yrs',   badge:'Office Specialist', desc:'Moved 40+ businesses in Metro Vancouver with zero reported downtime.', bg:'linear-gradient(135deg,#7c3aed,#5b21b6)' },
+    { name:'Miguel A.', initials:'MA', role:'Senior Move Specialist · 4 yrs', badge:'Senior Care', desc:'Patient and warm — specializes in senior transitions and downsizing moves.', bg:'linear-gradient(135deg,#065f46,#047857)' },
+    { name:'David L.',  initials:'DL', role:'Long-Distance Driver · 6 yrs', badge:'Long-Distance', desc:'Certified long-haul driver. Handles all routes across BC safely.', bg:'linear-gradient(135deg,#92400e,#b45309)' },
+    { name:'Sofia P.',  initials:'SP', role:'Packing & Assembly · 3 yrs', badge:'Assembly Pro', desc:'Fastest packer on the team. IKEA and flatpack expert at both ends.', bg:'linear-gradient(135deg,#be185d,#9d174d)' },
+    { name:'Tom N.',    initials:'TN', role:'Junk Removal Lead · 4 yrs', badge:'Eco Specialist', desc:'Efficient and eco-conscious. Donates and recycles whenever possible.', bg:'linear-gradient(135deg,#1e40af,#1d4ed8)' },
+  ];
+
+  const TRUCKS = [
+    { name:'The Swift',     icon:'🚐', plate:'AMB · 001', size:'Cargo Van · Up to 400 cu ft',      bg:'#f1f5f9', bestFor:'Studio–1BR' },
+    { name:'The Workhorse', icon:'🚛', plate:'AMB · 002', size:'16ft Box Truck · Up to 800 cu ft', bg:'#fef3c7', bestFor:'1–2 Bedrooms' },
+    { name:'The Titan',     icon:'🚚', plate:'AMB · 003', size:'26ft Box Truck · Up to 1,700 cu ft',bg:'#dcfce7',bestFor:'3+ Bedrooms / Office' },
+  ];
+
+  function assignTruck(sizePill) {
+    if (sizePill === 'studio') return TRUCKS[0];
+    if (sizePill === '1br' || sizePill === '2br') return TRUCKS[1];
+    return TRUCKS[2];
+  }
+
+  function assignMover(tab) {
+    if (tab === 'office' || tab === 'commercial') return TEAM[1];
+    if (tab === 'specialty') return TEAM[0];
+    if (tab === 'storage') return TEAM[4];
+    return TEAM[Math.floor(Math.random() * TEAM.length)];
+  }
+
+  function openBookingModal() {
+    // Reset to step 1
+    goStep(1);
+    selectedSlot = null;
+    document.getElementById('bk-date').value = '';
+    document.getElementById('timeslot-wrap').style.display = 'none';
+    document.getElementById('bk-step1-hint').style.display = 'block';
+    document.getElementById('bk-next1').style.display = 'none';
+    document.getElementById('bk-name').value  = '';
+    document.getElementById('bk-phone').value = '';
+    document.getElementById('bk-email').value = '';
+    document.getElementById('bk-notes').value = '';
+    document.getElementById('bk-error').style.display = 'none';
+    const btn = document.getElementById('bk-submit-btn');
+    btn.textContent = '✅ Confirm My Booking'; btn.disabled = false;
+
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('bk-date').min = today;
+
+    document.getElementById('booking-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(e) {
+    if (e.target === document.getElementById('booking-modal')) closeModalDirect();
+  }
+  function closeModalDirect() {
+    document.getElementById('booking-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Escape key closes modal and panels
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeModalDirect();
+      ['crew','trucks'].forEach(closePanel);
+    }
+  });
+</script>
+</body>
+</html>

@@ -3114,7 +3114,7 @@
   <div class="container">
     <div class="review-cta">
       <h2>Leave a Review & Save $20</h2>
-      <p>We grow through word of mouth. Share your experience on Google and we'll take $20 off your next move — our thank-you to you.</p>
+      <p>We grow through word of mouth. Share your experience on Google and we'll take $20 off your current move — our thank-you to you.</p>
       <div class="review-steps">
         <div class="review-step">
           <div class="num">1</div>
@@ -3229,7 +3229,7 @@
           How do I get the $20 Google review discount?
           <svg class="faq-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <div class="faq-answer">After your move, leave us an honest review on Google Maps. When you book your next move with us, simply mention the review (or show it to our team) and we'll take $20 off your invoice. It's our way of saying thank you for helping other customers find us.</div>
+        <div class="faq-answer">After your move, leave us an honest review on Google Maps. Simply mention the review (or show it to our team) and we'll take $20 off your current move invoice. It's our way of saying thank you for helping other customers find us.</div>
       </div>
 
       <div class="faq-item">
@@ -4159,25 +4159,61 @@
       crewId: assignCrewId(currentTab), truck: assignTruckId(e.sizeKey || '1br'),
     });
 
-    // Send email via Formspree
+    // ── Notifications ────────────────────────────────────────────────
+    const truckName = assignTruckId(e.sizeKey) === 't1' ? 'The Workhorse (16ft)' : assignTruckId(e.sizeKey) === 't2' ? 'Big Blue (20ft)' : 'The Sprinter (Van)';
+    const crewName  = assignCrewId(currentTab) === 'c1' ? 'Carlos M.' : assignCrewId(currentTab) === 'c2' ? 'Devon T.' : 'Marcus R.';
+    const msgBody   = `NEW BOOKING - Affordable Movers BC\n\nClient: ${name}\nPhone: ${phone}\nEmail: ${email}\nDate: ${fmt} @ ${selectedSlot}\nFrom: ${e.fromVal}\nTo: ${e.toVal}\nService: ${e.sizeKey} | ${e.hrs} hrs\nTruck: ${truckName}\nCrew: ${crewName}\nTotal: $${e.totalGST} (inc. GST)\nNotes: ${notes || 'None'}`;
+
+    // Email via EmailJS (sign up free at emailjs.com — replace the 3 values below)
+    const EMAILJS_PUBLIC_KEY  = 'YOUR_EMAILJS_PUBLIC_KEY';
+    const EMAILJS_SERVICE_ID  = 'YOUR_EMAILJS_SERVICE_ID';
+    const EMAILJS_TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID';
+
+    // SMS via Textbelt (buy credits at textbelt.com — replace key below, use 'textbelt' for 1 free test)
+    const TEXTBELT_KEY = 'YOUR_TEXTBELT_KEY';
+    const SMS_PHONE    = '+16045374140';
+
     try {
-      await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          _subject: `🚛 New Booking — ${name} — ${fmt} @ ${selectedSlot}`,
-          Name: name, Phone: phone, Email: email,
-          From: e.fromVal, To: e.toVal,
-          Date: fmt, Time: selectedSlot,
-          Duration: `${e.hrs} hrs`, 'Home Size': e.sizeKey,
-          Truck: assignTruckId(e.sizeKey) === 't1' ? 'The Workhorse (16ft)' : assignTruckId(e.sizeKey) === 't2' ? 'Big Blue (20ft)' : 'The Sprinter (Van)',
-          'Assigned Crew': assignCrewId(currentTab) === 'c1' ? 'Carlos M.' : assignCrewId(currentTab) === 'c2' ? 'Devon T.' : 'Marcus R.',
-          'Total Price': `$${e.total} + 5% GST = $${e.totalGST}`,
-          'Deposit Paid': depositPaid ? `$${e.deposit} via PayPal (TXN: ${transactionId})` : 'None — pay on move day',
-          'Remaining Due': `$${depositPaid ? e.remaining : e.totalGST} on move day`,
-          Notes: notes || 'None',
-        })
-      });
+      // Send email
+      if (EMAILJS_PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
+        await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            service_id:  EMAILJS_SERVICE_ID,
+            template_id: EMAILJS_TEMPLATE_ID,
+            user_id:     EMAILJS_PUBLIC_KEY,
+            template_params: {
+              to_email: 'emigargut3@gmail.com',
+              subject:  `New Booking — ${name} — ${fmt} @ ${selectedSlot}`,
+              message:  msgBody,
+              client_name:  name,
+              client_phone: phone,
+              client_email: email,
+              move_date:    `${fmt} @ ${selectedSlot}`,
+              move_from:    e.fromVal,
+              move_to:      e.toVal,
+              move_size:    e.sizeKey,
+              move_hours:   `${e.hrs} hrs`,
+              truck:        truckName,
+              crew:         crewName,
+              total:        `$${e.totalGST}`,
+              notes:        notes || 'None',
+            }
+          })
+        });
+      }
+    } catch (_) {}
+
+    try {
+      // Send SMS
+      if (TEXTBELT_KEY !== 'YOUR_TEXTBELT_KEY') {
+        await fetch('https://textbelt.com/text', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: SMS_PHONE, message: msgBody, key: TEXTBELT_KEY })
+        });
+      }
     } catch (_) {}
 
     // Show confirmation step

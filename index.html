@@ -110,10 +110,12 @@
 
     /* ── Top Bar ──────────────────────────────────────────────────── */
     .topbar {
-      background: var(--navy);
-      color: rgba(255,255,255,.85);
-      font-size: .82rem;
-      padding: 8px 0;
+      background: linear-gradient(90deg, #1a1a2e 0%, #D62828 50%, #1a1a2e 100%);
+      color: #fff;
+      font-size: .88rem;
+      padding: 11px 0;
+      text-align: center;
+      letter-spacing: .01em;
     }
     .topbar .container {
       display: flex;
@@ -122,8 +124,31 @@
       flex-wrap: wrap;
       gap: 8px;
     }
-    .topbar a { color: var(--gold); font-weight: 600; }
-    .topbar-links { display: flex; gap: 20px; }
+    .topbar-offer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: .92rem;
+    }
+    .topbar-offer .offer-badge {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 900;
+      font-size: .78rem;
+      padding: 3px 9px;
+      border-radius: 99px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      animation: pulse-badge 2s ease-in-out infinite;
+    }
+    @keyframes pulse-badge {
+      0%,100% { transform: scale(1); }
+      50%      { transform: scale(1.07); }
+    }
+    .topbar a { color: var(--gold); font-weight: 800; text-decoration: underline; }
+    .topbar-links { display: flex; gap: 20px; font-size: .82rem; opacity: .9; }
 
     /* ── Nav ──────────────────────────────────────────────────────── */
     nav {
@@ -1942,7 +1967,10 @@
 <!-- Top Bar -->
 <div class="topbar">
   <div class="container">
-    <span><strong>Leave a Google Review & Get <a href="#review-cta">$20 OFF</a> your next move!</strong></span>
+    <div class="topbar-offer">
+      <span class="offer-badge">Limited Offer</span>
+      Leave a Google Review &amp; Get <a href="#review-cta">$20 OFF</a> Your Next Move!
+    </div>
     <div class="topbar-links">
       <span>info@affordablemoversbc.com</span>
       <span><a href="tel:+16045374140">604-537-4140</a></span>

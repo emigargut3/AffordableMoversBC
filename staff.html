@@ -496,17 +496,54 @@
 
         <!-- ── FINANCES (owner only) ── -->
         <div class="view" id="view-finances">
+
+          <!-- Period selector -->
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+            <select id="fin-period" onchange="renderFinances()" style="padding:8px 14px;border-radius:8px;border:1.5px solid var(--light);font-size:.9rem;font-weight:600;color:var(--navy);background:#fff;cursor:pointer">
+              <option value="month">This Month</option>
+              <option value="quarter">This Quarter</option>
+              <option value="year">This Year</option>
+              <option value="all">All Time</option>
+            </select>
+            <button onclick="openExpenseModal()" style="padding:8px 18px;background:var(--red);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem">+ Add Expense</button>
+          </div>
+
+          <!-- KPI cards -->
           <div class="stats-grid" id="finance-stats"></div>
+
+          <!-- P&L + Expense breakdown -->
+          <div class="two-col" style="margin-top:0">
+            <div class="panel">
+              <div class="panel-header"><div class="panel-title">📊 Profit & Loss Statement</div></div>
+              <div class="panel-body" id="fin-pl"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><div class="panel-title">📉 Expenses by Category</div></div>
+              <div class="panel-body" id="fin-exp-breakdown"></div>
+            </div>
+          </div>
+
+          <!-- Revenue by service + Projections -->
           <div class="two-col">
             <div class="panel">
               <div class="panel-header"><div class="panel-title">💰 Revenue by Service</div></div>
               <div class="panel-body" id="finance-by-service"></div>
             </div>
             <div class="panel">
-              <div class="panel-header"><div class="panel-title">📅 Recent Transactions</div></div>
-              <div class="panel-body" id="finance-transactions"></div>
+              <div class="panel-header"><div class="panel-title">🔭 Projections (Next 30 Days)</div></div>
+              <div class="panel-body" id="fin-projections"></div>
             </div>
           </div>
+
+          <!-- Full expense log -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">🧾 Expense Log</div>
+              <div id="expense-total-label" style="font-size:.85rem;color:var(--gray)"></div>
+            </div>
+            <div class="panel-body" id="fin-expense-log"></div>
+          </div>
+
         </div>
 
       </div><!-- /content -->
@@ -517,6 +554,57 @@
 <!-- ── BOOKING DETAIL MODAL ── -->
 <div class="detail-overlay" id="detail-overlay" onclick="closeDetail(event)">
   <div class="detail-card" id="detail-card"></div>
+</div>
+
+<!-- ── EXPENSE MODAL ── -->
+<div class="detail-overlay" id="expense-overlay" onclick="closeExpenseModal(event)">
+  <div class="detail-card" style="max-width:480px">
+    <div class="detail-header" style="border-top:4px solid var(--red);border-radius:20px 20px 0 0">
+      <div><h3>Add Expense</h3><p>Record a business cost</p></div>
+      <button class="detail-close" onclick="document.getElementById('expense-overlay').classList.remove('open')">✕</button>
+    </div>
+    <div class="detail-body" style="padding:24px">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <label style="font-size:.82rem;font-weight:700;color:var(--navy);display:block;margin-bottom:4px">Category</label>
+          <select id="exp-category" style="width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid var(--light);font-size:.9rem;color:var(--navy)">
+            <option value="Truck Rental">Truck Rental / Lease</option>
+            <option value="Labour">Employee Labour / Wages</option>
+            <option value="Fuel">Fuel</option>
+            <option value="Insurance">Insurance</option>
+            <option value="Equipment">Equipment & Supplies</option>
+            <option value="Marketing">Marketing & Advertising</option>
+            <option value="Admin">Office / Admin</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:.82rem;font-weight:700;color:var(--navy);display:block;margin-bottom:4px">Description</label>
+          <input id="exp-desc" type="text" placeholder="e.g. Monthly truck lease payment" style="width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid var(--light);font-size:.9rem" />
+        </div>
+        <div style="display:flex;gap:12px">
+          <div style="flex:1">
+            <label style="font-size:.82rem;font-weight:700;color:var(--navy);display:block;margin-bottom:4px">Amount ($)</label>
+            <input id="exp-amount" type="number" placeholder="0.00" min="0" step="0.01" style="width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid var(--light);font-size:.9rem" />
+          </div>
+          <div style="flex:1">
+            <label style="font-size:.82rem;font-weight:700;color:var(--navy);display:block;margin-bottom:4px">Date</label>
+            <input id="exp-date" type="date" style="width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid var(--light);font-size:.9rem" />
+          </div>
+        </div>
+        <div>
+          <label style="font-size:.82rem;font-weight:700;color:var(--navy);display:block;margin-bottom:4px">Recurring?</label>
+          <select id="exp-recurring" style="width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid var(--light);font-size:.9rem;color:var(--navy)">
+            <option value="no">One-time expense</option>
+            <option value="monthly">Monthly (recurring)</option>
+            <option value="weekly">Weekly (recurring)</option>
+          </select>
+        </div>
+        <div id="exp-err" style="color:var(--red);font-size:.85rem;display:none">Please fill in all required fields.</div>
+        <button onclick="saveExpense()" style="padding:12px;background:var(--red);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:1rem;cursor:pointer;margin-top:4px">Save Expense</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -969,35 +1057,150 @@ function changeBookingStatus(date, time, newStatus) {
   if (document.getElementById('view-bookings').classList.contains('active')) renderBookingsList();
 }
 
-// ── FINANCES (owner only) ───────────────────────────────────────────────
+// ── EXPENSES STORAGE ────────────────────────────────────────────────────
+var EXPENSE_KEY = 'ambc_expenses';
+function getExpenses() { try { return JSON.parse(localStorage.getItem(EXPENSE_KEY)||'[]'); } catch { return []; } }
+function saveExpenses(list) { localStorage.setItem(EXPENSE_KEY, JSON.stringify(list)); }
+
+function openExpenseModal() {
+  if (!isOwner()) return;
+  document.getElementById('exp-date').value = new Date().toISOString().slice(0,10);
+  document.getElementById('exp-amount').value = '';
+  document.getElementById('exp-desc').value = '';
+  document.getElementById('exp-err').style.display = 'none';
+  document.getElementById('expense-overlay').classList.add('open');
+}
+function closeExpenseModal(e) {
+  if (e.target === document.getElementById('expense-overlay')) document.getElementById('expense-overlay').classList.remove('open');
+}
+function saveExpense() {
+  var cat  = document.getElementById('exp-category').value;
+  var desc = document.getElementById('exp-desc').value.trim();
+  var amt  = parseFloat(document.getElementById('exp-amount').value);
+  var date = document.getElementById('exp-date').value;
+  var rec  = document.getElementById('exp-recurring').value;
+  if (!desc || !amt || amt <= 0 || !date) { document.getElementById('exp-err').style.display='block'; return; }
+  var list = getExpenses();
+  list.push({ id: Date.now(), category: cat, description: desc, amount: amt, date: date, recurring: rec });
+  saveExpenses(list);
+  document.getElementById('expense-overlay').classList.remove('open');
+  renderFinances();
+}
+function deleteExpense(id) {
+  if (!isOwner()) return;
+  if (!confirm('Delete this expense?')) return;
+  saveExpenses(getExpenses().filter(function(e){ return e.id !== id; }));
+  renderFinances();
+}
+
+// ── FINANCES (owner only) ────────────────────────────────────────────────
+function getFinancePeriod() {
+  var period = document.getElementById('fin-period') ? document.getElementById('fin-period').value : 'month';
+  var now = new Date();
+  var start, end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+  if (period === 'month') {
+    start = new Date(now.getFullYear(), now.getMonth(), 1);
+  } else if (period === 'quarter') {
+    var q = Math.floor(now.getMonth()/3);
+    start = new Date(now.getFullYear(), q*3, 1);
+  } else if (period === 'year') {
+    start = new Date(now.getFullYear(), 0, 1);
+  } else {
+    start = new Date('2020-01-01');
+    end = new Date('2099-12-31');
+  }
+  return { start: start.toISOString().slice(0,10), end: end.toISOString().slice(0,10) };
+}
+
 function renderFinances() {
   if (!isOwner()) return;
-  var bookings = getBookings();
-  var confirmed = bookings.filter(function(b) { return b.status !== 'cancelled'; });
+  var period = getFinancePeriod();
+  var allBookings = getBookings();
+  var allExpenses = getExpenses();
 
-  var totalRev = confirmed.reduce(function(s,b) { return s + (b.totalGST||b.total||0); }, 0);
-  var totalCost = confirmed.reduce(function(s,b) {
-    return s + Math.round((b.hrs||2) * 45 * ((b.crewId==='c1'?2:1)+1));
-  }, 0);
-  var totalProfit = Math.max(0, totalRev - totalCost);
+  var bookings = allBookings.filter(function(b){ return b.date >= period.start && b.date <= period.end && b.status !== 'cancelled'; });
+  var expenses = allExpenses.filter(function(e){ return e.date >= period.start && e.date <= period.end; });
 
+  // Revenue
+  var revenue = bookings.reduce(function(s,b){ return s + (b.totalGST||b.total||0); }, 0);
+
+  // Expenses by category
+  var expByCategory = {};
+  expenses.forEach(function(e){
+    expByCategory[e.category] = (expByCategory[e.category]||0) + e.amount;
+  });
+  var totalExpenses = expenses.reduce(function(s,e){ return s + e.amount; }, 0);
+
+  // COGS = Labour + Fuel + Equipment
+  var cogsCategories = ['Labour','Fuel','Equipment'];
+  var cogs = expenses.filter(function(e){ return cogsCategories.indexOf(e.category) > -1; })
+                     .reduce(function(s,e){ return s+e.amount; }, 0);
+  var grossProfit = revenue - cogs;
+
+  // Operating expenses = everything else
+  var opex = expenses.filter(function(e){ return cogsCategories.indexOf(e.category) === -1; })
+                     .reduce(function(s,e){ return s+e.amount; }, 0);
+  var netProfit = grossProfit - opex;
+  var margin = revenue > 0 ? Math.round(netProfit/revenue*100) : 0;
+
+  // KPI cards
   document.getElementById('finance-stats').innerHTML = [
-    statCard('Total Revenue', '$'+totalRev.toLocaleString(), 'var(--red)', confirmed.length+' jobs'),
-    statCard('Est. Labour Costs', '$'+totalCost.toLocaleString(), '#ca8a04', 'crew wages'),
-    statCard('Est. Profit', '$'+totalProfit.toLocaleString(), '#16a34a', Math.round(totalProfit/Math.max(1,totalRev)*100)+'% margin'),
-    statCard('Avg Job Value', '$'+Math.round(totalRev/Math.max(1,confirmed.length)), '#2563eb', 'per booking'),
+    statCard('Revenue', '$'+revenue.toLocaleString(), 'var(--red)', bookings.length+' jobs'),
+    statCard('Total Expenses', '$'+Math.round(totalExpenses).toLocaleString(), '#ca8a04', expenses.length+' entries'),
+    statCard('Net Profit', '$'+Math.round(netProfit).toLocaleString(), netProfit>=0?'#16a34a':'#dc2626', margin+'% margin'),
+    statCard('Avg Job Value', '$'+Math.round(revenue/Math.max(1,bookings.length)), '#2563eb', 'per booking'),
   ].join('');
+
+  // P&L Statement
+  function plRow(label, val, bold, color, indent) {
+    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:'+(bold?'10px 0 10px':'7px 0')+';'+(bold?'border-top:2px solid var(--light);':'')+'font-size:.9rem">' +
+      '<span style="'+(indent?'padding-left:16px;color:var(--gray)':'font-weight:'+(bold?'800':'600')+';color:var(--navy)')+'">'+label+'</span>' +
+      '<span style="font-weight:'+(bold?'900':'600')+';color:'+(color||'var(--navy)')+'">'+val+'</span>' +
+    '</div>';
+  }
+  document.getElementById('fin-pl').innerHTML =
+    plRow('REVENUE', '', false, '', false) +
+    plRow('Booking Revenue', '$'+revenue.toLocaleString(), false, 'var(--red)', true) +
+    plRow('Gross Revenue', '$'+revenue.toLocaleString(), true, 'var(--navy)') +
+    '<div style="height:8px"></div>' +
+    plRow('COST OF GOODS SOLD (COGS)', '', false, '', false) +
+    ['Labour','Fuel','Equipment'].map(function(c){
+      return plRow(c, '-$'+(Math.round(expByCategory[c]||0)).toLocaleString(), false, '#ca8a04', true);
+    }).join('') +
+    plRow('Total COGS', '-$'+Math.round(cogs).toLocaleString(), true, '#ca8a04') +
+    plRow('GROSS PROFIT', '$'+Math.round(grossProfit).toLocaleString(), true, grossProfit>=0?'#16a34a':'#dc2626') +
+    '<div style="height:8px"></div>' +
+    plRow('OPERATING EXPENSES', '', false, '', false) +
+    ['Truck Rental','Insurance','Marketing','Admin','Other'].map(function(c){
+      return plRow(c, '-$'+(Math.round(expByCategory[c]||0)).toLocaleString(), false, '#7c3aed', true);
+    }).join('') +
+    plRow('Total OpEx', '-$'+Math.round(opex).toLocaleString(), true, '#7c3aed') +
+    '<div style="height:4px;background:var(--navy);border-radius:2px;margin:8px 0"></div>' +
+    plRow('NET PROFIT / LOSS', (netProfit>=0?'+':'')+'$'+Math.round(netProfit).toLocaleString(), true, netProfit>=0?'#16a34a':'#dc2626');
+
+  // Expense breakdown bars
+  var cats = Object.keys(expByCategory).sort(function(a,b){ return expByCategory[b]-expByCategory[a]; });
+  var catColors = { 'Truck Rental':'#D62828','Labour':'#2563eb','Fuel':'#ea580c','Insurance':'#7c3aed','Equipment':'#16a34a','Marketing':'#ca8a04','Admin':'#6B7280','Other':'#9ca3af' };
+  document.getElementById('fin-exp-breakdown').innerHTML = cats.length ? cats.map(function(c){
+    var pct = Math.round(expByCategory[c]/Math.max(1,totalExpenses)*100);
+    return '<div style="margin-bottom:14px">' +
+      '<div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:.88rem">' +
+        '<span style="font-weight:600;color:var(--navy)">'+c+'</span>' +
+        '<span style="font-weight:700;color:'+(catColors[c]||'#666')+'">${'+Math.round(expByCategory[c]).toLocaleString()+' ('+pct+'%)</span>' +
+      '</div>' +
+      '<div style="background:var(--light);border-radius:99px;height:8px">' +
+        '<div style="background:'+(catColors[c]||'#666')+';width:'+pct+'%;height:8px;border-radius:99px;transition:.4s"></div>' +
+      '</div>' +
+    '</div>';
+  }).join('') : '<div class="empty"><p>No expenses recorded yet.<br>Click "+ Add Expense" to start tracking.</p></div>';
 
   // Revenue by service
   var byService = {};
-  confirmed.forEach(function(b) {
-    var s = b.serviceTab || 'Other';
-    byService[s] = (byService[s]||0) + (b.totalGST||b.total||0);
-  });
-  var serviceHtml = Object.keys(byService).sort(function(a,b){ return byService[b]-byService[a]; }).map(function(s) {
-    var pct = Math.round(byService[s]/Math.max(1,totalRev)*100);
+  bookings.forEach(function(b){ var s=b.serviceTab||'Other'; byService[s]=(byService[s]||0)+(b.totalGST||b.total||0); });
+  document.getElementById('finance-by-service').innerHTML = Object.keys(byService).sort(function(a,b){ return byService[b]-byService[a]; }).map(function(s){
+    var pct = Math.round(byService[s]/Math.max(1,revenue)*100);
     return '<div style="margin-bottom:14px">' +
-      '<div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:.9rem">' +
+      '<div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:.88rem">' +
         '<span style="font-weight:600;color:var(--navy)">'+s+'</span>' +
         '<span style="color:var(--red);font-weight:700">$'+byService[s].toLocaleString()+' ('+pct+'%)</span>' +
       '</div>' +
@@ -1005,31 +1208,52 @@ function renderFinances() {
         '<div style="background:'+serviceColor(s)+';width:'+pct+'%;height:8px;border-radius:99px;transition:.4s"></div>' +
       '</div>' +
     '</div>';
-  }).join('');
-  document.getElementById('finance-by-service').innerHTML = serviceHtml || '<div class="empty"><p>No data yet.</p></div>';
+  }).join('') || '<div class="empty"><p>No bookings in this period.</p></div>';
 
-  // Recent transactions
-  var sorted = bookings.slice().sort(function(a,b){ return b.date.localeCompare(a.date); }).slice(0,10);
-  var txHtml = sorted.map(function(b) {
-    var cost = Math.round((b.hrs||2)*45*((b.crewId==='c1'?2:1)+1));
-    var profit = Math.max(0,(b.totalGST||b.total||0)-cost);
-    var cancelled = b.status === 'cancelled';
-    return '<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--light);font-size:.85rem">' +
-      '<div style="flex:1"><div style="font-weight:700;color:var(--navy)">'+(b.name||'Client')+'</div>' +
-        '<div style="color:var(--gray)">'+formatDate(b.date)+' · '+(b.serviceTab||'Move')+'</div></div>' +
-      '<div style="text-align:right">' +
-        '<div style="color:var(--red);font-weight:700'+(cancelled?';text-decoration:line-through':'')+'">$'+(b.totalGST||b.total||0)+'</div>' +
-        (cancelled ? '<div style="color:#dc2626;font-size:.78rem">Cancelled</div>' :
-          '<div style="color:#16a34a;font-size:.78rem">Profit ~$'+profit+'</div>') +
-      '</div>' +
+  // Projections: upcoming bookings in next 30 days
+  var today = new Date().toISOString().slice(0,10);
+  var in30 = new Date(); in30.setDate(in30.getDate()+30);
+  var in30str = in30.toISOString().slice(0,10);
+  var upcoming = allBookings.filter(function(b){ return b.date > today && b.date <= in30str && b.status !== 'cancelled'; });
+  var projRev = upcoming.reduce(function(s,b){ return s+(b.totalGST||b.total||0); }, 0);
+  var avgExpPerDay = totalExpenses / Math.max(1, (new Date(period.end) - new Date(period.start)) / 86400000);
+  var projExp = Math.round(avgExpPerDay * 30);
+  var projProfit = projRev - projExp;
+  document.getElementById('fin-projections').innerHTML =
+    '<div style="padding:8px 0">' +
+    '<div style="font-size:.82rem;color:var(--gray);margin-bottom:12px">Based on '+upcoming.length+' scheduled jobs + current expense run rate</div>' +
+    [
+      ['Projected Revenue', '$'+projRev.toLocaleString(), 'var(--red)'],
+      ['Projected Expenses', '-$'+projExp.toLocaleString(), '#ca8a04'],
+      ['Projected Profit', (projProfit>=0?'+':'')+'$'+projProfit.toLocaleString(), projProfit>=0?'#16a34a':'#dc2626'],
+    ].map(function(r){
+      return '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--light);font-size:.9rem">' +
+        '<span style="color:var(--navy);font-weight:600">'+r[0]+'</span>' +
+        '<span style="font-weight:800;color:'+r[2]+'">'+r[1]+'</span></div>';
+    }).join('') +
+    '<div style="margin-top:14px;font-size:.82rem;color:var(--gray)">'+upcoming.slice(0,5).map(function(b){
+      return '<div style="padding:4px 0">'+formatDate(b.date)+' — '+(b.name||'Client')+' · $'+(b.totalGST||b.total||0)+'</div>';
+    }).join('') + '</div></div>';
+
+  // Expense log
+  document.getElementById('expense-total-label').textContent = expenses.length+' entries · Total: $'+Math.round(totalExpenses).toLocaleString();
+  var expSorted = expenses.slice().sort(function(a,b){ return b.date.localeCompare(a.date); });
+  document.getElementById('fin-expense-log').innerHTML = expSorted.length ? expSorted.map(function(e){
+    return '<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--light);font-size:.87rem">' +
+      '<div style="width:10px;height:10px;border-radius:50%;background:'+(catColors[e.category]||'#999')+';flex-shrink:0"></div>' +
+      '<div style="flex:1"><div style="font-weight:700;color:var(--navy)">'+e.description+'</div>' +
+        '<div style="color:var(--gray)">'+e.category+' · '+formatDate(e.date)+(e.recurring!=='no'?' · <span style="color:#7c3aed;font-weight:600">'+e.recurring+'</span>':'')+'</div></div>' +
+      '<div style="font-weight:800;color:#ca8a04">-$'+e.amount.toLocaleString()+'</div>' +
+      '<button onclick="deleteExpense('+e.id+')" title="Delete" style="background:#fee2e2;border:none;color:#dc2626;border-radius:6px;padding:4px 8px;cursor:pointer;font-size:.8rem;font-weight:700">Del</button>' +
     '</div>';
-  }).join('');
-  document.getElementById('finance-transactions').innerHTML = txHtml || '<div class="empty"><p>No bookings yet.</p></div>';
+  }).join('') : '<div class="empty"><p>No expenses in this period.</p></div>';
 }
 
 function statCard(label, value, color, sub) {
   return '<div class="stat-card"><div class="stat-value" style="color:'+color+'">'+value+'</div><div class="stat-label">'+label+'</div><div style="font-size:.75rem;color:var(--gray);margin-top:2px">'+sub+'</div></div>';
 }
+
+var catColors = { 'Truck Rental':'#D62828','Labour':'#2563eb','Fuel':'#ea580c','Insurance':'#7c3aed','Equipment':'#16a34a','Marketing':'#ca8a04','Admin':'#6B7280','Other':'#9ca3af' };
 
 // ── CREW SCHEDULE ───────────────────────────────────────────────────────
 function renderCrewSchedule() {

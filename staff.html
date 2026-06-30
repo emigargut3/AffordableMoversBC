@@ -695,9 +695,9 @@ function seedDemoData() {
 var currentUser = null;
 
 function doLogin() {
-  var u = document.getElementById('login-user').value.trim().toLowerCase();
+  var u = document.getElementById('login-user').value.trim();
   var p = document.getElementById('login-pass').value;
-  var found = STAFF.find(function(s) { return s.user === u && s.pass === p; });
+  var found = STAFF.find(function(s) { return s.user.toLowerCase() === u.toLowerCase() && s.pass === p; });
   if (!found) {
     document.getElementById('login-err').style.display = 'block';
     return;

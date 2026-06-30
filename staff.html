@@ -367,6 +367,9 @@
         <div class="nav-item" onclick="showView('bookings')">
           <span class="nav-icon">📋</span> All Bookings
         </div>
+        <div class="nav-item" onclick="showView('clients')">
+          <span class="nav-icon">👤</span> Clients
+        </div>
         <div class="nav-label">Operations</div>
         <div class="nav-item" onclick="showView('crew')">
           <span class="nav-icon">👷</span> Crew Schedule
@@ -444,6 +447,20 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- ── CLIENTS ── -->
+        <div class="view" id="view-clients">
+          <div class="filter-bar">
+            <input class="search-input" type="text" id="client-search" placeholder="Search by name, email or phone..." oninput="renderClients()" />
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">👤 Client Directory</div>
+              <div id="client-count" style="font-size:.85rem;color:var(--gray)"></div>
+            </div>
+            <div class="panel-body" id="clients-list"></div>
           </div>
         </div>
 
@@ -611,8 +628,8 @@
 // ── STAFF CREDENTIALS ──────────────────────────────────────────────────
 // role: 'owner' = full control (Emiliano); role: 'viewer' = read-only (Paul)
 var STAFF = [
-  { user: 'emiliano', pass: 'ambc2024!', name: 'Emiliano', initials: 'EG', role: 'owner' },
-  { user: 'paul',     pass: 'ambc2024!', name: 'Paul',     initials: 'PL', role: 'viewer' },
+  { user: 'EmiAM',  pass: '1234567890', name: 'Emiliano', initials: 'EG', role: 'owner' },
+  { user: 'PaulAM', pass: '12345678',   name: 'Paul',     initials: 'PL', role: 'viewer' },
 ];
 
 function isOwner() { return currentUser && currentUser.role === 'owner'; }
@@ -726,6 +743,7 @@ document.addEventListener('keydown', function(e) {
 var viewTitles = {
   overview: 'Overview',
   calendar: 'Calendar',
+  clients:  'Clients',
   bookings: 'All Bookings',
   crew: 'Crew Schedule',
   trucks: 'Truck Dispatch',
@@ -744,6 +762,7 @@ function showView(name) {
   });
   document.getElementById('view-title').textContent = viewTitles[name];
   if (name === 'bookings') renderBookingsList();
+  if (name === 'clients')  renderClients();
   if (name === 'crew') renderCrewSchedule();
   if (name === 'trucks') renderTruckDispatch();
   if (name === 'finances') renderFinances();
@@ -776,16 +795,31 @@ function renderOverview() {
   var all = getBookings();
   var today = new Date().toISOString().slice(0,10);
   var thisMonth = today.slice(0,7);
-  var todayJobs = all.filter(function(b) { return b.date === today; });
-  var monthJobs = all.filter(function(b) { return b.date && b.date.slice(0,7) === thisMonth; });
+  var thisYear  = today.slice(0,4);
+
+  // Week range (Mon–Sun)
+  var now = new Date();
+  var dayOfWeek = (now.getDay() + 6) % 7; // Mon=0
+  var weekStart = new Date(now); weekStart.setDate(now.getDate() - dayOfWeek);
+  var weekEnd   = new Date(weekStart); weekEnd.setDate(weekStart.getDate() + 6);
+  var weekStartStr = weekStart.toISOString().slice(0,10);
+  var weekEndStr   = weekEnd.toISOString().slice(0,10);
+
+  var todayJobs = all.filter(function(b) { return b.date === today && b.status !== 'cancelled'; });
+  var weekJobs  = all.filter(function(b) { return b.date >= weekStartStr && b.date <= weekEndStr && b.status !== 'cancelled'; });
+  var monthJobs = all.filter(function(b) { return b.date && b.date.slice(0,7) === thisMonth && b.status !== 'cancelled'; });
+  var yearJobs  = all.filter(function(b) { return b.date && b.date.slice(0,4) === thisYear && b.status !== 'cancelled'; });
   var upcoming  = all.filter(function(b) { return b.date >= today; }).sort(function(a,b){ return a.date.localeCompare(b.date); });
-  var revenue   = monthJobs.reduce(function(s,b){ return s + (b.totalGST || b.total || 0); }, 0);
+
+  var weekRev  = weekJobs.reduce(function(s,b){ return s+(b.totalGST||b.total||0); }, 0);
+  var monthRev = monthJobs.reduce(function(s,b){ return s+(b.totalGST||b.total||0); }, 0);
+  var yearRev  = yearJobs.reduce(function(s,b){ return s+(b.totalGST||b.total||0); }, 0);
 
   document.getElementById('stats-grid').innerHTML = [
-    statCard('Today\'s Jobs', todayJobs.length, 'Scheduled for today', 'badge-blue'),
-    statCard('This Month', monthJobs.length, 'Total bookings', 'badge-green'),
-    statCard('Monthly Revenue', '$' + revenue.toLocaleString(), 'Inc. GST', 'badge-gold'),
-    statCard('Pending', all.filter(function(b){ return b.status === 'pending'; }).length, 'Awaiting confirmation', 'badge-red'),
+    statCard('Today\'s Jobs',   todayJobs.length,          'Scheduled today',        'badge-blue'),
+    statCard('This Week',       weekJobs.length + ' jobs', '$'+weekRev.toLocaleString()+' revenue', 'badge-green'),
+    statCard('This Month',      monthJobs.length + ' jobs','$'+monthRev.toLocaleString()+' revenue','badge-gold'),
+    statCard('This Year',       yearJobs.length + ' jobs', '$'+yearRev.toLocaleString()+' revenue', 'badge-red'),
   ].join('');
 
   // Upcoming list (next 6)
@@ -823,6 +857,114 @@ function statCard(label, value, sub, badge) {
   return '<div class="stat-card"><div class="stat-label">' + label + '</div>' +
     '<div class="stat-value">' + value + '</div>' +
     '<div class="stat-sub">' + sub + '</div></div>';
+}
+
+// ── CLIENTS ──────────────────────────────────────────────────────────────
+function renderClients() {
+  var all = getBookings();
+  var q = (document.getElementById('client-search')||{}).value || '';
+  q = q.toLowerCase();
+
+  // Group by email (or phone if no email)
+  var clientMap = {};
+  all.forEach(function(b) {
+    var key = (b.email || b.phone || b.name || '').toLowerCase();
+    if (!key) return;
+    if (!clientMap[key]) {
+      clientMap[key] = { name: b.name, email: b.email, phone: b.phone, bookings: [], totalSpend: 0 };
+    }
+    clientMap[key].bookings.push(b);
+    if (b.status !== 'cancelled') clientMap[key].totalSpend += (b.totalGST||b.total||0);
+  });
+
+  var clients = Object.values(clientMap);
+
+  // Search filter
+  if (q) {
+    clients = clients.filter(function(c) {
+      return (c.name||'').toLowerCase().includes(q) ||
+             (c.email||'').toLowerCase().includes(q) ||
+             (c.phone||'').toLowerCase().includes(q);
+    });
+  }
+
+  // Sort by most recent booking
+  clients.sort(function(a,b) {
+    var aLast = a.bookings.slice().sort(function(x,y){ return y.date.localeCompare(x.date); })[0].date;
+    var bLast = b.bookings.slice().sort(function(x,y){ return y.date.localeCompare(x.date); })[0].date;
+    return bLast.localeCompare(aLast);
+  });
+
+  var countEl = document.getElementById('client-count');
+  if (countEl) countEl.textContent = clients.length + ' clients';
+
+  if (!clients.length) {
+    document.getElementById('clients-list').innerHTML = '<div class="empty"><div class="empty-icon">👤</div><p>No clients found.</p></div>';
+    return;
+  }
+
+  document.getElementById('clients-list').innerHTML = clients.map(function(c) {
+    var lastBooking = c.bookings.slice().sort(function(a,b){ return b.date.localeCompare(a.date); })[0];
+    var initials = (c.name||'?').split(' ').map(function(w){ return w[0]; }).join('').slice(0,2).toUpperCase();
+    var colors = ['#D62828','#2563eb','#16a34a','#7c3aed','#ea580c','#ca8a04'];
+    var color = colors[(c.name||'').charCodeAt(0) % colors.length];
+    return '<div style="display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--light);cursor:pointer" onclick="showClientDetail(\''+encodeURIComponent(c.email||c.phone||c.name)+'\')">' +
+      '<div style="width:44px;height:44px;border-radius:50%;background:'+color+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;flex-shrink:0">'+initials+'</div>' +
+      '<div style="flex:1;min-width:0">' +
+        '<div style="font-weight:700;color:var(--navy)">'+c.name+'</div>' +
+        '<div style="font-size:.82rem;color:var(--gray)">'+(c.email||'—')+' · '+(c.phone||'—')+'</div>' +
+        '<div style="font-size:.8rem;color:var(--gray);margin-top:2px">Last job: '+formatDate(lastBooking.date)+' · '+(lastBooking.serviceTab||'Move')+'</div>' +
+      '</div>' +
+      '<div style="text-align:right;flex-shrink:0">' +
+        '<div style="font-weight:800;color:var(--red);font-size:1rem">$'+c.totalSpend.toLocaleString()+'</div>' +
+        '<div style="font-size:.78rem;color:var(--gray)">'+c.bookings.length+' booking'+(c.bookings.length!==1?'s':'')+'</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function showClientDetail(encodedKey) {
+  var key = decodeURIComponent(encodedKey);
+  var all = getBookings();
+  var bkgs = all.filter(function(b){
+    return (b.email||b.phone||b.name||'').toLowerCase() === key.toLowerCase();
+  }).sort(function(a,b){ return b.date.localeCompare(a.date); });
+  if (!bkgs.length) return;
+  var c = bkgs[0];
+  var totalSpend = bkgs.filter(function(b){ return b.status!=='cancelled'; }).reduce(function(s,b){ return s+(b.totalGST||b.total||0); },0);
+
+  var html = [
+    '<div class="detail-header" style="border-top:4px solid #2563eb;border-radius:20px 20px 0 0">',
+      '<div><h3>'+(c.name||'Client')+'</h3><p>'+(c.email||'—')+' · '+(c.phone||'—')+'</p></div>',
+      '<button class="detail-close" onclick="closeDetailBtn()">✕</button>',
+    '</div>',
+    '<div class="detail-body">',
+      '<div class="detail-section">',
+        '<div class="detail-section-title">Client Summary</div>',
+        '<div class="detail-row">',
+          '<div class="detail-field"><div class="detail-label">Total Bookings</div><div class="detail-val" style="font-size:1.3rem;font-weight:800;color:#2563eb">'+bkgs.length+'</div></div>',
+          '<div class="detail-field"><div class="detail-label">Total Spent</div><div class="detail-val" style="font-size:1.3rem;font-weight:800;color:var(--red)">$'+totalSpend.toLocaleString()+'</div></div>',
+        '</div>',
+      '</div>',
+      '<div class="detail-section">',
+        '<div class="detail-section-title">Booking History</div>',
+        bkgs.map(function(b){
+          var sc = b.status==='confirmed'?'status-confirmed':b.status==='cancelled'?'status-cancelled':'status-pending';
+          return '<div style="padding:10px 0;border-bottom:1px solid var(--light);font-size:.87rem">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center">' +
+              '<div><strong>'+formatDate(b.date)+'</strong> · '+b.time+'</div>' +
+              '<span class="status-pill '+sc+'">'+b.status+'</span>' +
+            '</div>' +
+            '<div style="color:var(--gray);margin-top:3px">'+(b.serviceTab||'Move')+' · '+(b.fromVal||'')+(b.toVal?' → '+b.toVal:'')+'</div>' +
+            '<div style="font-weight:700;color:var(--red);margin-top:3px">$'+(b.totalGST||b.total||0)+'</div>' +
+          '</div>';
+        }).join(''),
+      '</div>',
+    '</div>',
+  ].join('');
+
+  document.getElementById('detail-card').innerHTML = html;
+  document.getElementById('detail-overlay').classList.add('open');
 }
 
 // ── BOOKING ROW ────────────────────────────────────────────────────────

@@ -4159,61 +4159,46 @@
       crewId: assignCrewId(currentTab), truck: assignTruckId(e.sizeKey || '1br'),
     });
 
-    // ── Notifications ────────────────────────────────────────────────
+    // ── Notifications (free — Formspree email + ntfy.sh push) ───────
     const truckName = assignTruckId(e.sizeKey) === 't1' ? 'The Workhorse (16ft)' : assignTruckId(e.sizeKey) === 't2' ? 'Big Blue (20ft)' : 'The Sprinter (Van)';
     const crewName  = assignCrewId(currentTab) === 'c1' ? 'Carlos M.' : assignCrewId(currentTab) === 'c2' ? 'Devon T.' : 'Marcus R.';
-    const msgBody   = `NEW BOOKING - Affordable Movers BC\n\nClient: ${name}\nPhone: ${phone}\nEmail: ${email}\nDate: ${fmt} @ ${selectedSlot}\nFrom: ${e.fromVal}\nTo: ${e.toVal}\nService: ${e.sizeKey} | ${e.hrs} hrs\nTruck: ${truckName}\nCrew: ${crewName}\nTotal: $${e.totalGST} (inc. GST)\nNotes: ${notes || 'None'}`;
+    const msgBody   = `Client: ${name} | ${phone} | ${email}\nDate: ${fmt} @ ${selectedSlot}\nFrom: ${e.fromVal} → ${e.toVal}\nSize: ${e.sizeKey} | ${e.hrs} hrs\nTruck: ${truckName} | Crew: ${crewName}\nTotal: $${e.totalGST} inc. GST\nNotes: ${notes || 'None'}`;
 
-    // Email via EmailJS (sign up free at emailjs.com — replace the 3 values below)
-    const EMAILJS_PUBLIC_KEY  = 'YOUR_EMAILJS_PUBLIC_KEY';
-    const EMAILJS_SERVICE_ID  = 'YOUR_EMAILJS_SERVICE_ID';
-    const EMAILJS_TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID';
-
-    // SMS via Textbelt (buy credits at textbelt.com — replace key below, use 'textbelt' for 1 free test)
-    const TEXTBELT_KEY = 'YOUR_TEXTBELT_KEY';
-    const SMS_PHONE    = '+16045374140';
-
+    // ── Email via Formspree (free at formspree.io — replace YOUR_FORM_ID) ──
+    const FORMSPREE_ID = 'YOUR_FORM_ID';
     try {
-      // Send email
-      if (EMAILJS_PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
-        await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      if (FORMSPREE_ID !== 'YOUR_FORM_ID') {
+        await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({
-            service_id:  EMAILJS_SERVICE_ID,
-            template_id: EMAILJS_TEMPLATE_ID,
-            user_id:     EMAILJS_PUBLIC_KEY,
-            template_params: {
-              to_email: 'emigargut3@gmail.com',
-              subject:  `New Booking — ${name} — ${fmt} @ ${selectedSlot}`,
-              message:  msgBody,
-              client_name:  name,
-              client_phone: phone,
-              client_email: email,
-              move_date:    `${fmt} @ ${selectedSlot}`,
-              move_from:    e.fromVal,
-              move_to:      e.toVal,
-              move_size:    e.sizeKey,
-              move_hours:   `${e.hrs} hrs`,
-              truck:        truckName,
-              crew:         crewName,
-              total:        `$${e.totalGST}`,
-              notes:        notes || 'None',
-            }
+            _subject: `New Booking — ${name} — ${fmt} @ ${selectedSlot}`,
+            _replyto: email,
+            Name: name, Phone: phone, Email: email,
+            Date: `${fmt} @ ${selectedSlot}`,
+            From: e.fromVal, To: e.toVal,
+            Size: e.sizeKey, Hours: `${e.hrs} hrs`,
+            Truck: truckName, Crew: crewName,
+            Total: `$${e.totalGST} inc. GST`,
+            Notes: notes || 'None',
           })
         });
       }
     } catch (_) {}
 
+    // ── Push notification via ntfy.sh (100% free — no account needed) ──
+    // On your phone: install ntfy app → subscribe to topic "ambc-bookings-emi"
     try {
-      // Send SMS
-      if (TEXTBELT_KEY !== 'YOUR_TEXTBELT_KEY') {
-        await fetch('https://textbelt.com/text', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ phone: SMS_PHONE, message: msgBody, key: TEXTBELT_KEY })
-        });
-      }
+      await fetch('https://ntfy.sh/ambc-bookings-emi', {
+        method: 'POST',
+        headers: {
+          'Title': `New Booking — ${name}`,
+          'Priority': 'high',
+          'Tags': 'truck,moneybag',
+          'Content-Type': 'text/plain',
+        },
+        body: msgBody
+      });
     } catch (_) {}
 
     // Show confirmation step

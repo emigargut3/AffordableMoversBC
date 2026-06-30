@@ -374,12 +374,15 @@
         <div class="nav-item" onclick="showView('trucks')">
           <span class="nav-icon">🚛</span> Truck Dispatch
         </div>
+        <div class="nav-item owner-only" id="nav-finances" onclick="showView('finances')" style="display:none">
+          <span class="nav-icon">💰</span> Finances
+        </div>
       </nav>
       <div class="sidebar-user">
         <div class="user-avatar" id="user-avatar">EG</div>
         <div>
           <div class="user-name" id="user-name">Emiliano</div>
-          <div class="user-role">Admin</div>
+          <div class="user-role" id="user-role-label">Owner</div>
         </div>
         <button class="logout-btn" onclick="doLogout()" title="Sign out">⏻</button>
       </div>
@@ -491,6 +494,21 @@
           </div>
         </div>
 
+        <!-- ── FINANCES (owner only) ── -->
+        <div class="view" id="view-finances">
+          <div class="stats-grid" id="finance-stats"></div>
+          <div class="two-col">
+            <div class="panel">
+              <div class="panel-header"><div class="panel-title">💰 Revenue by Service</div></div>
+              <div class="panel-body" id="finance-by-service"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><div class="panel-title">📅 Recent Transactions</div></div>
+              <div class="panel-body" id="finance-transactions"></div>
+            </div>
+          </div>
+        </div>
+
       </div><!-- /content -->
     </div><!-- /main -->
   </div><!-- /layout -->
@@ -503,10 +521,13 @@
 
 <script>
 // ── STAFF CREDENTIALS ──────────────────────────────────────────────────
+// role: 'owner' = full control (Emiliano); role: 'viewer' = read-only (Paul)
 var STAFF = [
-  { user: 'emiliano', pass: 'ambc2024!', name: 'Emiliano', initials: 'EG', role: 'Admin' },
-  { user: 'paul',     pass: 'ambc2024!', name: 'Paul',     initials: 'PL', role: 'Admin' },
+  { user: 'emiliano', pass: 'ambc2024!', name: 'Emiliano', initials: 'EG', role: 'owner' },
+  { user: 'paul',     pass: 'ambc2024!', name: 'Paul',     initials: 'PL', role: 'viewer' },
 ];
+
+function isOwner() { return currentUser && currentUser.role === 'owner'; }
 
 // ── SERVICE COLORS ─────────────────────────────────────────────────────
 var SERVICE_COLORS = {
@@ -595,6 +616,11 @@ function showDashboard() {
   document.getElementById('dashboard').style.display = 'block';
   document.getElementById('user-name').textContent = currentUser.name;
   document.getElementById('user-avatar').textContent = currentUser.initials;
+  document.getElementById('user-role-label').textContent = isOwner() ? 'Owner' : 'Viewer';
+  // Show/hide owner-only elements
+  document.querySelectorAll('.owner-only').forEach(function(el) {
+    el.style.display = isOwner() ? '' : 'none';
+  });
   seedDemoData();
   updateTopbarDate();
   renderOverview();
@@ -615,9 +641,11 @@ var viewTitles = {
   bookings: 'All Bookings',
   crew: 'Crew Schedule',
   trucks: 'Truck Dispatch',
+  finances: 'Finances',
 };
 
 function showView(name) {
+  if (name === 'finances' && !isOwner()) return;
   document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
   document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
   document.getElementById('view-' + name).classList.add('active');
@@ -630,6 +658,7 @@ function showView(name) {
   if (name === 'bookings') renderBookingsList();
   if (name === 'crew') renderCrewSchedule();
   if (name === 'trucks') renderTruckDispatch();
+  if (name === 'finances') renderFinances();
 }
 
 function updateTopbarDate() {
@@ -866,6 +895,10 @@ function openDetail(date, time) {
           '<div class="detail-field"><div class="detail-label">Price (before GST)</div><div class="detail-val">$'+(b.total||0)+'</div></div>',
           '<div class="detail-field"><div class="detail-label">Total inc. 5% GST</div><div class="detail-val" style="font-size:1.1rem;color:var(--red);font-weight:800">$'+(b.totalGST||b.total||0)+'</div></div>',
         '</div>',
+        (isOwner() ? '<div class="detail-row">' +
+          '<div class="detail-field"><div class="detail-label">Est. Labour Cost</div><div class="detail-val" style="color:#ca8a04;font-weight:700">$'+Math.round((b.hrs||2)*45*((b.crewId==='c1'?2:1)+1))+'</div></div>' +
+          '<div class="detail-field"><div class="detail-label">Est. Profit</div><div class="detail-val" style="color:#16a34a;font-weight:800;font-size:1.05rem">$'+Math.max(0,Math.round((b.totalGST||b.total||0)-Math.round((b.hrs||2)*45*((b.crewId==='c1'?2:1)+1))))+'</div></div>' +
+        '</div>' : ''),
       '</div>',
 
       '<div class="detail-section">',
@@ -886,6 +919,19 @@ function openDetail(date, time) {
         '</div>',
       '</div>',
 
+      (isOwner() ? '<div class="detail-section" style="border-top:2px solid var(--light);padding-top:16px;margin-top:4px">' +
+        '<div class="detail-section-title">Owner Actions</div>' +
+        '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">' +
+          '<select onchange="changeBookingStatus(\''+b.date+'\',\''+b.time+'\',this.value)" style="padding:8px 12px;border-radius:8px;border:1.5px solid var(--light);font-size:.9rem;color:var(--navy);cursor:pointer">' +
+            '<option value="">Change Status...</option>' +
+            '<option value="confirmed"'+(b.status==='confirmed'?' selected':'')+'>Confirmed</option>' +
+            '<option value="pending"'+(b.status==='pending'?' selected':'')+'>Pending</option>' +
+            '<option value="cancelled"'+(b.status==='cancelled'?' selected':'')+'>Cancelled</option>' +
+          '</select>' +
+          '<button onclick="deleteBooking(\''+b.date+'\',\''+b.time+'\')" style="padding:8px 16px;background:#fee2e2;color:#dc2626;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem">Delete Booking</button>' +
+        '</div>' +
+      '</div>' : ''),
+
     '</div>',
   ].join('');
 
@@ -899,6 +945,90 @@ function closeDetail(e) {
 }
 function closeDetailBtn() {
   document.getElementById('detail-overlay').classList.remove('open');
+}
+
+function deleteBooking(date, time) {
+  if (!isOwner()) return;
+  if (!confirm('Delete this booking? This cannot be undone.')) return;
+  var list = getBookings().filter(function(b) { return !(b.date === date && b.time === time); });
+  localStorage.setItem(BOOKING_KEY, JSON.stringify(list));
+  document.getElementById('detail-overlay').classList.remove('open');
+  renderOverview();
+  renderCalendar();
+  if (document.getElementById('view-bookings').classList.contains('active')) renderBookingsList();
+}
+
+function changeBookingStatus(date, time, newStatus) {
+  if (!isOwner() || !newStatus) return;
+  var list = getBookings();
+  list.forEach(function(b) { if (b.date === date && b.time === time) b.status = newStatus; });
+  localStorage.setItem(BOOKING_KEY, JSON.stringify(list));
+  document.getElementById('detail-overlay').classList.remove('open');
+  renderOverview();
+  renderCalendar();
+  if (document.getElementById('view-bookings').classList.contains('active')) renderBookingsList();
+}
+
+// ── FINANCES (owner only) ───────────────────────────────────────────────
+function renderFinances() {
+  if (!isOwner()) return;
+  var bookings = getBookings();
+  var confirmed = bookings.filter(function(b) { return b.status !== 'cancelled'; });
+
+  var totalRev = confirmed.reduce(function(s,b) { return s + (b.totalGST||b.total||0); }, 0);
+  var totalCost = confirmed.reduce(function(s,b) {
+    return s + Math.round((b.hrs||2) * 45 * ((b.crewId==='c1'?2:1)+1));
+  }, 0);
+  var totalProfit = Math.max(0, totalRev - totalCost);
+
+  document.getElementById('finance-stats').innerHTML = [
+    statCard('Total Revenue', '$'+totalRev.toLocaleString(), 'var(--red)', confirmed.length+' jobs'),
+    statCard('Est. Labour Costs', '$'+totalCost.toLocaleString(), '#ca8a04', 'crew wages'),
+    statCard('Est. Profit', '$'+totalProfit.toLocaleString(), '#16a34a', Math.round(totalProfit/Math.max(1,totalRev)*100)+'% margin'),
+    statCard('Avg Job Value', '$'+Math.round(totalRev/Math.max(1,confirmed.length)), '#2563eb', 'per booking'),
+  ].join('');
+
+  // Revenue by service
+  var byService = {};
+  confirmed.forEach(function(b) {
+    var s = b.serviceTab || 'Other';
+    byService[s] = (byService[s]||0) + (b.totalGST||b.total||0);
+  });
+  var serviceHtml = Object.keys(byService).sort(function(a,b){ return byService[b]-byService[a]; }).map(function(s) {
+    var pct = Math.round(byService[s]/Math.max(1,totalRev)*100);
+    return '<div style="margin-bottom:14px">' +
+      '<div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:.9rem">' +
+        '<span style="font-weight:600;color:var(--navy)">'+s+'</span>' +
+        '<span style="color:var(--red);font-weight:700">$'+byService[s].toLocaleString()+' ('+pct+'%)</span>' +
+      '</div>' +
+      '<div style="background:var(--light);border-radius:99px;height:8px">' +
+        '<div style="background:'+serviceColor(s)+';width:'+pct+'%;height:8px;border-radius:99px;transition:.4s"></div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+  document.getElementById('finance-by-service').innerHTML = serviceHtml || '<div class="empty"><p>No data yet.</p></div>';
+
+  // Recent transactions
+  var sorted = bookings.slice().sort(function(a,b){ return b.date.localeCompare(a.date); }).slice(0,10);
+  var txHtml = sorted.map(function(b) {
+    var cost = Math.round((b.hrs||2)*45*((b.crewId==='c1'?2:1)+1));
+    var profit = Math.max(0,(b.totalGST||b.total||0)-cost);
+    var cancelled = b.status === 'cancelled';
+    return '<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--light);font-size:.85rem">' +
+      '<div style="flex:1"><div style="font-weight:700;color:var(--navy)">'+(b.name||'Client')+'</div>' +
+        '<div style="color:var(--gray)">'+formatDate(b.date)+' · '+(b.serviceTab||'Move')+'</div></div>' +
+      '<div style="text-align:right">' +
+        '<div style="color:var(--red);font-weight:700'+(cancelled?';text-decoration:line-through':'')+'">$'+(b.totalGST||b.total||0)+'</div>' +
+        (cancelled ? '<div style="color:#dc2626;font-size:.78rem">Cancelled</div>' :
+          '<div style="color:#16a34a;font-size:.78rem">Profit ~$'+profit+'</div>') +
+      '</div>' +
+    '</div>';
+  }).join('');
+  document.getElementById('finance-transactions').innerHTML = txHtml || '<div class="empty"><p>No bookings yet.</p></div>';
+}
+
+function statCard(label, value, color, sub) {
+  return '<div class="stat-card"><div class="stat-value" style="color:'+color+'">'+value+'</div><div class="stat-label">'+label+'</div><div style="font-size:.75rem;color:var(--gray);margin-top:2px">'+sub+'</div></div>';
 }
 
 // ── CREW SCHEDULE ───────────────────────────────────────────────────────

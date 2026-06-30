@@ -4164,26 +4164,21 @@
     const crewName  = assignCrewId(currentTab) === 'c1' ? 'Carlos M.' : assignCrewId(currentTab) === 'c2' ? 'Devon T.' : 'Marcus R.';
     const msgBody   = `Client: ${name} | ${phone} | ${email}\nDate: ${fmt} @ ${selectedSlot}\nFrom: ${e.fromVal} → ${e.toVal}\nSize: ${e.sizeKey} | ${e.hrs} hrs\nTruck: ${truckName} | Crew: ${crewName}\nTotal: $${e.totalGST} inc. GST\nNotes: ${notes || 'None'}`;
 
-    // ── Email via Formspree (free at formspree.io — replace YOUR_FORM_ID) ──
-    const FORMSPREE_ID = 'YOUR_FORM_ID';
+    // ── Email via EmailJS ──────────────────────────────────────────────
     try {
-      if (FORMSPREE_ID !== 'YOUR_FORM_ID') {
-        await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
-            _subject: `New Booking — ${name} — ${fmt} @ ${selectedSlot}`,
-            _replyto: email,
-            Name: name, Phone: phone, Email: email,
-            Date: `${fmt} @ ${selectedSlot}`,
-            From: e.fromVal, To: e.toVal,
-            Size: e.sizeKey, Hours: `${e.hrs} hrs`,
-            Truck: truckName, Crew: crewName,
-            Total: `$${e.totalGST} inc. GST`,
-            Notes: notes || 'None',
-          })
-        });
-      }
+      await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id:  'service_5jm9nl9',
+          template_id: 'template_7ni8mad',
+          user_id:     'nLF6d6Vt3O-ge6hx5',
+          template_params: {
+            subject: `New Booking — ${name} — ${fmt} @ ${selectedSlot}`,
+            message: msgBody,
+          }
+        })
+      });
     } catch (_) {}
 
     // ── Push notification via ntfy.sh (100% free — no account needed) ──

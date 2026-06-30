@@ -7,6 +7,11 @@
   <meta name="description" content="Top-rated moving company in British Columbia. Residential, commercial, piano, senior, junk removal, storage & more. No hidden fees. Free quotes. BBB Accredited." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <!-- Leaflet map (no API key required) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- PayPal SDK (replace YOUR_PAYPAL_CLIENT_ID with your real client ID from developer.paypal.com) -->
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=CAD&intent=capture" data-sdk-integration-source="button-factory"></script>
   <style>
     /* ── Reset & Base ───────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1796,6 +1801,140 @@
       padding-bottom: 20px;
     }
     .mobile-menu a:last-child { border: none; }
+    /* ── Route Map ─────────────────────────────────────────────────── */
+    .route-map-wrap {
+      display: none;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      border: 2px solid rgba(255,255,255,.15);
+    }
+    .route-map-wrap.visible { display: block; }
+    #route-map { height: 180px; width: 100%; }
+
+    /* ── Route timing strip ─────────────────────────────────────────── */
+    .route-timing {
+      display: none;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0;
+      background: rgba(255,255,255,.07);
+      border-radius: 10px;
+      padding: 12px 0;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .route-timing.visible { display: grid; }
+    .rt-cell { padding: 4px 12px; }
+    .rt-cell + .rt-cell { border-left: 1px solid rgba(255,255,255,.15); }
+    .rt-label { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.45); margin-bottom: 3px; }
+    .rt-value { font-size: 1rem; font-weight: 800; color: var(--gold); }
+    .rt-sub { font-size: .68rem; color: rgba(255,255,255,.5); margin-top: 2px; }
+
+    /* ── Deposit split strip ────────────────────────────────────────── */
+    .deposit-split {
+      display: none;
+      background: rgba(244,169,34,.12);
+      border: 1px solid rgba(244,169,34,.3);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+    .deposit-split.visible { display: block; }
+    .ds-title { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--gold); margin-bottom: 8px; }
+    .ds-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+    .ds-row:last-child { margin-bottom: 0; border-top: 1px solid rgba(255,255,255,.1); padding-top: 6px; margin-top: 6px; }
+    .ds-label { font-size: .8rem; color: rgba(255,255,255,.75); }
+    .ds-amount { font-size: .88rem; font-weight: 800; color: white; }
+    .ds-note { font-size: .7rem; color: rgba(255,255,255,.45); margin-top: 6px; }
+
+    /* ── Questions CTA ──────────────────────────────────────────────── */
+    .questions-cta {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      font-size: .8rem;
+      color: rgba(255,255,255,.85);
+      cursor: pointer;
+      width: 100%;
+      font-family: inherit;
+      font-weight: 600;
+      transition: background .2s;
+      text-decoration: none;
+    }
+    .questions-cta.visible { display: flex; }
+    .questions-cta:hover { background: rgba(255,255,255,.15); }
+
+    /* ── Questions popup ────────────────────────────────────────────── */
+    .qpopup-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.55);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .qpopup-overlay.open { display: flex; }
+    .qpopup {
+      background: white;
+      border-radius: 20px;
+      padding: 36px 32px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 24px 80px rgba(0,0,0,.3);
+      animation: fadeUp .25s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .qpopup-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .qpopup h3 { font-size: 1.3rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+    .qpopup p { font-size: .9rem; color: var(--gray); margin-bottom: 24px; line-height: 1.5; }
+    .qpopup-call {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: var(--red); color: white;
+      border-radius: 12px; padding: 16px 24px;
+      font-size: 1.1rem; font-weight: 800;
+      text-decoration: none; margin-bottom: 12px;
+      transition: background .2s;
+    }
+    .qpopup-call:hover { background: var(--red-dk); }
+    .qpopup-close { font-size: .85rem; color: var(--gray); cursor: pointer; background: none; border: none; font-family: inherit; margin-top: 4px; }
+    .qpopup-close:hover { color: var(--navy); }
+
+    /* ── Payment step in booking modal ──────────────────────────────── */
+    .pay-summary {
+      background: var(--off);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .pay-summary-title { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--gray); margin-bottom: 10px; }
+    .pay-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: .88rem; }
+    .pay-row.total { font-weight: 800; font-size: 1rem; color: var(--navy); border-top: 1px solid var(--light); margin-top: 6px; padding-top: 10px; }
+    .pay-deposit-box {
+      background: linear-gradient(135deg, var(--navy), #1e3a6e);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 16px;
+      color: white;
+    }
+    .pay-deposit-label { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.6); margin-bottom: 6px; }
+    .pay-deposit-amount { font-size: 2.2rem; font-weight: 900; color: var(--gold); }
+    .pay-deposit-sub { font-size: .78rem; color: rgba(255,255,255,.6); margin-top: 4px; }
+    #paypal-button-container { min-height: 50px; }
+    .pay-secure { font-size: .72rem; color: var(--gray); text-align: center; margin-top: 10px; }
+
   </style>
 </head>
 <body>
@@ -1803,10 +1942,10 @@
 <!-- Top Bar -->
 <div class="topbar">
   <div class="container">
-    <span>⭐ <strong>Leave a Google Review & Get <a href="#review-cta">$20 OFF</a> your next move!</strong></span>
+    <span><strong>Leave a Google Review & Get <a href="#review-cta">$20 OFF</a> your next move!</strong></span>
     <div class="topbar-links">
-      <span>📧 info@affordablemoversbc.com</span>
-      <span>📞 <a href="tel:+16045374140">604-537-4140</a></span>
+      <span>info@affordablemoversbc.com</span>
+      <span><a href="tel:+16045374140">604-537-4140</a></span>
     </div>
   </div>
 </div>
@@ -1816,7 +1955,7 @@
   <div class="container">
     <div class="nav-inner">
       <a href="#" class="logo">
-        <div class="logo-icon">🚛</div>
+        <div class="logo-icon" style="font-size:0;background:var(--red);border-radius:10px;width:44px;height:44px;overflow:hidden;"><img src="logo.png" alt="Affordable Movers BC" style="width:100%;height:100%;object-fit:contain;padding:4px;" onerror="this.parentElement.innerHTML='M';this.parentElement.style.fontSize='1.2rem';this.parentElement.style.color='white';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';" /></div>
         <div class="logo-text">
           <strong>Affordable Movers BC</strong>
           <span>British Columbia's Trusted Movers</span>
@@ -1831,7 +1970,7 @@
         <li><a href="#faq">FAQ</a></li>
       </ul>
       <div class="nav-cta">
-        <a href="tel:+16045374140" class="nav-phone">📞 604-537-4140</a>
+        <a href="tel:+16045374140" class="nav-phone">604-537-4140</a>
         <a href="#contact" class="btn btn-primary">Free Quote</a>
       </div>
       <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.add('open')">
@@ -1858,12 +1997,12 @@
   <div class="container">
     <div class="hero-grid">
       <div>
-        <div class="hero-badge">⭐⭐⭐⭐⭐ BBB Accredited · Top Rated in BC</div>
+        <div class="hero-badge">BBB Accredited · Top Rated in BC</div>
         <h1>Moving Made <em>Easy,</em> Stress-Free & Affordable</h1>
         <p>Professional movers serving all of British Columbia. Residential, commercial, specialty items, storage, junk removal & more — done right, every time.</p>
         <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">🚛 Get a Free Quote</a>
-          <a href="tel:+16045374140" class="btn btn-outline">📞 Call Now</a>
+          <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
+          <a href="tel:+16045374140" class="btn btn-outline">Call Now</a>
         </div>
         <div class="hero-stats">
           <div class="hero-stat">
@@ -1888,25 +2027,25 @@
         <div class="estimator-wrap">
           <!-- Tabs -->
           <div class="estimator-tabs">
-            <button class="estimator-tab active" onclick="switchTab('home')">🏠 Home Move</button>
-            <button class="estimator-tab" onclick="switchTab('office')">🏢 Office Move</button>
-            <button class="estimator-tab" onclick="switchTab('specialty')">🎹 Specialty</button>
-            <button class="estimator-tab" onclick="switchTab('storage')">🗄️ Storage</button>
+            <button class="estimator-tab active" onclick="switchTab('home')">Home Move</button>
+            <button class="estimator-tab" onclick="switchTab('office')">Office Move</button>
+            <button class="estimator-tab" onclick="switchTab('specialty')">Specialty</button>
+            <button class="estimator-tab" onclick="switchTab('storage')">Storage</button>
           </div>
 
           <div class="estimator-body">
 
             <!-- Locations -->
-            <div class="est-section-label">📍 Where are you moving?</div>
+            <div class="est-section-label">Where are you moving?</div>
             <div class="loc-wrap">
               <div class="location-row" id="location-row">
                 <div class="location-field">
-                  <span class="loc-pin">🟢</span>
+                  <span class="loc-pin" style="width:10px;height:10px;border-radius:50%;background:#16a34a;flex-shrink:0;display:inline-block;"></span>
                   <span class="loc-label">FROM</span>
                   <input class="loc-input" id="from-input" type="text" placeholder="Enter pickup address or city" autocomplete="off" oninput="showSuggestions('from-input','from-list',this.value)" onfocus="showSuggestions('from-input','from-list',this.value)" onblur="hideSuggestions('from-list')" />
                 </div>
                 <div class="location-field">
-                  <span class="loc-pin">🔴</span>
+                  <span class="loc-pin" style="width:10px;height:10px;border-radius:50%;background:#D62828;flex-shrink:0;display:inline-block;"></span>
                   <span class="loc-label">TO</span>
                   <input class="loc-input" id="to-input" type="text" placeholder="Enter destination address or city" autocomplete="off" oninput="showSuggestions('to-input','to-list',this.value)" onfocus="showSuggestions('to-input','to-list',this.value)" onblur="hideSuggestions('to-list')" />
                 </div>
@@ -1918,7 +2057,7 @@
 
             <!-- Home size -->
             <div id="size-section">
-              <div class="est-section-label">🏠 Home / job size</div>
+              <div class="est-section-label">Home / job size</div>
               <div class="pill-group" id="size-pills">
                 <button class="pill" onclick="selectPill('size-pills',this,'studio')">Studio</button>
                 <button class="pill selected" onclick="selectPill('size-pills',this,'1br')">1 Bedroom</button>
@@ -1929,7 +2068,7 @@
             </div>
 
             <!-- Estimated duration -->
-            <div class="est-section-label">⏱️ Estimated time needed</div>
+            <div class="est-section-label">Estimated time needed</div>
             <div class="pill-group" id="dur-pills">
               <button class="pill" onclick="selectPill('dur-pills',this,'2')">2 hrs</button>
               <button class="pill selected" onclick="selectPill('dur-pills',this,'3')">3 hrs</button>
@@ -1942,17 +2081,17 @@
             <!-- Optional add-ons (collapsed) -->
             <details style="margin-bottom:12px;">
               <summary style="font-size:.78rem;font-weight:700;color:var(--gray);cursor:pointer;padding:6px 0;list-style:none;display:flex;align-items:center;gap:6px;">
-                <span>➕ Add-ons</span>
+                <span>Add-ons</span>
                 <span style="font-size:.68rem;color:var(--gray);background:var(--off);padding:2px 8px;border-radius:100px;border:1px solid var(--light);">optional</span>
               </summary>
               <div style="padding-top:10px;">
                 <div class="checkbox-grid">
-                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="packing" /> 📦 Full packing</label>
-                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="piano" /> 🎹 Piano / Safe</label>
-                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="assembly" /> 🔧 Assembly</label>
-                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="junk" /> 🗑️ Junk removal</label>
-                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="storage" /> 🗄️ Storage</label>
-                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="lastmin" /> ⚡ Same-day</label>
+                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="packing" /> Full packing</label>
+                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="piano" /> Piano / Safe</label>
+                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="assembly" /> Assembly</label>
+                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="junk" /> Junk removal</label>
+                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="storage" /> Storage</label>
+                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="lastmin" /> Same-day</label>
                 </div>
                 <div class="floor-row" style="margin-top:10px;">
                   <div class="floor-box">
@@ -1979,22 +2118,72 @@
 
             <!-- Calculate button -->
             <button class="est-calc-btn" id="calc-btn" onclick="estimatePrice()">
-              ⚡ Get My Price Instantly
+              Get My Price Instantly
             </button>
 
             <!-- Price result -->
             <div class="price-result" id="price-result">
-              <div class="result-label">Your Price</div>
+              <div class="result-label">Your Instant Quote</div>
               <div class="result-amount" id="result-amount">$—</div>
               <div class="result-note" id="result-note"></div>
               <div class="result-breakdown" id="result-breakdown"></div>
-              <div class="result-actions" style="margin-bottom:8px;">
-                <button class="result-actions btn-book-now" onclick="openBookingModal()">✅ Book This Move</button>
-              </div>
-              <a href="tel:+16045374140" class="unhappy-btn" id="unhappy-btn">
-                😕 Price not right? Call us to negotiate — 604-537-4140
-              </a>
             </div>
+
+            <!-- Route map (shows after price) -->
+            <div class="route-map-wrap" id="route-map-wrap">
+              <div id="route-map"></div>
+            </div>
+
+            <!-- Timing strip -->
+            <div class="route-timing" id="route-timing">
+              <div class="rt-cell">
+                <div class="rt-label">Truck to you</div>
+                <div class="rt-value" id="rt-travel">—</div>
+                <div class="rt-sub">from our depot</div>
+              </div>
+              <div class="rt-cell">
+                <div class="rt-label">Move time</div>
+                <div class="rt-value" id="rt-move">—</div>
+                <div class="rt-sub">estimated on-site</div>
+              </div>
+              <div class="rt-cell">
+                <div class="rt-label">Distance</div>
+                <div class="rt-value" id="rt-distance">—</div>
+                <div class="rt-sub">pickup → drop-off</div>
+              </div>
+            </div>
+
+            <!-- 30/70 deposit split -->
+            <div class="deposit-split" id="deposit-split">
+              <div class="ds-title">How payment works</div>
+              <div class="ds-row">
+                <span class="ds-label">30% deposit today (locks your slot)</span>
+                <span class="ds-amount" id="ds-deposit">$—</span>
+              </div>
+              <div class="ds-row">
+                <span class="ds-label">Remaining 70% on move day</span>
+                <span class="ds-amount" id="ds-remaining">$—</span>
+              </div>
+              <div class="ds-row">
+                <span class="ds-label">Total incl. 5% GST</span>
+                <span class="ds-amount" id="ds-total">$—</span>
+              </div>
+              <div class="ds-note">No surprise charges · 48hr cancellation policy</div>
+            </div>
+
+            <!-- Questions CTA -->
+            <button class="questions-cta" id="questions-cta" onclick="openQPopup()">
+              Any specific questions before booking? <strong>Call us!</strong> &nbsp;→ 604-537-4140
+            </button>
+
+            <!-- Book button -->
+            <div class="result-actions" id="result-book-actions" style="display:none;margin-bottom:8px;">
+              <button class="btn-book-now" style="flex:1;padding:14px;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;border:none;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;" onclick="openBookingModal()">Book This Move</button>
+            </div>
+
+            <a href="tel:+16045374140" class="unhappy-btn" id="unhappy-btn" style="display:none;">
+              Price not right? Call us to negotiate — 604-537-4140
+            </a>
 
             <div style="text-align:center;margin-top:10px;font-size:.72rem;color:var(--gray);">
               No personal info needed · Instant price · <strong style="color:var(--red);">$20 off</strong> with a Google review
@@ -2010,27 +2199,27 @@
 <div class="trust-bar">
   <div class="container">
     <div class="trust-item">
-      <div class="icon">✅</div>
+      <div class="icon" style="font-size:1rem;font-weight:800;color:var(--red)">✓</div>
       <span>BBB Accredited Business</span>
     </div>
     <div class="trust-item">
-      <div class="icon">🛡️</div>
+      <div class="icon" style="font-size:1rem;font-weight:800;color:var(--red)">✓</div>
       <span>Fully Licensed & Insured</span>
     </div>
     <div class="trust-item">
-      <div class="icon">💰</div>
+      <div class="icon" style="font-size:1rem;font-weight:800;color:var(--red)">✓</div>
       <span>No Hidden Fees — Ever</span>
     </div>
     <div class="trust-item">
-      <div class="icon">🕐</div>
+      <div class="icon" style="font-size:1rem;font-weight:800;color:var(--red)">✓</div>
       <span>On-Time Guarantee</span>
     </div>
     <div class="trust-item">
-      <div class="icon">📍</div>
+      <div class="icon" style="font-size:1rem;font-weight:800;color:var(--red)">✓</div>
       <span>Serving All of BC</span>
     </div>
     <div class="trust-item">
-      <div class="icon">⭐</div>
+      <div class="icon" style="font-size:1rem;font-weight:800;color:var(--red)">✓</div>
       <span>5-Star Google Rated</span>
     </div>
   </div>
@@ -2127,6 +2316,139 @@
   </div>
 </section>
 
+<!-- Partner Services -->
+<section class="section" id="partner-services">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag tag--gold">Trusted Partner Network</span>
+      <h2>More Than Moving — A Full Home Service Network</h2>
+      <p>We've partnered with BC's best vetted service companies so you get everything done in one place, at the highest standards. One call. Multiple trusted pros.</p>
+    </div>
+
+    <!-- Partner trust banner -->
+    <div style="background:linear-gradient(135deg,var(--navy) 0%,#1e3a6e 100%);border-radius:16px;padding:28px 32px;margin-bottom:40px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <div style="font-size:2rem;flex-shrink:0;"></div>
+      <div style="flex:1;min-width:240px;">
+        <div style="font-size:1rem;font-weight:800;color:white;margin-bottom:4px;">All partners are vetted, insured &amp; BC-licensed</div>
+        <div style="font-size:.85rem;color:rgba(255,255,255,.65);">We personally select every partner company. Each one is reviewed for quality, licensing, insurance, and customer satisfaction before we refer them to you.</div>
+      </div>
+      <a href="tel:+16045374140" style="background:var(--red);color:white;padding:12px 24px;border-radius:10px;font-weight:700;font-size:.9rem;white-space:nowrap;text-decoration:none;flex-shrink:0;">Book Any Service</a>
+    </div>
+
+    <div class="services-grid">
+
+      <!-- Pressure Washing -->
+      <div class="service-card" style="border-top:3px solid #2563eb;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <div class="service-icon">🚿</div>
+          <span class="service-badge" style="background:#dbeafe;color:#1d4ed8;font-size:.68rem;">Partner Service</span>
+        </div>
+        <h3>Pressure Washing</h3>
+        <p>Driveways, decks, patios, fences, siding, and walkways blasted clean. Our certified pressure washing partners use commercial-grade equipment for results that last.</p>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--light);">
+          <div style="font-size:.75rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Common Jobs</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;">
+            <span style="background:#eff6ff;color:#1d4ed8;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Driveway</span>
+            <span style="background:#eff6ff;color:#1d4ed8;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Deck & Patio</span>
+            <span style="background:#eff6ff;color:#1d4ed8;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">House Siding</span>
+            <span style="background:#eff6ff;color:#1d4ed8;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Fence</span>
+          </div>
+        </div>
+        <a href="tel:+16045374140" style="display:block;margin-top:14px;background:var(--red);color:white;text-align:center;padding:10px;border-radius:8px;font-weight:700;font-size:.82rem;text-decoration:none;">Get a Quote →</a>
+      </div>
+
+      <!-- Exterior Cleaning -->
+      <div class="service-card" style="border-top:3px solid #16a34a;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <div class="service-icon">🏡</div>
+          <span class="service-badge" style="background:#dcfce7;color:#15803d;font-size:.68rem;">Partner Service</span>
+        </div>
+        <h3>Exterior Home Cleaning</h3>
+        <p>Window cleaning, gutter clearing, roof washing, and full exterior detailing. Move in or move out with a home that looks brand new inside and out.</p>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--light);">
+          <div style="font-size:.75rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Common Jobs</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;">
+            <span style="background:#f0fdf4;color:#15803d;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Window Cleaning</span>
+            <span style="background:#f0fdf4;color:#15803d;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Gutter Clearing</span>
+            <span style="background:#f0fdf4;color:#15803d;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Roof Wash</span>
+            <span style="background:#f0fdf4;color:#15803d;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Soffit & Fascia</span>
+          </div>
+        </div>
+        <a href="tel:+16045374140" style="display:block;margin-top:14px;background:var(--red);color:white;text-align:center;padding:10px;border-radius:8px;font-weight:700;font-size:.82rem;text-decoration:none;">Get a Quote →</a>
+      </div>
+
+      <!-- Deep / Move-Out Cleaning -->
+      <div class="service-card" style="border-top:3px solid #7c3aed;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <div class="service-icon">✨</div>
+          <span class="service-badge" style="background:#ede9fe;color:#6d28d9;font-size:.68rem;">Partner Service</span>
+        </div>
+        <h3>Move-Out / Move-In Cleaning</h3>
+        <p>Deep cleaning of your old or new home so you get your deposit back and move into a spotless space. Bathrooms, kitchen, carpets, walls, appliances — everything.</p>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--light);">
+          <div style="font-size:.75rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Common Jobs</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;">
+            <span style="background:#f5f3ff;color:#6d28d9;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Move-Out Clean</span>
+            <span style="background:#f5f3ff;color:#6d28d9;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Move-In Clean</span>
+            <span style="background:#f5f3ff;color:#6d28d9;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Carpet Steam</span>
+            <span style="background:#f5f3ff;color:#6d28d9;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Appliances</span>
+          </div>
+        </div>
+        <a href="tel:+16045374140" style="display:block;margin-top:14px;background:var(--red);color:white;text-align:center;padding:10px;border-radius:8px;font-weight:700;font-size:.82rem;text-decoration:none;">Get a Quote →</a>
+      </div>
+
+      <!-- Handyman / Repairs -->
+      <div class="service-card" style="border-top:3px solid #ea580c;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <div class="service-icon">🔨</div>
+          <span class="service-badge" style="background:#ffedd5;color:#c2410c;font-size:.68rem;">Partner Service</span>
+        </div>
+        <h3>Handyman & Minor Repairs</h3>
+        <p>Patch holes, fix doors, install blinds, mount TVs, repair drywall, and tackle the small jobs that pile up during a move. We'll connect you with a trusted local handyman.</p>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--light);">
+          <div style="font-size:.75rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Common Jobs</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;">
+            <span style="background:#fff7ed;color:#c2410c;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">TV Mounting</span>
+            <span style="background:#fff7ed;color:#c2410c;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Drywall Patch</span>
+            <span style="background:#fff7ed;color:#c2410c;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Blind Install</span>
+            <span style="background:#fff7ed;color:#c2410c;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Door Fixes</span>
+          </div>
+        </div>
+        <a href="tel:+16045374140" style="display:block;margin-top:14px;background:var(--red);color:white;text-align:center;padding:10px;border-radius:8px;font-weight:700;font-size:.82rem;text-decoration:none;">Get a Quote →</a>
+      </div>
+
+      <!-- Painting -->
+      <div class="service-card" style="border-top:3px solid #ca8a04;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <div class="service-icon">🎨</div>
+          <span class="service-badge" style="background:#fef9c3;color:#92400e;font-size:.68rem;">Partner Service</span>
+        </div>
+        <h3>Interior & Exterior Painting</h3>
+        <p>Professional painting before or after your move. Our partner painters deliver clean, fast work with premium paint — walls, ceilings, trim, and more.</p>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--light);">
+          <div style="font-size:.75rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Common Jobs</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;">
+            <span style="background:#fefce8;color:#92400e;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Interior Walls</span>
+            <span style="background:#fefce8;color:#92400e;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Exterior Paint</span>
+            <span style="background:#fefce8;color:#92400e;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Trim & Doors</span>
+            <span style="background:#fefce8;color:#92400e;padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:600;">Ceilings</span>
+          </div>
+        </div>
+        <a href="tel:+16045374140" style="display:block;margin-top:14px;background:var(--red);color:white;text-align:center;padding:10px;border-radius:8px;font-weight:700;font-size:.82rem;text-decoration:none;">Get a Quote →</a>
+      </div>
+
+      <!-- Want to partner? -->
+      <div class="service-card" style="border-top:3px solid var(--navy);background:linear-gradient(135deg,#f8fafc,#f1f5f9);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:32px 24px;">
+        <div style="font-size:2rem;margin-bottom:12px;"></div>
+        <h3 style="color:var(--navy);margin-bottom:8px;">Are You a Service Company?</h3>
+        <p style="font-size:.85rem;color:var(--gray);margin-bottom:20px;">We're always looking for trusted, licensed BC service companies to join our partner network and reach more clients.</p>
+        <a href="mailto:info@affordablemoversbc.com?subject=Partner Network Inquiry" style="background:var(--navy);color:white;padding:11px 22px;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none;">Apply to Partner →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- Why Us -->
 <section class="section" id="why-us">
   <div class="container">
@@ -2171,7 +2493,7 @@
       </div>
       <div class="why-visual">
         <div class="why-stat-card">
-          <div class="why-stat-icon">🚛</div>
+          <div class="why-stat-icon"></div>
           <div class="why-stat-text">
             <strong>1,500+</strong>
             <span>Successful moves completed across BC</span>
@@ -2185,14 +2507,14 @@
           </div>
         </div>
         <div class="why-stat-card">
-          <div class="why-stat-icon">📍</div>
+          <div class="why-stat-icon" style="font-size:1.2rem;font-weight:800;color:var(--red)">BC</div>
           <div class="why-stat-text">
             <strong>2 Locations</strong>
             <span>Vancouver & Burnaby — serving all Metro Vancouver</span>
           </div>
         </div>
         <div class="why-stat-card">
-          <div class="why-stat-icon">🕐</div>
+          <div class="why-stat-icon" style="font-size:1.2rem;font-weight:800;color:var(--red)">7D</div>
           <div class="why-stat-text">
             <strong>7 Days a Week</strong>
             <span>Including weekends and holidays</span>
@@ -2228,7 +2550,7 @@
       </div>
 
       <div class="price-card featured">
-        <div class="popular-badge">⭐ Most Popular</div>
+        <div class="popular-badge">Most Popular</div>
         <h3>1–2 Bedroom Home</h3>
         <div class="price">$169<span>/hr</span></div>
         <div class="desc">3 movers + truck · 3-hr minimum</div>
@@ -2323,7 +2645,7 @@
     <div class="reviews-grid">
 
       <div class="review-card">
-        <div class="review-google">🌐 Google</div>
+        <div class="review-google">Google</div>
         <div class="stars">★★★★★</div>
         <p class="review-text">"Affordable Movers moved my entire household in Vancouver and I couldn't be happier. The team treated every piece with care — even my grandmother's china cabinet came through without a scratch. Five stars, easily!"</p>
         <div class="reviewer">
@@ -2336,7 +2658,7 @@
       </div>
 
       <div class="review-card">
-        <div class="review-google">🌐 Google</div>
+        <div class="review-google">Google</div>
         <div class="stars">★★★★★</div>
         <p class="review-text">"Professional and punctual from start to finish. They relocated our entire office in Burnaby over one weekend with zero downtime on Monday. I've already referred them to three other business owners."</p>
         <div class="reviewer">
@@ -2349,7 +2671,7 @@
       </div>
 
       <div class="review-card">
-        <div class="review-google">🌐 Google</div>
+        <div class="review-google">Google</div>
         <div class="stars">★★★★★</div>
         <p class="review-text">"No issues whatsoever — they got everything moved in record time and saved my life! I called them last minute on a Thursday and they were there Saturday morning. Highly recommend for anyone in Coquitlam."</p>
         <div class="reviewer">
@@ -2362,7 +2684,7 @@
       </div>
 
       <div class="review-card">
-        <div class="review-google">🌐 Google</div>
+        <div class="review-google">Google</div>
         <div class="stars">★★★★★</div>
         <p class="review-text">"Used them for a piano move from Surrey to Langley. I was terrified but they handled my Steinway like absolute pros. The right equipment, the right people. Worth every penny and then some."</p>
         <div class="reviewer">
@@ -2375,7 +2697,7 @@
       </div>
 
       <div class="review-card">
-        <div class="review-google">🌐 Google</div>
+        <div class="review-google">Google</div>
         <div class="stars">★★★★★</div>
         <p class="review-text">"I hired them to help my 78-year-old mom move into her retirement community. They were patient, kind, and so respectful with all her belongings. She felt completely at ease with the whole crew."</p>
         <div class="reviewer">
@@ -2388,7 +2710,7 @@
       </div>
 
       <div class="review-card">
-        <div class="review-google">🌐 Google</div>
+        <div class="review-google">Google</div>
         <div class="stars">★★★★★</div>
         <p class="review-text">"Transparent pricing, showed up on time, finished faster than quoted. The price I was told was the price I paid. In the moving industry that's rare — these guys are the real deal."</p>
         <div class="reviewer">
@@ -2403,7 +2725,7 @@
     </div>
     <div style="text-align:center;margin-top:36px;">
       <a href="https://g.page/r/affordablemoversbc/review" target="_blank" class="btn btn-primary" style="font-size:1rem;">
-        ⭐ See All Reviews on Google
+        See All Reviews on Google
       </a>
     </div>
   </div>
@@ -2434,7 +2756,7 @@
           </div>
           <div class="entry-label-row">
             <div>
-              <div class="entry-title">👥 Meet Our Crew</div>
+              <div class="entry-title">Meet Our Crew</div>
               <div class="entry-sub">6 trained movers · Names, faces & specialties</div>
             </div>
             <div class="entry-arrow">→</div>
@@ -2453,13 +2775,13 @@
       <div class="team-entry-card" onclick="openPanel('trucks')">
         <div class="team-entry-preview">
           <div class="preview-trucks">
-            <div class="pt" style="background:#f1f5f9">🚐</div>
-            <div class="pt" style="background:#fef3c7">🚛</div>
-            <div class="pt" style="background:#dcfce7">🚚</div>
+            <div class="pt" style="background:#f1f5f9;font-size:.7rem;font-weight:700;color:#475569">VAN</div>
+            <div class="pt" style="background:#fef3c7"></div>
+            <div class="pt" style="background:#dcfce7;font-size:.7rem;font-weight:700;color:#15803d">26FT</div>
           </div>
           <div class="entry-label-row">
             <div>
-              <div class="entry-title">🚛 Our Trucks</div>
+              <div class="entry-title">Our Trucks</div>
               <div class="entry-sub">3 vehicles · Specs, capacity & what fits</div>
             </div>
             <div class="entry-arrow">→</div>
@@ -2495,8 +2817,8 @@
       <div class="fp-member-card">
         <div class="fp-photo" style="background:linear-gradient(135deg,#1A2B4A,#22375f)">
           <span class="fp-initials">CM</span>
-          <div class="fp-badge">⭐ Lead Mover</div>
-          <div class="fp-photo-hint">📷 Photo coming soon</div>
+          <div class="fp-badge">Lead Mover</div>
+          <div class="fp-photo-hint">Photo coming soon</div>
         </div>
         <div class="fp-info">
           <div class="fp-name-row">
@@ -2511,7 +2833,7 @@
             <div class="fp-stat"><strong>7 yrs</strong><span>Experience</span></div>
           </div>
           <div class="fp-tags">
-            <span>🎹 Piano</span><span>📦 Packing</span><span>🏠 Residential</span><span>🖼️ Antiques</span>
+            <span>Piano</span><span>Packing</span><span>Residential</span><span>Antiques</span>
           </div>
         </div>
       </div>
@@ -2520,7 +2842,7 @@
         <div class="fp-photo" style="background:linear-gradient(135deg,#7c3aed,#5b21b6)">
           <span class="fp-initials">JR</span>
           <div class="fp-badge">🏢 Office Specialist</div>
-          <div class="fp-photo-hint">📷 Photo coming soon</div>
+          <div class="fp-photo-hint">Photo coming soon</div>
         </div>
         <div class="fp-info">
           <div class="fp-name-row">
@@ -2535,7 +2857,7 @@
             <div class="fp-stat"><strong>5 yrs</strong><span>Experience</span></div>
           </div>
           <div class="fp-tags">
-            <span>🏢 Commercial</span><span>💼 Corporate</span><span>🖥️ IT Equipment</span><span>📋 Planning</span>
+            <span>Commercial</span><span>Corporate</span><span>IT Equipment</span><span>Planning</span>
           </div>
         </div>
       </div>
@@ -2543,8 +2865,8 @@
       <div class="fp-member-card">
         <div class="fp-photo" style="background:linear-gradient(135deg,#065f46,#047857)">
           <span class="fp-initials">MA</span>
-          <div class="fp-badge">👴 Senior Care</div>
-          <div class="fp-photo-hint">📷 Photo coming soon</div>
+          <div class="fp-badge">Senior Care</div>
+          <div class="fp-photo-hint">Photo coming soon</div>
         </div>
         <div class="fp-info">
           <div class="fp-name-row">
@@ -2559,7 +2881,7 @@
             <div class="fp-stat"><strong>4 yrs</strong><span>Experience</span></div>
           </div>
           <div class="fp-tags">
-            <span>👴 Seniors</span><span>🫶 Compassionate</span><span>🏠 Downsizing</span><span>🧸 Careful</span>
+            <span>Seniors</span><span>Compassionate</span><span>Downsizing</span><span>Careful</span>
           </div>
         </div>
       </div>
@@ -2567,8 +2889,8 @@
       <div class="fp-member-card">
         <div class="fp-photo" style="background:linear-gradient(135deg,#92400e,#b45309)">
           <span class="fp-initials">DL</span>
-          <div class="fp-badge">🛣️ Long-Distance</div>
-          <div class="fp-photo-hint">📷 Photo coming soon</div>
+          <div class="fp-badge">Long-Distance</div>
+          <div class="fp-photo-hint">Photo coming soon</div>
         </div>
         <div class="fp-info">
           <div class="fp-name-row">
@@ -2583,7 +2905,7 @@
             <div class="fp-stat"><strong>6 yrs</strong><span>Experience</span></div>
           </div>
           <div class="fp-tags">
-            <span>🛣️ Long-Distance</span><span>🚛 Large Truck</span><span>🗺️ All of BC</span><span>⏱️ On-Time</span>
+            <span>Long-Distance</span><span>Large Truck</span><span>All of BC</span><span>On-Time</span>
           </div>
         </div>
       </div>
@@ -2591,8 +2913,8 @@
       <div class="fp-member-card">
         <div class="fp-photo" style="background:linear-gradient(135deg,#be185d,#9d174d)">
           <span class="fp-initials">SP</span>
-          <div class="fp-badge">🔧 Assembly Pro</div>
-          <div class="fp-photo-hint">📷 Photo coming soon</div>
+          <div class="fp-badge">Assembly Pro</div>
+          <div class="fp-photo-hint">Photo coming soon</div>
         </div>
         <div class="fp-info">
           <div class="fp-name-row">
@@ -2607,7 +2929,7 @@
             <div class="fp-stat"><strong>3 yrs</strong><span>Experience</span></div>
           </div>
           <div class="fp-tags">
-            <span>🔧 Assembly</span><span>📦 Packing</span><span>⚡ Fast</span><span>🛏️ IKEA Expert</span>
+            <span>Assembly</span><span>Packing</span><span>Fast</span><span>IKEA Expert</span>
           </div>
         </div>
       </div>
@@ -2615,8 +2937,8 @@
       <div class="fp-member-card">
         <div class="fp-photo" style="background:linear-gradient(135deg,#1e40af,#1d4ed8)">
           <span class="fp-initials">TN</span>
-          <div class="fp-badge">🗑️ Junk Removal</div>
-          <div class="fp-photo-hint">📷 Photo coming soon</div>
+          <div class="fp-badge">Junk Removal</div>
+          <div class="fp-photo-hint">Photo coming soon</div>
         </div>
         <div class="fp-info">
           <div class="fp-name-row">
@@ -2631,7 +2953,7 @@
             <div class="fp-stat"><strong>4 yrs</strong><span>Experience</span></div>
           </div>
           <div class="fp-tags">
-            <span>🗑️ Junk Removal</span><span>♻️ Eco-Friendly</span><span>⚡ Same-Day</span><span>🤝 Donation</span>
+            <span>Junk Removal</span><span>Eco-Friendly</span><span>Same-Day</span><span>Donation</span>
           </div>
         </div>
       </div>
@@ -2639,8 +2961,8 @@
     </div>
 
     <div class="fullpanel-cta">
-      <a href="#contact" class="btn btn-primary" onclick="closePanel('crew')">🚛 Book Your Move & Meet Your Crew</a>
-      <a href="tel:+16045374140" class="btn btn-outline">📞 Call Us — 604-537-4140</a>
+      <a href="#contact" class="btn btn-primary" onclick="closePanel('crew')">Book Your Move & Meet Your Crew</a>
+      <a href="tel:+16045374140" class="btn btn-outline">Call Us — 604-537-4140</a>
     </div>
   </div>
 </div>
@@ -2662,8 +2984,8 @@
       <div class="fp-truck-card">
         <div class="fp-truck-visual" style="background:linear-gradient(135deg,#f1f5f9,#e2e8f0)">
           <div class="fp-truck-img-area">
-            <div class="fp-truck-emoji">🚐</div>
-            <div class="fp-truck-photo-hint">📷 Photo coming soon</div>
+            <div class="fp-truck-emoji" style="font-size:.8rem;font-weight:700;color:#475569">VAN</div>
+            <div class="fp-truck-photo-hint">Photo coming soon</div>
           </div>
           <div class="fp-truck-plate-wrap">
             <div class="fp-truck-plate">AMB · 001</div>
@@ -2672,7 +2994,7 @@
         <div class="fp-truck-info">
           <div class="fp-truck-name-row">
             <h3>The Swift</h3>
-            <span class="fp-truck-status available">✅ Available</span>
+            <span class="fp-truck-status available">Available</span>
           </div>
           <div class="fp-truck-size">Cargo Van</div>
           <div class="fp-truck-specs-table">
@@ -2684,17 +3006,17 @@
             <div class="spec-row"><span>Parking</span><strong>Fits residential streets</strong></div>
           </div>
           <div class="fp-tags" style="margin-top:16px">
-            <span>🏠 Studio–1BR</span><span>⚡ Same-Day OK</span><span>🅿️ Easy Parking</span>
+            <span>Studio–1BR</span><span>Same-Day OK</span><span>Easy Parking</span>
           </div>
         </div>
       </div>
 
       <div class="fp-truck-card featured-truck">
-        <div class="fp-truck-popular">⭐ Most Requested</div>
+        <div class="fp-truck-popular">Most Requested</div>
         <div class="fp-truck-visual" style="background:linear-gradient(135deg,#fef3c7,#fde68a)">
           <div class="fp-truck-img-area">
-            <div class="fp-truck-emoji">🚛</div>
-            <div class="fp-truck-photo-hint">📷 Photo coming soon</div>
+            <div class="fp-truck-emoji"></div>
+            <div class="fp-truck-photo-hint">Photo coming soon</div>
           </div>
           <div class="fp-truck-plate-wrap">
             <div class="fp-truck-plate">AMB · 002</div>
@@ -2703,7 +3025,7 @@
         <div class="fp-truck-info">
           <div class="fp-truck-name-row">
             <h3>The Workhorse</h3>
-            <span class="fp-truck-status available">✅ Available</span>
+            <span class="fp-truck-status available">Available</span>
           </div>
           <div class="fp-truck-size">16ft Box Truck</div>
           <div class="fp-truck-specs-table">
@@ -2715,7 +3037,7 @@
             <div class="spec-row"><span>Extras</span><strong>Padded interior walls</strong></div>
           </div>
           <div class="fp-tags" style="margin-top:16px">
-            <span>🏠 1–2 BR</span><span>🛡️ Padded Interior</span><span>↕️ Loading Ramp</span>
+            <span>1–2 BR</span><span>Padded Interior</span><span>Loading Ramp</span>
           </div>
         </div>
       </div>
@@ -2723,8 +3045,8 @@
       <div class="fp-truck-card">
         <div class="fp-truck-visual" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0)">
           <div class="fp-truck-img-area">
-            <div class="fp-truck-emoji">🚚</div>
-            <div class="fp-truck-photo-hint">📷 Photo coming soon</div>
+            <div class="fp-truck-emoji" style="font-size:.8rem;font-weight:700;color:#15803d">26FT</div>
+            <div class="fp-truck-photo-hint">Photo coming soon</div>
           </div>
           <div class="fp-truck-plate-wrap">
             <div class="fp-truck-plate">AMB · 003</div>
@@ -2733,7 +3055,7 @@
         <div class="fp-truck-info">
           <div class="fp-truck-name-row">
             <h3>The Titan</h3>
-            <span class="fp-truck-status available">✅ Available</span>
+            <span class="fp-truck-status available">Available</span>
           </div>
           <div class="fp-truck-size">26ft Box Truck</div>
           <div class="fp-truck-specs-table">
@@ -2745,7 +3067,7 @@
             <div class="spec-row"><span>Extras</span><strong>10% off inter-city moves</strong></div>
           </div>
           <div class="fp-tags" style="margin-top:16px">
-            <span>🏠 3–4+ BR</span><span>🛣️ Long-Distance</span><span>🏢 Commercial</span>
+            <span>3–4+ BR</span><span>Long-Distance</span><span>Commercial</span>
           </div>
         </div>
       </div>
@@ -2753,8 +3075,8 @@
     </div>
 
     <div class="fullpanel-cta">
-      <a href="#contact" class="btn btn-primary" onclick="closePanel('trucks')">🚛 Book Your Move — We'll Assign Your Truck</a>
-      <a href="tel:+16045374140" class="btn btn-outline">📞 Call Us — 604-537-4140</a>
+      <a href="#contact" class="btn btn-primary" onclick="closePanel('trucks')">Book Your Move — We'll Assign Your Truck</a>
+      <a href="tel:+16045374140" class="btn btn-outline">Call Us — 604-537-4140</a>
     </div>
   </div>
 </div>
@@ -2763,7 +3085,7 @@
 <section class="section" id="review-cta">
   <div class="container">
     <div class="review-cta">
-      <h2>⭐ Leave a Review, Save $20</h2>
+      <h2>Leave a Review & Save $20</h2>
       <p>We grow through word of mouth. Share your experience on Google and we'll take $20 off your next move — our thank-you to you.</p>
       <div class="review-steps">
         <div class="review-step">
@@ -2912,35 +3234,35 @@
         <p>Get your free, no-obligation quote today. We respond within a few hours on business days, same day on weekdays.</p>
         <div class="contact-items">
           <div class="contact-item">
-            <div class="icon">📞</div>
+            <div class="icon"></div>
             <div>
               <strong>Phone</strong>
               <span><a href="tel:+16045374140" style="color:var(--red);font-weight:600;">604-537-4140</a></span>
             </div>
           </div>
           <div class="contact-item">
-            <div class="icon">📧</div>
+            <div class="icon"></div>
             <div>
               <strong>Email</strong>
               <span><a href="mailto:info@affordablemoversbc.com" style="color:var(--red);font-weight:600;">info@affordablemoversbc.com</a></span>
             </div>
           </div>
           <div class="contact-item">
-            <div class="icon">📍</div>
+            <div class="icon" style="font-size:1rem;font-weight:800;color:var(--red)">✓</div>
             <div>
               <strong>Vancouver Office</strong>
               <span>1255 W Georgia Street, Vancouver, BC V6E 3J7</span>
             </div>
           </div>
           <div class="contact-item">
-            <div class="icon">📍</div>
+            <div class="icon" style="font-size:1rem;font-weight:800;color:var(--red)">✓</div>
             <div>
               <strong>Burnaby Office</strong>
               <span>4350 Beresford Street, Burnaby, BC V5H 4K9</span>
             </div>
           </div>
           <div class="contact-item">
-            <div class="icon">🕐</div>
+            <div class="icon" style="font-size:1rem;font-weight:800;color:var(--red)">✓</div>
             <div>
               <strong>Hours</strong>
               <span>7 days a week · 7:00 AM – 8:00 PM</span>
@@ -3004,7 +3326,7 @@
             <textarea rows="3" placeholder="Tell us about your move: home size, elevator access, special items, etc."></textarea>
           </div>
           <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:16px;font-size:1rem;">
-            🚛 Send My Quote Request →
+            Send My Quote Request →
           </button>
         </form>
       </div>
@@ -3012,7 +3334,18 @@
   </div>
 </section>
 
-<!-- Booking Modal — 3 steps -->
+<!-- Questions Popup -->
+<div class="qpopup-overlay" id="qpopup-overlay" onclick="closeQPopup(event)">
+  <div class="qpopup">
+    <div class="qpopup-icon"></div>
+    <h3>Any specific questions<br>before booking?</h3>
+    <p>Our team is standing by to answer anything — pricing, logistics, special items, or anything else. Just call us and we'll sort it out!</p>
+    <a href="tel:+16045374140" class="qpopup-call">Call 604-537-4140</a>
+    <div><button class="qpopup-close" onclick="closeQPopupBtn()">No thanks, continue booking →</button></div>
+  </div>
+</div>
+
+<!-- Booking Modal — 4 steps -->
 <div class="modal-overlay" id="booking-modal" onclick="closeModal(event)">
   <div class="modal-box" style="max-width:600px;">
 
@@ -3022,7 +3355,9 @@
       <div class="bk-step-divider"></div>
       <div class="bk-step" id="bkstep-2"><span>2</span> Your details</div>
       <div class="bk-step-divider"></div>
-      <div class="bk-step" id="bkstep-3"><span>3</span> Confirmed!</div>
+      <div class="bk-step" id="bkstep-3" style="display:none"></div>
+      <div class="bk-step-divider" style="display:none"></div>
+      <div class="bk-step" id="bkstep-4"><span>3</span> Confirmed!</div>
     </div>
 
     <!-- STEP 1: Date + Time -->
@@ -3036,16 +3371,16 @@
       </div>
 
       <div class="bk-date-field">
-        <label>📅 Move date</label>
+        <label>Move date</label>
         <input type="date" id="bk-date" onchange="loadTimeSlots()" />
       </div>
 
       <div id="timeslot-wrap" style="display:none;">
-        <div class="modal-section-label" style="margin-top:16px;">🕐 Available time slots</div>
+        <div class="modal-section-label" style="margin-top:16px;">Available time slots</div>
         <div class="timeslot-grid" id="timeslot-grid"></div>
         <div class="timeslot-legend">
-          <span class="ts-avail">✅ Available</span>
-          <span class="ts-taken">🚫 Booked</span>
+          <span class="ts-avail">Available</span>
+          <span class="ts-taken">Booked</span>
         </div>
       </div>
 
@@ -3092,26 +3427,68 @@
 
       <div id="bk-error" style="color:var(--red);font-size:.82rem;font-weight:600;display:none;margin-bottom:10px;"></div>
 
+      <!-- Questions before paying CTA -->
+      <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:10px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+        
+        <div style="flex:1;font-size:.82rem;color:#92400e;font-weight:600;">Any specific questions before booking?</div>
+        <a href="tel:+16045374140" style="background:#D62828;color:white;padding:8px 14px;border-radius:8px;font-size:.8rem;font-weight:700;white-space:nowrap;text-decoration:none;">Call us</a>
+      </div>
+
+      <div id="bk-error" style="color:var(--red);font-size:.82rem;font-weight:600;display:none;margin-bottom:10px;"></div>
+
       <div style="display:flex;gap:10px;">
         <button class="modal-btn-close" onclick="goStep(1)" style="flex:0 0 auto;padding:14px 18px;">← Back</button>
-        <button class="est-calc-btn" onclick="submitBooking()" style="flex:1;" id="bk-submit-btn">
-          ✅ Confirm My Booking
+        <button class="est-calc-btn" onclick="goToPayment()" style="flex:1;" id="bk-submit-btn">
+          Confirm My Booking
         </button>
-      </div>
-      <div style="text-align:center;margin-top:10px;font-size:.72rem;color:var(--gray);">
-        We'll email you a confirmation right away · No deposit required
       </div>
     </div>
 
-    <!-- STEP 3: Confirmed -->
+    <!-- STEP 3: Pay deposit -->
     <div class="modal-body" id="bk-panel-3" style="display:none;">
-      <div style="text-align:center;padding:8px 0 20px;">
-        <div class="modal-check" style="margin:0 auto 16px;">✓</div>
-        <div style="font-size:1.3rem;font-weight:900;color:var(--navy);margin-bottom:6px;">You're booked! 🎉</div>
-        <div style="font-size:.88rem;color:var(--gray);">Confirmation sent to <strong id="bk-confirm-email"></strong></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <div>
+          <div style="font-size:1.1rem;font-weight:800;color:var(--navy);">Secure your booking</div>
+          <div style="font-size:.8rem;color:var(--gray);margin-top:2px;">Pay 30% deposit now to lock in your time slot.</div>
+        </div>
+        <button class="fullpanel-close" onclick="closeModalDirect()" style="flex-shrink:0;">✕</button>
       </div>
 
-      <div class="modal-section-label">👤 Your Assigned Mover</div>
+      <div class="pay-summary">
+        <div class="pay-summary-title">Move Summary</div>
+        <div id="pay-chip-summary"></div>
+      </div>
+
+      <div class="pay-deposit-box">
+        <div class="pay-deposit-label">30% Deposit Due Now</div>
+        <div class="pay-deposit-amount" id="pay-deposit-display">$—</div>
+        <div class="pay-deposit-sub" id="pay-remaining-display">Remaining $— due on move day</div>
+      </div>
+
+      <div id="paypal-button-container"></div>
+      <div class="pay-secure">Payments secured by PayPal · 48-hour free cancellation</div>
+
+      <div style="margin-top:14px;display:flex;gap:10px;">
+        <button class="modal-btn-close" onclick="goStep(2)" style="flex:0 0 auto;padding:14px 18px;">← Back</button>
+        <button class="est-calc-btn" onclick="skipPaymentConfirm()" style="flex:1;background:var(--navy);" id="bk-skip-pay-btn">
+          Book Now (Pay on Move Day)
+        </button>
+      </div>
+      <div style="text-align:center;margin-top:8px;font-size:.72rem;color:var(--gray);">
+        Prefer to pay everything on move day? No problem — just book now.
+      </div>
+    </div>
+
+    <!-- STEP 4: Confirmed -->
+    <div class="modal-body" id="bk-panel-4" style="display:none;">
+      <div style="text-align:center;padding:8px 0 20px;">
+        <div class="modal-check" style="margin:0 auto 16px;">✓</div>
+        <div style="font-size:1.3rem;font-weight:900;color:var(--navy);margin-bottom:6px;">You're booked!</div>
+        <div style="font-size:.88rem;color:var(--gray);">Confirmation sent to <strong id="bk-confirm-email"></strong></div>
+        <div id="bk-deposit-confirm-note" style="margin-top:10px;background:#dcfce7;border-radius:8px;padding:8px 12px;font-size:.82rem;color:#15803d;font-weight:600;display:none;"></div>
+      </div>
+
+      <div class="modal-section-label">Your Assigned Mover</div>
       <div class="assigned-card">
         <div class="assigned-avatar" id="modal-avatar-bg"><span id="modal-avatar-initials"></span></div>
         <div class="assigned-info">
@@ -3122,7 +3499,7 @@
         <div class="assigned-badge" id="modal-mover-badge"></div>
       </div>
 
-      <div class="modal-section-label">🚛 Your Assigned Truck</div>
+      <div class="modal-section-label">Your Assigned Truck</div>
       <div class="truck-assigned">
         <div class="truck-thumb" id="modal-truck-bg"><span id="modal-truck-icon"></span></div>
         <div class="truck-assigned-info">
@@ -3139,7 +3516,7 @@
       </div>
 
       <div class="modal-actions">
-        <a href="tel:+16045374140" class="modal-btn-call">📞 Questions? Call 604-537-4140</a>
+        <a href="tel:+16045374140" class="modal-btn-call">Questions? Call 604-537-4140</a>
         <button class="modal-btn-close" onclick="closeModalDirect()">Close</button>
       </div>
     </div>
@@ -3153,7 +3530,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="logo">
-          <div class="logo-icon">🚛</div>
+          <div class="logo-icon" style="font-size:0;background:var(--red);border-radius:10px;width:44px;height:44px;overflow:hidden;"><img src="logo.png" alt="Affordable Movers BC" style="width:100%;height:100%;object-fit:contain;padding:4px;" onerror="this.parentElement.innerHTML='M';this.parentElement.style.fontSize='1.2rem';this.parentElement.style.color='white';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';" /></div>
           <div class="logo-text">
             <strong style="color:white;">Affordable Movers BC</strong>
             <span>British Columbia's Trusted Movers</span>
@@ -3161,10 +3538,10 @@
         </div>
         <p>Your trusted partner for seamless, reliable, and affordable moving services across British Columbia. BBB Accredited. Fully Insured. No Hidden Fees.</p>
         <div class="footer-social">
-          <a href="#" class="social-btn">📘</a>
-          <a href="https://instagram.com/affordablemovers.bc" class="social-btn">📸</a>
-          <a href="#" class="social-btn">🐦</a>
-          <a href="mailto:info@affordablemoversbc.com" class="social-btn">✉️</a>
+          <a href="#" class="social-btn">fb</a>
+          <a href="https://instagram.com/affordablemovers.bc" class="social-btn">ig</a>
+          <a href="#" class="social-btn">tw</a>
+          <a href="mailto:info@affordablemoversbc.com" class="social-btn">@</a>
         </div>
       </div>
       <div class="footer-col">
@@ -3209,7 +3586,7 @@
           <li><a href="tel:+16045374140">604-537-4140</a></li>
         </ul>
         <div style="margin-top:20px;">
-          <div class="bbb-badge">✅ BBB Accredited</div>
+          <div class="bbb-badge">BBB Accredited</div>
         </div>
       </div>
     </div>
@@ -3220,7 +3597,8 @@
         <a href="#" style="color:rgba(255,255,255,.5);">Privacy Policy</a>
       </div>
       <div style="color:rgba(255,255,255,.4);font-size:.78rem;">
-        Vancouver: 1255 W Georgia St · Burnaby: 4350 Beresford St · 📞 604-537-4140
+        Vancouver: 1255 W Georgia St · Burnaby: 4350 Beresford St · 604-537-4140
+        · <a href="staff.html" style="color:rgba(255,255,255,.25);font-size:.72rem;">Staff Login</a>
       </div>
     </div>
   </div>
@@ -3228,8 +3606,8 @@
 
 <!-- Sticky Buttons -->
 <div class="sticky-phone">
-  <a href="#contact" class="sticky-btn sticky-quote">📋 Free Quote</a>
-  <a href="tel:+16045374140" class="sticky-btn sticky-call">📞 Call Now</a>
+  <a href="#contact" class="sticky-btn sticky-quote">Free Quote</a>
+  <a href="tel:+16045374140" class="sticky-btn sticky-call">Call Now</a>
 </div>
 
 <script>
@@ -3268,7 +3646,7 @@
     if (!matches.length) { list.style.display = 'none'; return; }
     list.innerHTML = matches.map(l =>
       `<div class="autocomplete-item" onmousedown="pickLocation('${inputId}','${listId}','${l.name}')" >
-        📍 ${l.name}
+        ${l.name}
        </div>`
     ).join('');
     list.style.display = 'block';
@@ -3352,6 +3730,12 @@
     return m ? m[1] : null;
   }
 
+  // Our depot location (Vancouver office)
+  var DEPOT_LAT = 49.2827, DEPOT_LNG = -123.1207;
+
+  // Leaflet map instance
+  var _routeMap = null;
+
   function estimatePrice() {
     const fromVal = document.getElementById('from-input').value.trim();
     const toVal   = document.getElementById('to-input').value.trim();
@@ -3360,33 +3744,35 @@
 
     if (!fromVal || !toVal) {
       result.classList.remove('visible');
+      ['route-map-wrap','route-timing','deposit-split'].forEach(id => {
+        document.getElementById(id).classList.remove('visible');
+      });
+      document.getElementById('questions-cta').classList.remove('visible');
+      document.getElementById('result-book-actions').style.display = 'none';
+      document.getElementById('unhappy-btn').style.display = 'none';
       calcBtn.style.display = 'flex';
       return;
     }
 
-    calcBtn.innerHTML = '⚡ Calculating…';
+    calcBtn.innerHTML = 'Calculating…';
     calcBtn.classList.add('calculating');
 
     setTimeout(() => {
       calcBtn.style.display = 'none';
       result.classList.add('visible');
 
-      // Size + duration
       const sizeKey = getPillValue('size-pills') || '1br';
       const cfg     = SIZE_CONFIG[sizeKey] || SIZE_CONFIG['1br'];
       const hrs     = parseFloat(getPillValue('dur-pills') || '3');
 
-      // Distance
       const distKm = estimateDistanceKm(fromVal, toVal);
       const isLong = distKm !== null && distKm > 50;
 
-      // Floors
       const floorSurcharge = (
         (parseInt(document.getElementById('floor-from').value) || 0) +
         (parseInt(document.getElementById('floor-to').value) || 0)
       ) * 50;
 
-      // Add-ons (flat fees)
       let addonTotal = 0, addonLabels = [];
       document.querySelectorAll('[data-addon]:checked').forEach(cb => {
         const key = cb.dataset.addon;
@@ -3395,21 +3781,16 @@
         addonLabels.push(lbl[key]);
       });
 
-      // Long-distance add
       const longDistAdd = isLong ? Math.round(distKm * 2.2) : 0;
-
-      // Tab modifier
       const tabMod = currentTab === 'office' ? 1.2 : 1;
-
-      // FINAL price (firm single number, not range)
       const base = cfg.rateHr * hrs * tabMod;
       const total = Math.round((base + floorSurcharge + addonTotal + longDistAdd) / 25) * 25;
       const totalGST = Math.round(total * 1.05 / 25) * 25;
+      const deposit  = Math.round(totalGST * 0.30 / 5) * 5;
+      const remaining = totalGST - deposit;
 
-      // Store for booking modal
-      window._lastEstimate = { fromVal, toVal, sizeKey, hrs, cfg, distKm, isLong, total, totalGST, addonLabels };
+      window._lastEstimate = { fromVal, toVal, sizeKey, hrs, cfg, distKm, isLong, total, totalGST, deposit, remaining, addonLabels };
 
-      // Update UI
       document.getElementById('result-amount').textContent = `$${total.toLocaleString()}`;
       document.getElementById('result-note').textContent =
         `${cfg.label} · ${hrs} hrs · + 5% GST = $${totalGST.toLocaleString()} total${isLong ? ` · Long-distance (~${distKm} km)` : ''}`;
@@ -3424,7 +3805,92 @@
       document.getElementById('result-breakdown').innerHTML =
         chips.map(c => `<span class="result-chip">${c}</span>`).join('');
 
+      // Deposit split
+      document.getElementById('ds-deposit').textContent   = `$${deposit.toLocaleString()}`;
+      document.getElementById('ds-remaining').textContent = `$${remaining.toLocaleString()}`;
+      document.getElementById('ds-total').textContent     = `$${totalGST.toLocaleString()}`;
+      if (PAYMENT_ENABLED) document.getElementById('deposit-split').classList.add('visible');
+
+      // Show questions CTA + book button
+      document.getElementById('questions-cta').classList.add('visible');
+      document.getElementById('result-book-actions').style.display = 'flex';
+      document.getElementById('unhappy-btn').style.display = 'block';
+
+      // Route map + timing
+      const fromCoords = getCoords(fromVal);
+      const toCoords   = getCoords(toVal);
+      if (fromCoords && toCoords) {
+        showRouteMap(fromCoords, toCoords, hrs);
+      }
     }, 500);
+  }
+
+  /* ── Route map (Leaflet + OSRM free routing) ──────────────────── */
+  function showRouteMap(from, to, moveHrs) {
+    document.getElementById('route-map-wrap').classList.add('visible');
+    document.getElementById('route-timing').classList.add('visible');
+
+    // Show travel time estimates while OSRM loads
+    const depotDistKm = haversineKm(DEPOT_LAT, DEPOT_LNG, from.lat, from.lng);
+    const avgSpeed = 45; // km/h urban
+    const travelMins = Math.max(15, Math.round(depotDistKm / avgSpeed * 60));
+    const moveMins = Math.round(moveHrs * 60);
+    const moveDist = Math.round(haversineKm(from.lat, from.lng, to.lat, to.lng));
+
+    document.getElementById('rt-travel').textContent   = travelMins < 60 ? `${travelMins} min` : `${Math.floor(travelMins/60)}h ${travelMins%60}m`;
+    document.getElementById('rt-move').textContent     = `${moveHrs} hrs`;
+    document.getElementById('rt-distance').textContent = `~${moveDist} km`;
+
+    // Initialize or reset Leaflet map
+    if (_routeMap) {
+      _routeMap.remove();
+      _routeMap = null;
+    }
+    setTimeout(() => {
+      _routeMap = L.map('route-map', { zoomControl: false, attributionControl: false });
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(_routeMap);
+
+      const redIcon = L.divIcon({ html:'<div style="background:#D62828;width:12px;height:12px;border-radius:50%;border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,.4)"></div>', iconSize:[12,12], iconAnchor:[6,6] });
+      const greenIcon = L.divIcon({ html:'<div style="background:#16a34a;width:12px;height:12px;border-radius:50%;border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,.4)"></div>', iconSize:[12,12], iconAnchor:[6,6] });
+
+      L.marker([from.lat, from.lng], { icon: greenIcon }).addTo(_routeMap).bindPopup('📦 Pickup: ' + from.name);
+      L.marker([to.lat, to.lng],   { icon: redIcon }).addTo(_routeMap).bindPopup('🏠 Drop-off: ' + to.name);
+
+      const bounds = L.latLngBounds([[from.lat, from.lng],[to.lat, to.lng]]);
+      _routeMap.fitBounds(bounds, { padding: [30, 30] });
+
+      // Fetch actual road route from OSRM (free, no API key)
+      fetch(`https://router.project-osrm.org/route/v1/driving/${from.lng},${from.lat};${to.lng},${to.lat}?overview=full&geometries=geojson`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.routes && data.routes[0]) {
+            const route = data.routes[0];
+            const coords = route.geometry.coordinates.map(c => [c[1], c[0]]);
+            L.polyline(coords, { color: '#D62828', weight: 4, opacity: 0.85 }).addTo(_routeMap);
+            _routeMap.fitBounds(L.latLngBounds(coords), { padding: [20, 20] });
+            // Update travel time with real road data
+            const realDriveMins = Math.round(route.duration / 60);
+            document.getElementById('rt-distance').textContent = `${Math.round(route.distance/1000)} km`;
+            // Depot→pickup driving time (estimate based on ratio)
+            const realTravelMins = Math.round(depotDistKm / (route.distance/1000) * realDriveMins * 0.9);
+            document.getElementById('rt-travel').textContent = realTravelMins < 60 ? `${realTravelMins} min` : `${Math.floor(realTravelMins/60)}h ${realTravelMins%60}m`;
+          }
+        })
+        .catch(() => { /* OSRM unavailable, keep haversine estimate */ });
+    }, 100);
+  }
+
+  /* ── Questions popup ──────────────────────────────────────────── */
+  function openQPopup() {
+    document.getElementById('qpopup-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeQPopup(e) {
+    if (e.target === document.getElementById('qpopup-overlay')) closeQPopupBtn();
+  }
+  function closeQPopupBtn() {
+    document.getElementById('qpopup-overlay').classList.remove('open');
+    document.body.style.overflow = '';
   }
 
   /* ── FAQ Toggle ────────────────────────────────────────────────── */
@@ -3534,16 +4000,20 @@
     document.getElementById('bk-next1').style.display = 'flex';
   }
 
-  /* ── Booking modal steps ────────────────────────────────────────── */
+  /* ── Booking modal steps (4 steps) ─────────────────────────────── */
   function goStep(n) {
-    [1,2,3].forEach(i => {
-      document.getElementById(`bk-panel-${i}`).style.display = i === n ? 'block' : 'none';
+    [1,2,3,4].forEach(i => {
+      const panel = document.getElementById(`bk-panel-${i}`);
+      if (panel) panel.style.display = i === n ? 'block' : 'none';
       const stepEl = document.getElementById(`bkstep-${i}`);
-      stepEl.classList.remove('active','done');
-      if (i < n) stepEl.classList.add('done');
-      if (i === n) stepEl.classList.add('active');
+      if (stepEl) {
+        stepEl.classList.remove('active','done');
+        if (i < n) stepEl.classList.add('done');
+        if (i === n) stepEl.classList.add('active');
+      }
     });
     if (n === 2) buildBookingSummaryChip();
+    if (n === 3) buildPaymentStep();
   }
 
   function buildBookingSummaryChip() {
@@ -3555,12 +4025,14 @@
        ${fmt} · ${selectedSlot || '—'} · ${e.hrs || '?'} hrs · <strong>$${(e.total||0).toLocaleString()} + GST</strong>`;
   }
 
-  /* ── Submit booking ────────────────────────────────────────────── */
-  async function submitBooking() {
+  /* ── Step 2 → validate → go to payment ──────────────────────────── */
+  // Set to true when Whop payment is ready to go live
+  var PAYMENT_ENABLED = false;
+
+  function goToPayment() {
     const name  = document.getElementById('bk-name').value.trim();
     const phone = document.getElementById('bk-phone').value.trim();
     const email = document.getElementById('bk-email').value.trim();
-    const notes = document.getElementById('bk-notes').value.trim();
     const errEl = document.getElementById('bk-error');
     const date  = document.getElementById('bk-date').value;
 
@@ -3574,7 +4046,6 @@
       errEl.style.display = 'block';
       return;
     }
-    // Double-check availability (race condition guard)
     if (isSlotTaken(date, selectedSlot)) {
       errEl.textContent = 'Sorry — that slot was just booked. Please go back and choose another time.';
       errEl.style.display = 'block';
@@ -3582,17 +4053,85 @@
     }
     errEl.style.display = 'none';
 
-    const btn = document.getElementById('bk-submit-btn');
-    btn.textContent = 'Sending…';
-    btn.disabled = true;
+    if (PAYMENT_ENABLED) {
+      goStep(3); // Show deposit/payment step
+    } else {
+      confirmBooking(false, null); // Skip straight to confirmed
+    }
+  }
 
+  /* ── Build payment step ─────────────────────────────────────────── */
+  function buildPaymentStep() {
+    const e = window._lastEstimate || {};
+    const date = document.getElementById('bk-date').value;
+    const fmt  = date ? new Date(date+'T12:00:00').toLocaleDateString('en-CA',{weekday:'short',month:'short',day:'numeric'}) : '—';
+    const name = document.getElementById('bk-name').value.trim();
+
+    document.getElementById('pay-chip-summary').innerHTML =
+      `<div class="pay-row"><span>${e.fromVal||'?'} → ${e.toVal||'?'}</span></div>
+       <div class="pay-row"><span>${fmt} · ${selectedSlot||'—'} · ${e.hrs||'?'} hrs</span></div>
+       <div class="pay-row"><span>Client</span><span>${name}</span></div>
+       <div class="pay-row total"><span>Total incl. GST</span><span>$${(e.totalGST||0).toLocaleString()}</span></div>`;
+
+    const deposit   = e.deposit || 0;
+    const remaining = e.remaining || 0;
+    document.getElementById('pay-deposit-display').textContent  = `$${deposit.toLocaleString()}`;
+    document.getElementById('pay-remaining-display').textContent = `Remaining $${remaining.toLocaleString()} due on move day`;
+
+    // Render PayPal button
+    const container = document.getElementById('paypal-button-container');
+    container.innerHTML = '';
+    if (window.paypal) {
+      paypal.Buttons({
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              description: `Moving deposit — ${e.fromVal} → ${e.toVal}`,
+              amount: { value: deposit.toFixed(2), currency_code: 'CAD' }
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            confirmBooking(true, details.id);
+          });
+        },
+        onError: function(err) {
+          container.innerHTML = '<div style="color:#D62828;font-size:.82rem;text-align:center;padding:10px;">Payment failed. Please try again or book without deposit.</div>';
+        },
+        style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay' }
+      }).render('#paypal-button-container');
+    } else {
+      container.innerHTML = '<div style="background:#fef3c7;border-radius:8px;padding:12px;font-size:.82rem;color:#92400e;text-align:center;">PayPal is loading… If it doesn\'t appear, click "Book Now (Pay on Move Day)" below.</div>';
+    }
+  }
+
+  /* ── Skip deposit — book without pre-payment ────────────────────── */
+  function skipPaymentConfirm() {
+    confirmBooking(false, null);
+  }
+
+  /* ── Confirm booking (shared by PayPal success + skip) ──────────── */
+  async function confirmBooking(depositPaid, transactionId) {
+    const name  = document.getElementById('bk-name').value.trim();
+    const phone = document.getElementById('bk-phone').value.trim();
+    const email = document.getElementById('bk-email').value.trim();
+    const notes = document.getElementById('bk-notes').value.trim();
+    const date  = document.getElementById('bk-date').value;
     const e = window._lastEstimate || {};
     const fmt = new Date(date+'T12:00:00').toLocaleDateString('en-CA',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
 
-    // Save to localStorage immediately
-    saveBooking({ date, time: selectedSlot, name, id: Date.now() });
+    // Save to localStorage
+    saveBooking({
+      date, time: selectedSlot, name, phone, email, id: Date.now(),
+      fromVal: e.fromVal, toVal: e.toVal, serviceTab: (currentTab === 'home' ? 'Home Move' : currentTab === 'office' ? 'Office Move' : currentTab === 'specialty' ? 'Specialty' : 'Storage'),
+      sizeKey: e.sizeKey, hrs: e.hrs, total: e.total, totalGST: e.totalGST,
+      deposit: depositPaid ? e.deposit : 0, depositPaid, transactionId,
+      status: 'confirmed', notes,
+      crewId: assignCrewId(currentTab), truck: assignTruckId(e.sizeKey || '1br'),
+    });
 
-    // Send email via Formspree (replace YOUR_FORM_ID with real ID from formspree.io)
+    // Send email via Formspree
     try {
       await fetch('https://formspree.io/f/YOUR_FORM_ID', {
         method: 'POST',
@@ -3602,20 +4141,46 @@
           Name: name, Phone: phone, Email: email,
           From: e.fromVal, To: e.toVal,
           Date: fmt, Time: selectedSlot,
-          Duration: `${e.hrs} hrs`, Size: e.sizeKey,
-          Price: `$${e.total} + 5% GST`,
+          Duration: `${e.hrs} hrs`, 'Home Size': e.sizeKey,
+          Truck: assignTruckId(e.sizeKey) === 't1' ? 'The Workhorse (16ft)' : assignTruckId(e.sizeKey) === 't2' ? 'Big Blue (20ft)' : 'The Sprinter (Van)',
+          'Assigned Crew': assignCrewId(currentTab) === 'c1' ? 'Carlos M.' : assignCrewId(currentTab) === 'c2' ? 'Devon T.' : 'Marcus R.',
+          'Total Price': `$${e.total} + 5% GST = $${e.totalGST}`,
+          'Deposit Paid': depositPaid ? `$${e.deposit} via PayPal (TXN: ${transactionId})` : 'None — pay on move day',
+          'Remaining Due': `$${depositPaid ? e.remaining : e.totalGST} on move day`,
           Notes: notes || 'None',
         })
       });
-    } catch (_) { /* email failed silently — booking still saved locally */ }
+    } catch (_) {}
 
-    // Populate step 3
+    // Show confirmation step
     document.getElementById('bk-confirm-email').textContent = email;
+    const depositNote = document.getElementById('bk-deposit-confirm-note');
+    if (depositPaid) {
+      depositNote.style.display = 'block';
+      depositNote.textContent = `✅ $${e.deposit} deposit paid — Remaining $${e.remaining} due on move day`;
+    } else {
+      depositNote.style.display = 'block';
+      depositNote.style.background = '#fef3c7';
+      depositNote.style.color = '#92400e';
+      depositNote.textContent = `Full amount $${e.totalGST} due on move day — no deposit taken`;
+    }
     populateCrewTruck();
     document.getElementById('modal-route').textContent    = `${(e.fromVal||'').split(',')[0]} → ${(e.toVal||'').split(',')[0]}`;
     document.getElementById('modal-price').textContent    = `$${(e.totalGST||0).toLocaleString()}`;
     document.getElementById('modal-datetime').textContent = `${fmt.split(',')[0].trim()} ${selectedSlot}`;
-    goStep(3);
+    goStep(4);
+  }
+
+  /* ── Crew/Truck ID helpers ──────────────────────────────────────── */
+  function assignCrewId(tab) {
+    if (tab === 'office') return 'c2';
+    if (tab === 'specialty') return 'c1';
+    return ['c1','c2','c3'][Math.floor(Date.now() / 1000) % 3];
+  }
+  function assignTruckId(sizePill) {
+    if (sizePill === 'studio') return 't3';
+    if (sizePill === '1br' || sizePill === '2br') return 't1';
+    return 't2';
   }
 
   function populateCrewTruck() {
@@ -3669,7 +4234,6 @@
   }
 
   function openBookingModal() {
-    // Reset to step 1
     goStep(1);
     selectedSlot = null;
     document.getElementById('bk-date').value = '';
@@ -3682,7 +4246,7 @@
     document.getElementById('bk-notes').value = '';
     document.getElementById('bk-error').style.display = 'none';
     const btn = document.getElementById('bk-submit-btn');
-    btn.textContent = '✅ Confirm My Booking'; btn.disabled = false;
+    btn.textContent = 'Confirm My Booking'; btn.disabled = false;
 
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('bk-date').min = today;

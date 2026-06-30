@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Portal — Affordable Movers BC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red:    #D62828;
+      --red-dk: #A31E1E;
+      --navy:   #1A2B4A;
+      --navy-lt:#22375f;
+      --gold:   #F4A922;
+      --white:  #FFFFFF;
+      --off:    #F0F2F5;
+      --gray:   #6B7280;
+      --light:  #E5E7EB;
+      --text:   #111827;
+      --green:  #16a34a;
+      --blue:   #2563eb;
+      --purple: #7c3aed;
+      --orange: #ea580c;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--off); color: var(--text); min-height: 100vh; }
+
+    /* ── LOGIN SCREEN ── */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--navy) 0%, #0f1e36 100%);
+    }
+    .login-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.4);
+    }
+    .login-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .login-logo-icon {
+      width: 48px; height: 48px;
+      background: var(--red);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+    .login-logo-text { font-size: 1rem; font-weight: 800; color: var(--navy); line-height: 1.2; }
+    .login-logo-sub { font-size: .75rem; color: var(--gray); font-weight: 400; }
+    .login-card h2 { font-size: 1.5rem; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+    .login-card p { color: var(--gray); font-size: .9rem; margin-bottom: 28px; }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: .8rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .05em; }
+    .field input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid var(--light);
+      border-radius: 10px;
+      font-size: .95rem;
+      font-family: inherit;
+      transition: border-color .2s;
+      outline: none;
+    }
+    .field input:focus { border-color: var(--red); }
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+      margin-top: 8px;
+    }
+    .login-btn:hover { background: var(--red-dk); }
+    .login-err { color: var(--red); font-size: .85rem; margin-top: 10px; text-align: center; display: none; }
+    .back-link { display: block; text-align: center; margin-top: 20px; color: var(--gray); font-size: .85rem; }
+    .back-link a { color: var(--navy); font-weight: 600; }
+
+    /* ── DASHBOARD ── */
+    #dashboard { display: none; }
+
+    /* Sidebar */
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 240px;
+      background: var(--navy);
+      color: var(--white);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 100;
+    }
+    .sidebar-logo {
+      padding: 24px 20px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .sidebar-logo-icon { width: 36px; height: 36px; background: var(--red); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .sidebar-logo-text { font-size: .85rem; font-weight: 800; line-height: 1.2; }
+    .sidebar-logo-sub { font-size: .7rem; color: rgba(255,255,255,.5); font-weight: 400; }
+    .sidebar-nav { flex: 1; padding: 16px 12px; }
+    .nav-label { font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.35); padding: 16px 8px 8px; }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: .88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background .15s;
+      color: rgba(255,255,255,.75);
+      margin-bottom: 2px;
+    }
+    .nav-item:hover { background: rgba(255,255,255,.08); color: var(--white); }
+    .nav-item.active { background: var(--red); color: var(--white); font-weight: 700; }
+    .nav-item .nav-icon { width: 20px; text-align: center; font-size: 1rem; }
+    .sidebar-user {
+      padding: 16px 20px;
+      border-top: 1px solid rgba(255,255,255,.1);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .user-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .8rem; font-weight: 800; color: var(--navy);
+      flex-shrink: 0;
+    }
+    .user-name { font-size: .85rem; font-weight: 700; }
+    .user-role { font-size: .72rem; color: rgba(255,255,255,.5); }
+    .logout-btn { margin-left: auto; background: none; border: none; color: rgba(255,255,255,.5); cursor: pointer; font-size: 1rem; padding: 4px; }
+    .logout-btn:hover { color: var(--white); }
+
+    /* Main content */
+    .main { margin-left: 240px; flex: 1; }
+    .topbar {
+      background: var(--white);
+      border-bottom: 1px solid var(--light);
+      padding: 16px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .topbar h1 { font-size: 1.25rem; font-weight: 800; color: var(--navy); }
+    .topbar-date { font-size: .85rem; color: var(--gray); }
+    .content { padding: 32px; }
+
+    /* Stat cards */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+    .stat-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 20px 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+    .stat-label { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--gray); margin-bottom: 8px; }
+    .stat-value { font-size: 1.9rem; font-weight: 800; color: var(--navy); }
+    .stat-sub { font-size: .8rem; color: var(--gray); margin-top: 4px; }
+    .stat-badge { display: inline-block; padding: 2px 8px; border-radius: 100px; font-size: .72rem; font-weight: 700; margin-top: 6px; }
+    .badge-green { background: #dcfce7; color: #15803d; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gold { background: #fef3c7; color: #92400e; }
+
+    /* Calendar */
+    .panel { background: var(--white); border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); overflow: hidden; }
+    .panel-header { padding: 20px 24px; border-bottom: 1px solid var(--light); display: flex; align-items: center; justify-content: space-between; }
+    .panel-title { font-size: 1rem; font-weight: 800; color: var(--navy); }
+    .panel-body { padding: 24px; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+
+    /* Calendar grid */
+    .cal-nav { display: flex; align-items: center; gap: 12px; }
+    .cal-nav button { background: var(--off); border: none; border-radius: 8px; width: 32px; height: 32px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+    .cal-nav button:hover { background: var(--light); }
+    .cal-month { font-weight: 700; font-size: .95rem; color: var(--navy); min-width: 130px; text-align: center; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .cal-day-name { text-align: center; font-size: .72rem; font-weight: 700; color: var(--gray); text-transform: uppercase; padding: 8px 4px; }
+    .cal-cell {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-start;
+      padding: 4px;
+      cursor: pointer;
+      transition: background .15s;
+      position: relative;
+      min-height: 48px;
+    }
+    .cal-cell:hover { background: var(--off); }
+    .cal-cell.today { background: rgba(214,40,40,.08); }
+    .cal-cell.today .cal-date { color: var(--red); font-weight: 800; }
+    .cal-cell.other-month { opacity: .35; }
+    .cal-cell.selected { background: var(--navy); }
+    .cal-cell.selected .cal-date { color: var(--white); }
+    .cal-date { font-size: .8rem; font-weight: 600; color: var(--text); }
+    .cal-dots { display: flex; gap: 2px; flex-wrap: wrap; justify-content: center; margin-top: 2px; }
+    .cal-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    /* Bookings list */
+    .booking-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--light);
+    }
+    .booking-item:last-child { border-bottom: none; }
+    .booking-color-bar { width: 4px; border-radius: 4px; align-self: stretch; flex-shrink: 0; min-height: 40px; }
+    .booking-info { flex: 1; }
+    .booking-title { font-weight: 700; font-size: .9rem; color: var(--navy); margin-bottom: 2px; }
+    .booking-meta { font-size: .8rem; color: var(--gray); }
+    .booking-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .booking-tag { padding: 2px 8px; border-radius: 100px; font-size: .72rem; font-weight: 600; }
+    .booking-price { font-weight: 800; font-size: .95rem; color: var(--navy); text-align: right; white-space: nowrap; }
+    .booking-price-sub { font-size: .72rem; color: var(--gray); text-align: right; }
+
+    /* Detail modal */
+    .detail-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.5);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .detail-overlay.open { display: flex; }
+    .detail-card {
+      background: var(--white);
+      border-radius: 20px;
+      width: 100%; max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 80px rgba(0,0,0,.3);
+    }
+    .detail-header {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--light);
+      display: flex; align-items: flex-start; justify-content: space-between;
+    }
+    .detail-header h3 { font-size: 1.1rem; font-weight: 800; color: var(--navy); }
+    .detail-header p { font-size: .85rem; color: var(--gray); margin-top: 2px; }
+    .detail-close { background: var(--off); border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .detail-body { padding: 24px 28px; }
+    .detail-row { display: flex; gap: 12px; margin-bottom: 14px; }
+    .detail-label { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--gray); margin-bottom: 3px; }
+    .detail-val { font-size: .95rem; font-weight: 600; color: var(--text); }
+    .detail-section { margin-bottom: 20px; }
+    .detail-section-title { font-size: .8rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--navy); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--light); }
+    .detail-field { flex: 1; }
+    .assigned-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--off); border-radius: 100px;
+      padding: 6px 14px 6px 6px;
+      font-size: .85rem; font-weight: 600; color: var(--navy);
+    }
+    .assigned-avatar-sm { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 800; color: var(--white); }
+
+    /* Service color legend */
+    .legend { display: flex; gap: 16px; flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: .78rem; color: var(--gray); }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    /* Status badge */
+    .status-pill { display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: .72rem; font-weight: 700; }
+    .status-confirmed { background: #dcfce7; color: #15803d; }
+    .status-pending { background: #fef3c7; color: #92400e; }
+    .status-cancelled { background: #fee2e2; color: #dc2626; }
+
+    /* Empty state */
+    .empty { text-align: center; padding: 48px 24px; color: var(--gray); }
+    .empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .empty p { font-size: .9rem; }
+
+    /* Tabs */
+    .tab-bar { display: flex; gap: 4px; background: var(--off); border-radius: 10px; padding: 4px; margin-bottom: 20px; }
+    .tab-btn { flex: 1; padding: 8px; border: none; background: none; border-radius: 8px; font-size: .85rem; font-weight: 600; cursor: pointer; color: var(--gray); transition: all .15s; }
+    .tab-btn.active { background: var(--white); color: var(--navy); box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+
+    /* Filter bar */
+    .filter-bar { display: flex; gap: 10px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+    .filter-select { padding: 8px 14px; border: 2px solid var(--light); border-radius: 8px; font-family: inherit; font-size: .85rem; color: var(--text); background: var(--white); cursor: pointer; }
+    .filter-select:focus { outline: none; border-color: var(--navy); }
+    .search-input { flex: 1; min-width: 200px; padding: 8px 14px; border: 2px solid var(--light); border-radius: 8px; font-family: inherit; font-size: .85rem; }
+    .search-input:focus { outline: none; border-color: var(--navy); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .sidebar { width: 200px; }
+      .main { margin-left: 200px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .two-col, .three-col { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+    }
+
+    .view { display: none; }
+    .view.active { display: block; }
+  </style>
+</head>
+<body>
+
+<!-- ═══ LOGIN SCREEN ═══════════════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon">🚛</div>
+      <div>
+        <div class="login-logo-text">Affordable Movers BC</div>
+        <div class="login-logo-sub">Staff Portal</div>
+      </div>
+    </div>
+    <h2>Welcome back</h2>
+    <p>Sign in to access your dashboard and bookings.</p>
+    <div class="field">
+      <label>Username</label>
+      <input type="text" id="login-user" placeholder="Enter your username" autocomplete="username" />
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="login-pass" placeholder="Enter your password" autocomplete="current-password" />
+    </div>
+    <button class="login-btn" onclick="doLogin()">Sign In →</button>
+    <div class="login-err" id="login-err">Incorrect username or password.</div>
+    <div class="back-link"><a href="index.html">← Back to website</a></div>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD ════════════════════════════════════════════════════ -->
+<div id="dashboard">
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">🚛</div>
+        <div>
+          <div class="sidebar-logo-text">Affordable Movers BC</div>
+          <div class="sidebar-logo-sub">Staff Portal</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main</div>
+        <div class="nav-item active" onclick="showView('overview')">
+          <span class="nav-icon">📊</span> Overview
+        </div>
+        <div class="nav-item" onclick="showView('calendar')">
+          <span class="nav-icon">📅</span> Calendar
+        </div>
+        <div class="nav-item" onclick="showView('bookings')">
+          <span class="nav-icon">📋</span> All Bookings
+        </div>
+        <div class="nav-label">Operations</div>
+        <div class="nav-item" onclick="showView('crew')">
+          <span class="nav-icon">👷</span> Crew Schedule
+        </div>
+        <div class="nav-item" onclick="showView('trucks')">
+          <span class="nav-icon">🚛</span> Truck Dispatch
+        </div>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-avatar" id="user-avatar">EG</div>
+        <div>
+          <div class="user-name" id="user-name">Emiliano</div>
+          <div class="user-role">Admin</div>
+        </div>
+        <button class="logout-btn" onclick="doLogout()" title="Sign out">⏻</button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+      <div class="topbar">
+        <h1 id="view-title">Overview</h1>
+        <div class="topbar-date" id="topbar-date"></div>
+      </div>
+      <div class="content">
+
+        <!-- ── OVERVIEW ── -->
+        <div class="view active" id="view-overview">
+          <div class="stats-grid" id="stats-grid"></div>
+          <div class="two-col">
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">📅 Upcoming Jobs</div>
+                <div class="legend" id="legend-overview"></div>
+              </div>
+              <div class="panel-body" id="upcoming-list"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">👷 Crew Today</div>
+              </div>
+              <div class="panel-body" id="crew-today"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── CALENDAR ── -->
+        <div class="view" id="view-calendar">
+          <div class="two-col">
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Monthly View</div>
+                <div class="cal-nav">
+                  <button onclick="calPrev()">‹</button>
+                  <div class="cal-month" id="cal-month-label"></div>
+                  <button onclick="calNext()">›</button>
+                </div>
+              </div>
+              <div class="panel-body">
+                <div class="cal-grid" id="cal-grid"></div>
+                <div class="legend" style="margin-top:16px;" id="cal-legend"></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title" id="cal-day-title">Select a day</div>
+              </div>
+              <div class="panel-body" id="cal-day-bookings">
+                <div class="empty">
+                  <div class="empty-icon">📅</div>
+                  <p>Click a day on the calendar to see its bookings.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── ALL BOOKINGS ── -->
+        <div class="view" id="view-bookings">
+          <div class="filter-bar">
+            <input class="search-input" type="text" id="search-input" placeholder="Search client, location, service..." oninput="renderBookingsList()" />
+            <select class="filter-select" id="filter-service" onchange="renderBookingsList()">
+              <option value="">All Services</option>
+              <option value="Home Move">Home Move</option>
+              <option value="Office Move">Office Move</option>
+              <option value="Specialty">Specialty</option>
+              <option value="Storage">Storage</option>
+            </select>
+            <select class="filter-select" id="filter-status" onchange="renderBookingsList()">
+              <option value="">All Status</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="pending">Pending</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">All Bookings</div>
+              <div id="booking-count" style="font-size:.85rem;color:var(--gray);"></div>
+            </div>
+            <div class="panel-body" id="bookings-list"></div>
+          </div>
+        </div>
+
+        <!-- ── CREW SCHEDULE ── -->
+        <div class="view" id="view-crew">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">👷 Crew Assignments</div>
+            </div>
+            <div class="panel-body" id="crew-schedule"></div>
+          </div>
+        </div>
+
+        <!-- ── TRUCK DISPATCH ── -->
+        <div class="view" id="view-trucks">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">🚛 Truck Dispatch Board</div>
+            </div>
+            <div class="panel-body" id="truck-dispatch"></div>
+          </div>
+        </div>
+
+      </div><!-- /content -->
+    </div><!-- /main -->
+  </div><!-- /layout -->
+</div><!-- /dashboard -->
+
+<!-- ── BOOKING DETAIL MODAL ── -->
+<div class="detail-overlay" id="detail-overlay" onclick="closeDetail(event)">
+  <div class="detail-card" id="detail-card"></div>
+</div>
+
+<script>
+// ── STAFF CREDENTIALS ──────────────────────────────────────────────────
+var STAFF = [
+  { user: 'emiliano', pass: 'ambc2024!', name: 'Emiliano', initials: 'EG', role: 'Admin' },
+  { user: 'paul',     pass: 'ambc2024!', name: 'Paul',     initials: 'PL', role: 'Admin' },
+];
+
+// ── SERVICE COLORS ─────────────────────────────────────────────────────
+var SERVICE_COLORS = {
+  'Home Move':   '#D62828',
+  'Office Move': '#2563eb',
+  'Specialty':   '#7c3aed',
+  'Storage':     '#ea580c',
+  'Cleaning':    '#16a34a',
+  'Junk Removal':'#ca8a04',
+};
+
+// ── CREW ───────────────────────────────────────────────────────────────
+var CREW = [
+  { id: 'c1', name: 'Carlos M.',  role: 'Senior Lead Mover', yrs: 7,  color: '#D62828', initials: 'CM', desc: 'Expert in large homes and piano moves.' },
+  { id: 'c2', name: 'Devon T.',   role: 'Lead Mover',        yrs: 5,  color: '#2563eb', initials: 'DT', desc: 'Commercial specialist, packing pro.' },
+  { id: 'c3', name: 'Marcus R.',  role: 'Mover',             yrs: 3,  color: '#16a34a', initials: 'MR', desc: 'Reliable and detail-oriented.' },
+  { id: 'c4', name: 'Alex P.',    role: 'Mover',             yrs: 2,  color: '#7c3aed', initials: 'AP', desc: 'Fast mover, great with fragile items.' },
+  { id: 'c5', name: 'Jordan K.',  role: 'Helper',            yrs: 1,  color: '#ea580c', initials: 'JK', desc: 'Strong and efficient loader.' },
+  { id: 'c6', name: 'Sam L.',     role: 'Helper',            yrs: 1,  color: '#ca8a04', initials: 'SL', desc: 'Quick learner, great reviews.' },
+];
+
+// ── TRUCKS ─────────────────────────────────────────────────────────────
+var TRUCKS = [
+  { id: 't1', name: 'The Workhorse', size: '16ft Box Truck', cap: '800 cu ft', plate: 'AMB-002', icon: '🚛' },
+  { id: 't2', name: 'Big Blue',      size: '20ft Box Truck', cap: '1,100 cu ft', plate: 'AMB-001', icon: '🚚' },
+  { id: 't3', name: 'The Sprinter',  size: 'Cargo Van',      cap: '250 cu ft',   plate: 'AMB-003', icon: '🚐' },
+];
+
+// ── BOOKINGS KEY ───────────────────────────────────────────────────────
+var BOOKING_KEY = 'ambc_bookings';
+
+function getBookings() {
+  try { return JSON.parse(localStorage.getItem(BOOKING_KEY) || '[]'); } catch { return []; }
+}
+
+// Seed demo bookings if empty
+function seedDemoData() {
+  var existing = getBookings();
+  if (existing.length > 0) return;
+  var today = new Date();
+  function daysFromNow(n) {
+    var d = new Date(today);
+    d.setDate(d.getDate() + n);
+    return d.toISOString().slice(0,10);
+  }
+  var demos = [
+    { date: daysFromNow(0),  time: '9:00 AM',  name: 'Sarah Mitchell',  phone: '604-555-0101', email: 'sarah@email.com', fromVal: 'Vancouver, BC', toVal: 'Burnaby, BC',     serviceTab: 'Home Move',   sizeKey: '2br', hrs: 3, total: 450, totalGST: 475, truck: 't1', crewId: 'c1', status: 'confirmed', notes: 'Has a piano.' },
+    { date: daysFromNow(1),  time: '7:00 AM',  name: 'Derek Chang',     phone: '604-555-0202', email: 'derek@email.com', fromVal: 'Surrey, BC',    toVal: 'Richmond, BC',    serviceTab: 'Office Move', sizeKey: '3br', hrs: 5, total: 845, totalGST: 887, truck: 't2', crewId: 'c2', status: 'confirmed', notes: '' },
+    { date: daysFromNow(2),  time: '11:00 AM', name: 'Maria Lopez',     phone: '604-555-0303', email: 'maria@email.com', fromVal: 'Coquitlam, BC', toVal: 'Langley, BC',     serviceTab: 'Home Move',   sizeKey: '1br', hrs: 2, total: 299, totalGST: 314, truck: 't3', crewId: 'c3', status: 'confirmed', notes: '' },
+    { date: daysFromNow(3),  time: '1:00 PM',  name: 'Tom Baker',       phone: '604-555-0404', email: 'tom@email.com',   fromVal: 'North Van, BC', toVal: 'Vancouver, BC',   serviceTab: 'Specialty',   sizeKey: '1br', hrs: 3, total: 549, totalGST: 576, truck: 't1', crewId: 'c4', status: 'pending',   notes: 'Piano + 2 art pieces.' },
+    { date: daysFromNow(5),  time: '9:00 AM',  name: 'Priya Nair',      phone: '604-555-0505', email: 'priya@email.com', fromVal: 'Abbotsford, BC',toVal: 'Vancouver, BC',   serviceTab: 'Home Move',   sizeKey: '3br', hrs: 6, total: 1014,totalGST:1065, truck: 't2', crewId: 'c1', status: 'confirmed', notes: '' },
+    { date: daysFromNow(7),  time: '7:00 AM',  name: 'James O\'Brien',  phone: '604-555-0606', email: 'james@email.com', fromVal: 'Vancouver, BC', toVal: 'Kelowna, BC',     serviceTab: 'Storage',     sizeKey: '2br', hrs: 4, total: 720, totalGST: 756, truck: 't1', crewId: 'c2', status: 'confirmed', notes: 'Long distance.' },
+    { date: daysFromNow(8),  time: '3:00 PM',  name: 'Linda Wu',        phone: '604-555-0707', email: 'linda@email.com', fromVal: 'Burnaby, BC',   toVal: 'Burnaby, BC',     serviceTab: 'Junk Removal',sizeKey: 'studio',hrs:2,total:299, totalGST:314, truck: 't3', crewId: 'c5', status: 'confirmed', notes: '' },
+    { date: daysFromNow(10), time: '11:00 AM', name: 'Ahmed Hassan',    phone: '604-555-0808', email: 'ahmed@email.com', fromVal: 'Richmond, BC',  toVal: 'Surrey, BC',      serviceTab: 'Home Move',   sizeKey: '4br', hrs: 8, total: 1512,totalGST:1588,truck: 't2', crewId: 'c1', status: 'confirmed', notes: '' },
+  ];
+  localStorage.setItem(BOOKING_KEY, JSON.stringify(demos));
+}
+
+// ── CURRENT USER ───────────────────────────────────────────────────────
+var currentUser = null;
+
+function doLogin() {
+  var u = document.getElementById('login-user').value.trim().toLowerCase();
+  var p = document.getElementById('login-pass').value;
+  var found = STAFF.find(function(s) { return s.user === u && s.pass === p; });
+  if (!found) {
+    document.getElementById('login-err').style.display = 'block';
+    return;
+  }
+  currentUser = found;
+  sessionStorage.setItem('ambc_staff', JSON.stringify(found));
+  showDashboard();
+}
+
+function doLogout() {
+  sessionStorage.removeItem('ambc_staff');
+  currentUser = null;
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+}
+
+function showDashboard() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('user-name').textContent = currentUser.name;
+  document.getElementById('user-avatar').textContent = currentUser.initials;
+  seedDemoData();
+  updateTopbarDate();
+  renderOverview();
+  renderCalendar();
+}
+
+// Allow Enter key on login
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
+    doLogin();
+  }
+});
+
+// ── NAVIGATION ─────────────────────────────────────────────────────────
+var viewTitles = {
+  overview: 'Overview',
+  calendar: 'Calendar',
+  bookings: 'All Bookings',
+  crew: 'Crew Schedule',
+  trucks: 'Truck Dispatch',
+};
+
+function showView(name) {
+  document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  document.getElementById('view-' + name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(function(n) {
+    if (n.textContent.toLowerCase().includes(viewTitles[name].toLowerCase().slice(0,4))) {
+      n.classList.add('active');
+    }
+  });
+  document.getElementById('view-title').textContent = viewTitles[name];
+  if (name === 'bookings') renderBookingsList();
+  if (name === 'crew') renderCrewSchedule();
+  if (name === 'trucks') renderTruckDispatch();
+}
+
+function updateTopbarDate() {
+  var d = new Date();
+  document.getElementById('topbar-date').textContent = d.toLocaleDateString('en-CA', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+}
+
+// ── HELPERS ────────────────────────────────────────────────────────────
+function formatDate(str) {
+  var d = new Date(str + 'T12:00:00');
+  return d.toLocaleDateString('en-CA', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+}
+
+function serviceColor(tab) {
+  return SERVICE_COLORS[tab] || '#6B7280';
+}
+
+function getCrewById(id) {
+  return CREW.find(function(c) { return c.id === id; }) || { name: 'TBD', initials: '?', color: '#ccc' };
+}
+function getTruckById(id) {
+  return TRUCKS.find(function(t) { return t.id === id; }) || { name: 'TBD', icon: '🚛', plate: '—' };
+}
+
+// ── OVERVIEW ───────────────────────────────────────────────────────────
+function renderOverview() {
+  var all = getBookings();
+  var today = new Date().toISOString().slice(0,10);
+  var thisMonth = today.slice(0,7);
+  var todayJobs = all.filter(function(b) { return b.date === today; });
+  var monthJobs = all.filter(function(b) { return b.date && b.date.slice(0,7) === thisMonth; });
+  var upcoming  = all.filter(function(b) { return b.date >= today; }).sort(function(a,b){ return a.date.localeCompare(b.date); });
+  var revenue   = monthJobs.reduce(function(s,b){ return s + (b.totalGST || b.total || 0); }, 0);
+
+  document.getElementById('stats-grid').innerHTML = [
+    statCard('Today\'s Jobs', todayJobs.length, 'Scheduled for today', 'badge-blue'),
+    statCard('This Month', monthJobs.length, 'Total bookings', 'badge-green'),
+    statCard('Monthly Revenue', '$' + revenue.toLocaleString(), 'Inc. GST', 'badge-gold'),
+    statCard('Pending', all.filter(function(b){ return b.status === 'pending'; }).length, 'Awaiting confirmation', 'badge-red'),
+  ].join('');
+
+  // Upcoming list (next 6)
+  var ul = document.getElementById('upcoming-list');
+  if (!upcoming.length) { ul.innerHTML = '<div class="empty"><div class="empty-icon">🎉</div><p>No upcoming bookings.</p></div>'; }
+  else {
+    ul.innerHTML = upcoming.slice(0,6).map(function(b) { return bookingRow(b); }).join('');
+  }
+
+  // Crew today
+  var ct = document.getElementById('crew-today');
+  if (!todayJobs.length) { ct.innerHTML = '<div class="empty"><div class="empty-icon">🌴</div><p>No jobs today.</p></div>'; }
+  else {
+    ct.innerHTML = todayJobs.map(function(b) {
+      var cr = getCrewById(b.crewId);
+      var tr = getTruckById(b.truck);
+      return '<div class="booking-item"><div class="booking-color-bar" style="background:' + serviceColor(b.serviceTab) + '"></div>' +
+        '<div class="booking-info"><div class="booking-title">' + (b.name || 'Unknown') + '</div>' +
+        '<div class="booking-meta">' + b.time + ' · ' + (b.fromVal||'') + ' → ' + (b.toVal||'') + '</div>' +
+        '<div class="booking-tags"><span class="assigned-pill"><span class="assigned-avatar-sm" style="background:' + cr.color + '">' + cr.initials + '</span>' + cr.name + '</span>' +
+        '<span class="assigned-pill">' + tr.icon + ' ' + tr.name + '</span></div></div>' +
+        '<div><div class="booking-price">$' + (b.totalGST||b.total||0) + '</div><div class="booking-price-sub">' + b.time + '</div></div></div>';
+    }).join('');
+  }
+
+  // Legend
+  var legendHtml = Object.keys(SERVICE_COLORS).map(function(s) {
+    return '<div class="legend-item"><div class="legend-dot" style="background:' + SERVICE_COLORS[s] + '"></div>' + s + '</div>';
+  }).join('');
+  var lo = document.getElementById('legend-overview');
+  if (lo) lo.innerHTML = legendHtml;
+}
+
+function statCard(label, value, sub, badge) {
+  return '<div class="stat-card"><div class="stat-label">' + label + '</div>' +
+    '<div class="stat-value">' + value + '</div>' +
+    '<div class="stat-sub">' + sub + '</div></div>';
+}
+
+// ── BOOKING ROW ────────────────────────────────────────────────────────
+function bookingRow(b) {
+  var cr = getCrewById(b.crewId);
+  var tr = getTruckById(b.truck);
+  var color = serviceColor(b.serviceTab);
+  var statusClass = b.status === 'confirmed' ? 'status-confirmed' : b.status === 'cancelled' ? 'status-cancelled' : 'status-pending';
+  return '<div class="booking-item" onclick="openDetail(\'' + b.date + '\',\'' + b.time + '\')" style="cursor:pointer">' +
+    '<div class="booking-color-bar" style="background:' + color + '"></div>' +
+    '<div class="booking-info">' +
+      '<div class="booking-title">' + (b.name||'Unknown') + ' <span class="status-pill ' + statusClass + '">' + (b.status||'confirmed') + '</span></div>' +
+      '<div class="booking-meta">' + formatDate(b.date) + ' · ' + b.time + '</div>' +
+      '<div class="booking-meta">' + (b.fromVal||'') + ' → ' + (b.toVal||'') + '</div>' +
+      '<div class="booking-tags">' +
+        '<span class="booking-tag" style="background:' + color + '22;color:' + color + '">' + (b.serviceTab||'Move') + '</span>' +
+        '<span class="assigned-pill"><span class="assigned-avatar-sm" style="background:' + cr.color + '">' + cr.initials + '</span>' + cr.name + '</span>' +
+        '<span class="assigned-pill">' + tr.icon + ' ' + tr.name + '</span>' +
+      '</div>' +
+    '</div>' +
+    '<div><div class="booking-price">$' + (b.totalGST||b.total||0) + '</div><div class="booking-price-sub">inc. GST</div></div></div>';
+}
+
+// ── CALENDAR ───────────────────────────────────────────────────────────
+var calYear, calMonth;
+(function() { var n = new Date(); calYear = n.getFullYear(); calMonth = n.getMonth(); })();
+
+function calPrev() { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar(); }
+function calNext() { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar(); }
+
+function renderCalendar() {
+  var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  document.getElementById('cal-month-label').textContent = MONTHS[calMonth] + ' ' + calYear;
+
+  var bookings = getBookings();
+  var today = new Date().toISOString().slice(0,10);
+
+  var firstDay = new Date(calYear, calMonth, 1).getDay();
+  var daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  var daysInPrev  = new Date(calYear, calMonth, 0).getDate();
+
+  var html = DAYS.map(function(d){ return '<div class="cal-day-name">'+d+'</div>'; }).join('');
+
+  // Prev month cells
+  for (var i = firstDay - 1; i >= 0; i--) {
+    html += '<div class="cal-cell other-month"><div class="cal-date">' + (daysInPrev - i) + '</div></div>';
+  }
+  // Current month
+  for (var d2 = 1; d2 <= daysInMonth; d2++) {
+    var dateStr = calYear + '-' + String(calMonth+1).padStart(2,'0') + '-' + String(d2).padStart(2,'0');
+    var dayBookings = bookings.filter(function(b){ return b.date === dateStr; });
+    var isToday = dateStr === today;
+    var dots = dayBookings.map(function(b){ return '<div class="cal-dot" style="background:' + serviceColor(b.serviceTab) + '"></div>'; }).join('');
+    html += '<div class="cal-cell' + (isToday?' today':'') + '" onclick="showCalDay(\'' + dateStr + '\')">' +
+      '<div class="cal-date">' + d2 + '</div>' +
+      (dots ? '<div class="cal-dots">' + dots + '</div>' : '') +
+      '</div>';
+  }
+  // Next month filler
+  var total = firstDay + daysInMonth;
+  var remain = total % 7 === 0 ? 0 : 7 - (total % 7);
+  for (var j = 1; j <= remain; j++) {
+    html += '<div class="cal-cell other-month"><div class="cal-date">' + j + '</div></div>';
+  }
+  document.getElementById('cal-grid').innerHTML = html;
+
+  // Legend
+  var cl = document.getElementById('cal-legend');
+  if (cl) cl.innerHTML = Object.keys(SERVICE_COLORS).map(function(s) {
+    return '<div class="legend-item"><div class="legend-dot" style="background:' + SERVICE_COLORS[s] + '"></div>' + s + '</div>';
+  }).join('');
+}
+
+function showCalDay(dateStr) {
+  var bookings = getBookings().filter(function(b){ return b.date === dateStr; });
+  var d = new Date(dateStr + 'T12:00:00');
+  var label = d.toLocaleDateString('en-CA', { weekday:'long', month:'long', day:'numeric' });
+  document.getElementById('cal-day-title').textContent = label;
+  var el = document.getElementById('cal-day-bookings');
+  if (!bookings.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">✅</div><p>No bookings this day.</p></div>';
+  } else {
+    el.innerHTML = bookings.sort(function(a,b){ return a.time.localeCompare(b.time); }).map(bookingRow).join('');
+  }
+  // Highlight selected day
+  document.querySelectorAll('.cal-cell').forEach(function(c){ c.classList.remove('selected'); });
+  var cells = document.querySelectorAll('.cal-cell:not(.other-month)');
+  var day = parseInt(dateStr.slice(8));
+  if (cells[day-1]) cells[day-1].classList.add('selected');
+}
+
+// ── ALL BOOKINGS ────────────────────────────────────────────────────────
+function renderBookingsList() {
+  var all = getBookings();
+  var search  = (document.getElementById('search-input')?.value || '').toLowerCase();
+  var service = document.getElementById('filter-service')?.value || '';
+  var status  = document.getElementById('filter-status')?.value || '';
+
+  var filtered = all.filter(function(b) {
+    var matchSearch = !search ||
+      (b.name||'').toLowerCase().includes(search) ||
+      (b.fromVal||'').toLowerCase().includes(search) ||
+      (b.toVal||'').toLowerCase().includes(search) ||
+      (b.serviceTab||'').toLowerCase().includes(search);
+    var matchService = !service || (b.serviceTab||'') === service;
+    var matchStatus  = !status  || (b.status||'confirmed') === status;
+    return matchSearch && matchService && matchStatus;
+  });
+
+  filtered.sort(function(a,b){ return (a.date+a.time).localeCompare(b.date+b.time); });
+
+  document.getElementById('booking-count').textContent = filtered.length + ' bookings';
+  var el = document.getElementById('bookings-list');
+  if (!filtered.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">🔍</div><p>No bookings match your filters.</p></div>';
+  } else {
+    el.innerHTML = filtered.map(bookingRow).join('');
+  }
+}
+
+// ── BOOKING DETAIL MODAL ────────────────────────────────────────────────
+function openDetail(date, time) {
+  var b = getBookings().find(function(x){ return x.date === date && x.time === time; });
+  if (!b) return;
+  var cr = getCrewById(b.crewId);
+  var tr = getTruckById(b.truck);
+  var color = serviceColor(b.serviceTab);
+  var statusClass = b.status === 'confirmed' ? 'status-confirmed' : b.status === 'cancelled' ? 'status-cancelled' : 'status-pending';
+
+  document.getElementById('detail-card').innerHTML = [
+    '<div class="detail-header" style="border-top: 4px solid ' + color + '; border-radius: 20px 20px 0 0">',
+      '<div><h3>' + (b.name||'Unknown Client') + '</h3><p>' + formatDate(b.date) + ' · ' + b.time + '</p></div>',
+      '<button class="detail-close" onclick="closeDetailBtn()">✕</button>',
+    '</div>',
+    '<div class="detail-body">',
+
+      '<div class="detail-section">',
+        '<div class="detail-section-title">📋 Booking Details</div>',
+        '<div class="detail-row">',
+          '<div class="detail-field"><div class="detail-label">Service</div><div class="detail-val"><span class="booking-tag" style="background:'+color+'22;color:'+color+'">'+( b.serviceTab||'Move')+'</span></div></div>',
+          '<div class="detail-field"><div class="detail-label">Status</div><div class="detail-val"><span class="status-pill '+statusClass+'">'+(b.status||'confirmed')+'</span></div></div>',
+        '</div>',
+        '<div class="detail-row">',
+          '<div class="detail-field"><div class="detail-label">From</div><div class="detail-val">'+(b.fromVal||'—')+'</div></div>',
+          '<div class="detail-field"><div class="detail-label">To</div><div class="detail-val">'+(b.toVal||'—')+'</div></div>',
+        '</div>',
+        '<div class="detail-row">',
+          '<div class="detail-field"><div class="detail-label">Home Size</div><div class="detail-val">'+(b.sizeKey||'—')+'</div></div>',
+          '<div class="detail-field"><div class="detail-label">Duration</div><div class="detail-val">'+(b.hrs||'—')+' hrs</div></div>',
+        '</div>',
+        (b.notes ? '<div class="detail-row"><div class="detail-field"><div class="detail-label">Notes</div><div class="detail-val">'+b.notes+'</div></div></div>' : ''),
+      '</div>',
+
+      '<div class="detail-section">',
+        '<div class="detail-section-title">💰 Financials</div>',
+        '<div class="detail-row">',
+          '<div class="detail-field"><div class="detail-label">Price (before GST)</div><div class="detail-val">$'+(b.total||0)+'</div></div>',
+          '<div class="detail-field"><div class="detail-label">Total inc. 5% GST</div><div class="detail-val" style="font-size:1.1rem;color:var(--red);font-weight:800">$'+(b.totalGST||b.total||0)+'</div></div>',
+        '</div>',
+      '</div>',
+
+      '<div class="detail-section">',
+        '<div class="detail-section-title">👷 Assigned Crew</div>',
+        '<span class="assigned-pill"><span class="assigned-avatar-sm" style="background:'+cr.color+'">'+cr.initials+'</span> '+cr.name+' · '+cr.role+'</span>',
+      '</div>',
+
+      '<div class="detail-section">',
+        '<div class="detail-section-title">🚛 Assigned Truck</div>',
+        '<span class="assigned-pill">'+tr.icon+' '+tr.name+' · '+tr.size+' · <strong>'+tr.plate+'</strong></span>',
+      '</div>',
+
+      '<div class="detail-section">',
+        '<div class="detail-section-title">📞 Client Contact</div>',
+        '<div class="detail-row">',
+          '<div class="detail-field"><div class="detail-label">Phone</div><div class="detail-val"><a href="tel:'+(b.phone||'')+'">'+( b.phone||'—')+'</a></div></div>',
+          '<div class="detail-field"><div class="detail-label">Email</div><div class="detail-val"><a href="mailto:'+(b.email||'')+'">'+( b.email||'—')+'</a></div></div>',
+        '</div>',
+      '</div>',
+
+    '</div>',
+  ].join('');
+
+  document.getElementById('detail-overlay').classList.add('open');
+}
+
+function closeDetail(e) {
+  if (e.target === document.getElementById('detail-overlay')) {
+    document.getElementById('detail-overlay').classList.remove('open');
+  }
+}
+function closeDetailBtn() {
+  document.getElementById('detail-overlay').classList.remove('open');
+}
+
+// ── CREW SCHEDULE ───────────────────────────────────────────────────────
+function renderCrewSchedule() {
+  var bookings = getBookings();
+  var today = new Date().toISOString().slice(0,10);
+  var upcoming = bookings.filter(function(b){ return b.date >= today; }).sort(function(a,b){ return a.date.localeCompare(b.date); });
+
+  var html = CREW.map(function(cr) {
+    var assigned = upcoming.filter(function(b){ return b.crewId === cr.id; });
+    return '<div style="margin-bottom:24px">' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
+        '<div class="assigned-avatar-sm" style="background:'+cr.color+';width:36px;height:36px;font-size:.85rem">'+cr.initials+'</div>' +
+        '<div><div style="font-weight:700;color:var(--navy)">'+cr.name+'</div><div style="font-size:.8rem;color:var(--gray)">'+cr.role+' · '+cr.yrs+' yrs</div></div>' +
+        '<div style="margin-left:auto"><span class="badge-blue status-pill">'+assigned.length+' jobs upcoming</span></div>' +
+      '</div>' +
+      (assigned.length ? assigned.slice(0,3).map(function(b) {
+        return '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--off);border-radius:8px;margin-bottom:6px;font-size:.85rem">' +
+          '<div class="cal-dot" style="background:'+serviceColor(b.serviceTab)+';flex-shrink:0"></div>' +
+          '<div style="flex:1"><strong>'+formatDate(b.date)+'</strong> · '+b.time+'</div>' +
+          '<div>'+( b.fromVal||'')+' → '+(b.toVal||'')+'</div>' +
+          '<div style="font-weight:700;color:var(--red)">$'+(b.totalGST||b.total||0)+'</div>' +
+        '</div>';
+      }).join('') : '<div style="color:var(--gray);font-size:.85rem;padding:8px">No upcoming jobs.</div>') +
+    '</div><hr style="border:none;border-top:1px solid var(--light);margin-bottom:20px">';
+  }).join('');
+
+  document.getElementById('crew-schedule').innerHTML = html;
+}
+
+// ── TRUCK DISPATCH ──────────────────────────────────────────────────────
+function renderTruckDispatch() {
+  var bookings = getBookings();
+  var today = new Date().toISOString().slice(0,10);
+  var upcoming = bookings.filter(function(b){ return b.date >= today; }).sort(function(a,b){ return a.date.localeCompare(b.date); });
+
+  var html = TRUCKS.map(function(tr) {
+    var assigned = upcoming.filter(function(b){ return b.truck === tr.id; });
+    var todayJob = assigned.find(function(b){ return b.date === today; });
+    return '<div style="margin-bottom:24px">' +
+      '<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">' +
+        '<div style="font-size:2rem">'+tr.icon+'</div>' +
+        '<div><div style="font-weight:700;color:var(--navy);font-size:1rem">'+tr.name+'</div>' +
+          '<div style="font-size:.8rem;color:var(--gray)">'+tr.size+' · '+tr.cap+' · <strong>'+tr.plate+'</strong></div></div>' +
+        '<div style="margin-left:auto">' +
+          (todayJob ? '<span class="status-pill status-confirmed">Out Today</span>' : '<span class="status-pill" style="background:var(--off);color:var(--gray)">Available</span>') +
+        '</div>' +
+      '</div>' +
+      (assigned.length ? assigned.slice(0,3).map(function(b) {
+        var cr = getCrewById(b.crewId);
+        return '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--off);border-radius:8px;margin-bottom:6px;font-size:.85rem">' +
+          '<div class="cal-dot" style="background:'+serviceColor(b.serviceTab)+';flex-shrink:0"></div>' +
+          '<div style="flex:1"><strong>'+formatDate(b.date)+'</strong> · '+b.time+'</div>' +
+          '<span class="assigned-pill" style="font-size:.75rem;padding:2px 8px 2px 4px"><span class="assigned-avatar-sm" style="background:'+cr.color+';width:20px;height:20px;font-size:.65rem">'+cr.initials+'</span>'+cr.name+'</span>' +
+          '<div style="font-weight:700;color:var(--red)">$'+(b.totalGST||b.total||0)+'</div>' +
+        '</div>';
+      }).join('') : '<div style="color:var(--gray);font-size:.85rem;padding:8px">No upcoming jobs.</div>') +
+    '</div><hr style="border:none;border-top:1px solid var(--light);margin-bottom:20px">';
+  }).join('');
+
+  document.getElementById('truck-dispatch').innerHTML = html;
+}
+
+// ── AUTO LOGIN IF SESSION EXISTS ────────────────────────────────────────
+(function() {
+  var saved = sessionStorage.getItem('ambc_staff');
+  if (saved) {
+    try {
+      currentUser = JSON.parse(saved);
+      showDashboard();
+    } catch(e) { /* ignore */ }
+  }
+})();
+</script>
+</body>
+</html>

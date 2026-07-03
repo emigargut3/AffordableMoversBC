@@ -4194,20 +4194,26 @@
     const crewName  = assignCrewId(currentTab) === 'c1' ? 'Carlos M.' : assignCrewId(currentTab) === 'c2' ? 'Devon T.' : 'Marcus R.';
     const msgBody   = `Client: ${name} | ${phone} | ${email}\nDate: ${fmt} @ ${selectedSlot}\nFrom: ${e.fromVal} → ${e.toVal}\nSize: ${e.sizeKey} | ${e.hrs} hrs\nTruck: ${truckName} | Crew: ${crewName}\nTotal: $${e.totalGST} inc. GST\nNotes: ${notes || 'None'}`;
 
-    // ── Email via EmailJS ──────────────────────────────────────────────
+    // ── Email via EmailJS (sends to both recipients) ───────────────────
+    const emailPayload = {
+      service_id:  'service_5jm9nl9',
+      template_id: 'template_7ni8mad',
+      user_id:     'nLF6d6Vt3O-ge6hx5',
+      template_params: {
+        subject: `New Booking — ${name} — ${fmt} @ ${selectedSlot}`,
+        message: msgBody,
+      }
+    };
     try {
       await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          service_id:  'service_5jm9nl9',
-          template_id: 'template_7ni8mad',
-          user_id:     'nLF6d6Vt3O-ge6hx5',
-          template_params: {
-            subject: `New Booking — ${name} — ${fmt} @ ${selectedSlot}`,
-            message: msgBody,
-          }
-        })
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...emailPayload, template_params: { ...emailPayload.template_params, to_email: 'emigargut3@gmail.com' } })
+      });
+    } catch (_) {}
+    try {
+      await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...emailPayload, template_params: { ...emailPayload.template_params, to_email: 'affordabletransport@hotmail.com' } })
       });
     } catch (_) {}
 

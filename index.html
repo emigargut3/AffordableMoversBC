@@ -225,17 +225,58 @@
 
     /* ── Hero ──────────────────────────────────────────────────────── */
     .hero {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-lt) 60%, #1e3a6e 100%);
+      background: #0a1628;
       color: var(--white);
       padding: 90px 0 80px;
       position: relative;
       overflow: hidden;
     }
+    .hero-bg-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+      animation: heroBgCycle 18s infinite;
+    }
+    @keyframes heroBgCycle {
+      0%    { background-image: url('action-1.jpg'); opacity: 1; }
+      28%   { background-image: url('action-1.jpg'); opacity: 1; }
+      33%   { background-image: url('action-2.jpg'); opacity: 1; }
+      61%   { background-image: url('action-2.jpg'); opacity: 1; }
+      66%   { background-image: url('action-3.jpg'); opacity: 1; }
+      94%   { background-image: url('action-3.jpg'); opacity: 1; }
+      100%  { background-image: url('action-1.jpg'); opacity: 1; }
+    }
+    .hero-bg-slide-1,
+    .hero-bg-slide-2,
+    .hero-bg-slide-3 {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+    .hero-bg-slide-1 { background-image: url('action-1.jpg'); }
+    .hero-bg-slide-2 { background-image: url('action-2.jpg'); }
+    .hero-bg-slide-3 { background-image: url('action-3.jpg'); }
+    .hero-bg-slide-1.active,
+    .hero-bg-slide-2.active,
+    .hero-bg-slide-3.active { opacity: 1; }
     .hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background: linear-gradient(135deg, rgba(10,22,40,0.80) 0%, rgba(10,22,40,0.60) 100%);
+      z-index: 1;
+    }
+    .hero .container {
+      position: relative;
+      z-index: 2;
     }
     .hero-grid {
       display: grid;
@@ -2022,6 +2063,9 @@
 
 <!-- Hero -->
 <section class="hero">
+  <div class="hero-bg-slide-1 active"></div>
+  <div class="hero-bg-slide-2"></div>
+  <div class="hero-bg-slide-3"></div>
   <div class="container">
     <div class="hero-grid">
       <div>
@@ -3841,21 +3885,40 @@
 
       const longDistAdd = isLong ? Math.round(distKm * 2.2) : 0;
       const tabMod = currentTab === 'office' ? 1.2 : 1;
-      const base = cfg.rateHr * hrs * tabMod;
-      const total = Math.round((base + floorSurcharge + addonTotal + longDistAdd) / 25) * 25;
+
+      // Round-trip transport fee: depot→pickup + dropoff→depot
+      const fromCoordsPre = getCoords(fromVal);
+      const toCoordsPre   = getCoords(toVal);
+      let transportHrs = 0, transportLabel = '';
+      if (fromCoordsPre) {
+        const depotToPickupKm  = haversineKm(DEPOT_LAT, DEPOT_LNG, fromCoordsPre.lat, fromCoordsPre.lng);
+        const dropoffToDepotKm = toCoordsPre
+          ? haversineKm(toCoordsPre.lat, toCoordsPre.lng, DEPOT_LAT, DEPOT_LNG)
+          : depotToPickupKm;
+        const totalTravelKm   = depotToPickupKm + dropoffToDepotKm;
+        const travelMinsTotal = Math.max(30, Math.round(totalTravelKm / 45 * 60));
+        transportHrs  = Math.ceil(travelMinsTotal / 60 * 2) / 2; // round up to nearest 0.5hr
+        const travelMinsOne = Math.round(travelMinsTotal / 2);
+        transportLabel = `Transport (${travelMinsOne} min each way, ${transportHrs} hr billed)`;
+      }
+
+      const transportFee = Math.round(cfg.rateHr * transportHrs * tabMod);
+      const base  = cfg.rateHr * hrs * tabMod;
+      const total = Math.round((base + transportFee + floorSurcharge + addonTotal + longDistAdd) / 25) * 25;
       const totalGST = Math.round(total * 1.05 / 25) * 25;
       const deposit  = Math.round(totalGST * 0.30 / 5) * 5;
       const remaining = totalGST - deposit;
 
-      window._lastEstimate = { fromVal, toVal, sizeKey, hrs, cfg, distKm, isLong, total, totalGST, deposit, remaining, addonLabels };
+      window._lastEstimate = { fromVal, toVal, sizeKey, hrs, cfg, distKm, isLong, total, totalGST, deposit, remaining, addonLabels, transportHrs, transportFee };
 
       document.getElementById('result-amount').textContent = `$${total.toLocaleString()}`;
       document.getElementById('result-note').textContent =
-        `${cfg.label} · ${hrs} hrs · + 5% GST = $${totalGST.toLocaleString()} total${isLong ? ` · Long-distance (~${distKm} km)` : ''}`;
+        `${cfg.label} · ${hrs} hrs · + 5% GST = $${totalGST.toLocaleString()} total · Includes transportation${isLong ? ` · Long-distance (~${distKm} km)` : ''}`;
 
       const chips = [
         `${cfg.label} @ $${cfg.rateHr}/hr`,
         `${hrs} hrs`,
+        ...(transportFee ? [`Transport +$${transportFee}`] : []),
         ...(isLong ? [`Long-distance ~${distKm} km`] : []),
         ...(floorSurcharge ? [`Stairs +$${floorSurcharge}`] : []),
         ...addonLabels,
@@ -4350,6 +4413,19 @@
       ['crew','trucks'].forEach(closePanel);
     }
   });
+
+  // Hero background slideshow
+  (function() {
+    var slides = document.querySelectorAll('.hero-bg-slide-1, .hero-bg-slide-2, .hero-bg-slide-3');
+    var current = 0;
+    if (slides.length) {
+      setInterval(function() {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+      }, 5000);
+    }
+  })();
 </script>
 
 <!-- Staff Login Button (fixed bottom-left) -->

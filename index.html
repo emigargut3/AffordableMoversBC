@@ -3886,6 +3886,23 @@
   // Leaflet map instance
   var _routeMap = null;
 
+  function geocodeAddress(address) {
+    if (_geoCache[address]) return Promise.resolve(_geoCache[address]);
+    return fetch('https://nominatim.openstreetmap.org/search?format=json&countrycodes=ca&limit=1&q=' + encodeURIComponent(address + ' BC Canada'), {
+      headers: { 'Accept-Language': 'en' }
+    })
+    .then(r => r.json())
+    .then(results => {
+      if (results && results[0]) {
+        const coords = { lat: parseFloat(results[0].lat), lng: parseFloat(results[0].lon) };
+        _geoCache[address] = coords;
+        return coords;
+      }
+      return null;
+    })
+    .catch(() => null);
+  }
+
   function estimatePrice() {
     const fromVal = document.getElementById('from-input').value.trim();
     const toVal   = document.getElementById('to-input').value.trim();
@@ -3907,9 +3924,13 @@
     calcBtn.innerHTML = 'Calculating…';
     calcBtn.classList.add('calculating');
 
-    setTimeout(() => {
-      calcBtn.style.display = 'none';
-      result.classList.add('visible');
+    // Geocode any addresses not yet in cache, then calculate
+    Promise.all([
+      getCoords(fromVal) ? Promise.resolve(getCoords(fromVal)) : geocodeAddress(fromVal),
+      getCoords(toVal)   ? Promise.resolve(getCoords(toVal))   : geocodeAddress(toVal)
+    ]).then(() => {
+    calcBtn.style.display = 'none';
+    result.classList.add('visible');
 
       const sizeKey = getPillValue('size-pills') || '1br';
       const cfg     = SIZE_CONFIG[sizeKey] || SIZE_CONFIG['1br'];
@@ -3993,7 +4014,7 @@
       if (fromCoords && toCoords) {
         showRouteMap(fromCoords, toCoords, hrs);
       }
-    }, 500);
+    }); // end Promise.all
   }
 
   /* ── Route map (Leaflet + OSRM free routing) ──────────────────── */

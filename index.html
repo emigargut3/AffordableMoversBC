@@ -3743,25 +3743,59 @@
     { name: 'Vernon, BC', zone: 'interior', lat: 50.2671, lng: -119.2720 },
   ];
 
+  // Address geocoding cache: label -> {lat, lng}
+  var _geoCache = {};
+  var _suggestTimers = {};
+
   function showSuggestions(inputId, listId, value) {
     const list = document.getElementById(listId);
-    if (!value || value.length < 2) { list.style.display = 'none'; return; }
-    const matches = BC_LOCATIONS.filter(l => l.name.toLowerCase().includes(value.toLowerCase())).slice(0, 6);
-    if (!matches.length) { list.style.display = 'none'; return; }
-    list.innerHTML = matches.map(l =>
-      `<div class="autocomplete-item" onmousedown="pickLocation('${inputId}','${listId}','${l.name}')" >
-        ${l.name}
-       </div>`
-    ).join('');
-    list.style.display = 'block';
+    if (!value || value.length < 3) { list.style.display = 'none'; return; }
+
+    // Show BC_LOCATIONS matches immediately
+    const local = BC_LOCATIONS.filter(l => l.name.toLowerCase().includes(value.toLowerCase())).slice(0, 4);
+
+    clearTimeout(_suggestTimers[inputId]);
+    _suggestTimers[inputId] = setTimeout(function() {
+      fetch('https://nominatim.openstreetmap.org/search?format=json&countrycodes=ca&limit=5&q=' + encodeURIComponent(value + ' BC Canada'), {
+        headers: { 'Accept-Language': 'en' }
+      })
+      .then(r => r.json())
+      .then(results => {
+        const remote = results.map(r => ({
+          label: r.display_name.split(',').slice(0,3).join(',').trim(),
+          lat: parseFloat(r.lat),
+          lng: parseFloat(r.lon)
+        }));
+        // Merge local + remote, deduplicate by label
+        const seen = new Set(local.map(l => l.name.toLowerCase()));
+        const merged = [
+          ...local.map(l => ({ label: l.name, lat: l.lat, lng: l.lng })),
+          ...remote.filter(r => !seen.has(r.label.toLowerCase()))
+        ].slice(0, 6);
+        if (!merged.length) { list.style.display = 'none'; return; }
+        merged.forEach(r => { _geoCache[r.label] = { lat: r.lat, lng: r.lng }; });
+        list.innerHTML = merged.map(r =>
+          `<div class="autocomplete-item" onmousedown="pickLocation('${inputId}','${listId}',${JSON.stringify(r.label)})">${r.label}</div>`
+        ).join('');
+        list.style.display = 'block';
+      })
+      .catch(() => {
+        if (!local.length) { list.style.display = 'none'; return; }
+        local.forEach(l => { _geoCache[l.name] = { lat: l.lat, lng: l.lng }; });
+        list.innerHTML = local.map(l =>
+          `<div class="autocomplete-item" onmousedown="pickLocation('${inputId}','${listId}',${JSON.stringify(l.name)})">${l.name}</div>`
+        ).join('');
+        list.style.display = 'block';
+      });
+    }, 300);
   }
 
   function hideSuggestions(listId) {
-    setTimeout(() => { document.getElementById(listId).style.display = 'none'; }, 150);
+    setTimeout(() => { document.getElementById(listId).style.display = 'none'; }, 200);
   }
 
-  function pickLocation(inputId, listId, name) {
-    document.getElementById(inputId).value = name;
+  function pickLocation(inputId, listId, label) {
+    document.getElementById(inputId).value = label;
     document.getElementById(listId).style.display = 'none';
     estimatePrice();
   }
@@ -3794,7 +3828,10 @@
 
   /* ── Distance calculation ──────────────────────────────────────── */
   function getCoords(name) {
-    const loc = BC_LOCATIONS.find(l => l.name.toLowerCase() === name.toLowerCase().trim());
+    if (!name) return null;
+    const key = name.trim();
+    if (_geoCache[key]) return _geoCache[key];
+    const loc = BC_LOCATIONS.find(l => l.name.toLowerCase() === key.toLowerCase());
     return loc || null;
   }
 

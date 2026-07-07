@@ -3755,13 +3755,41 @@
   // Address geocoding cache: label -> {lat, lng}
   var _geoCache = {};
   var _suggestTimers = {};
+  var _pickingLocation = false; // prevents blur from hiding list before click fires
+
+  function renderSuggestions(inputId, listId, items) {
+    const list = document.getElementById(listId);
+    if (!items.length) { list.style.display = 'none'; return; }
+    list.innerHTML = '';
+    items.forEach(function(item) {
+      const div = document.createElement('div');
+      div.className = 'autocomplete-item';
+      div.textContent = item.label;
+      div.addEventListener('mousedown', function(e) {
+        e.preventDefault(); // stop blur from firing before click
+        _pickingLocation = true;
+        pickLocation(inputId, listId, item.label);
+        setTimeout(function() { _pickingLocation = false; }, 300);
+      });
+      list.appendChild(div);
+    });
+    list.style.display = 'block';
+  }
 
   function showSuggestions(inputId, listId, value) {
     const list = document.getElementById(listId);
     if (!value || value.length < 3) { list.style.display = 'none'; return; }
 
-    // Show BC_LOCATIONS matches immediately
-    const local = BC_LOCATIONS.filter(l => l.name.toLowerCase().includes(value.toLowerCase())).slice(0, 4);
+    const local = BC_LOCATIONS
+      .filter(l => l.name.toLowerCase().includes(value.toLowerCase()))
+      .slice(0, 4)
+      .map(l => ({ label: l.name, lat: l.lat, lng: l.lng }));
+
+    // Show local results instantly while remote loads
+    if (local.length) {
+      local.forEach(l => { _geoCache[l.label] = { lat: l.lat, lng: l.lng }; });
+      renderSuggestions(inputId, listId, local);
+    }
 
     clearTimeout(_suggestTimers[inputId]);
     _suggestTimers[inputId] = setTimeout(function() {
@@ -3769,38 +3797,28 @@
         headers: { 'Accept-Language': 'en' }
       })
       .then(r => r.json())
-      .then(results => {
-        const remote = results.map(r => ({
-          label: r.display_name.split(',').slice(0,3).join(',').trim(),
+      .then(function(results) {
+        const remote = results.map(function(r) { return {
+          label: r.display_name.split(',').slice(0, 3).join(',').trim(),
           lat: parseFloat(r.lat),
           lng: parseFloat(r.lon)
-        }));
-        // Merge local + remote, deduplicate by label
-        const seen = new Set(local.map(l => l.name.toLowerCase()));
-        const merged = [
-          ...local.map(l => ({ label: l.name, lat: l.lat, lng: l.lng })),
-          ...remote.filter(r => !seen.has(r.label.toLowerCase()))
-        ].slice(0, 6);
-        if (!merged.length) { list.style.display = 'none'; return; }
+        }; });
+        const seen = new Set(local.map(l => l.label.toLowerCase()));
+        const merged = local.concat(remote.filter(r => !seen.has(r.label.toLowerCase()))).slice(0, 6);
         merged.forEach(r => { _geoCache[r.label] = { lat: r.lat, lng: r.lng }; });
-        list.innerHTML = merged.map(r =>
-          `<div class="autocomplete-item" onmousedown="pickLocation('${inputId}','${listId}',${JSON.stringify(r.label)})">${r.label}</div>`
-        ).join('');
-        list.style.display = 'block';
+        renderSuggestions(inputId, listId, merged);
       })
-      .catch(() => {
-        if (!local.length) { list.style.display = 'none'; return; }
-        local.forEach(l => { _geoCache[l.name] = { lat: l.lat, lng: l.lng }; });
-        list.innerHTML = local.map(l =>
-          `<div class="autocomplete-item" onmousedown="pickLocation('${inputId}','${listId}',${JSON.stringify(l.name)})">${l.name}</div>`
-        ).join('');
-        list.style.display = 'block';
+      .catch(function() {
+        if (local.length) renderSuggestions(inputId, listId, local);
+        else document.getElementById(listId).style.display = 'none';
       });
-    }, 300);
+    }, 350);
   }
 
   function hideSuggestions(listId) {
-    setTimeout(() => { document.getElementById(listId).style.display = 'none'; }, 200);
+    setTimeout(function() {
+      if (!_pickingLocation) document.getElementById(listId).style.display = 'none';
+    }, 250);
   }
 
   function pickLocation(inputId, listId, label) {

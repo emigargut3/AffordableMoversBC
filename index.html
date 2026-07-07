@@ -1883,7 +1883,7 @@
     /* ── Route timing strip ─────────────────────────────────────────── */
     .route-timing {
       display: none;
-      grid-template-columns: 1fr auto 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 0;
       background: #f8fafc;
       border: 1px solid #e2e8f0;
@@ -2215,19 +2215,14 @@
             <!-- Timing strip -->
             <div class="route-timing" id="route-timing">
               <div class="rt-cell">
-                <div class="rt-label">Truck to you</div>
-                <div class="rt-value" id="rt-travel">—</div>
-                <div class="rt-sub">from our depot</div>
-              </div>
-              <div class="rt-cell">
                 <div class="rt-label">Move time</div>
                 <div class="rt-value" id="rt-move">—</div>
                 <div class="rt-sub">estimated on-site</div>
               </div>
               <div class="rt-cell">
-                <div class="rt-label">Distance</div>
-                <div class="rt-value" id="rt-distance">—</div>
-                <div class="rt-sub">pickup → drop-off</div>
+                <div class="rt-label">Drive time</div>
+                <div class="rt-value" id="rt-drivetime">—</div>
+                <div class="rt-sub">pickup to drop-off</div>
               </div>
             </div>
 
@@ -4044,13 +4039,11 @@
     // Show travel time estimates while OSRM loads
     const depotDistKm = haversineKm(DEPOT_LAT, DEPOT_LNG, from.lat, from.lng);
     const avgSpeed = 45; // km/h urban
-    const travelMins = Math.max(15, Math.round(depotDistKm / avgSpeed * 60));
-    const moveMins = Math.round(moveHrs * 60);
-    const moveDist = Math.round(haversineKm(from.lat, from.lng, to.lat, to.lng));
+    const moveDistKm = Math.round(haversineKm(from.lat, from.lng, to.lat, to.lng));
+    const estDriveMins = Math.max(5, Math.round(moveDistKm / avgSpeed * 60));
 
-    document.getElementById('rt-travel').textContent   = travelMins < 60 ? `${travelMins} min` : `${Math.floor(travelMins/60)}h ${travelMins%60}m`;
     document.getElementById('rt-move').textContent     = `${moveHrs} hrs`;
-    document.getElementById('rt-distance').textContent = `~${moveDist} km`;
+    document.getElementById('rt-drivetime').textContent = estDriveMins < 60 ? `~${estDriveMins} min` : `~${Math.floor(estDriveMins/60)}h ${estDriveMins%60}m`;
 
     // Initialize or reset Leaflet map
     if (_routeMap) {
@@ -4081,10 +4074,8 @@
             _routeMap.fitBounds(L.latLngBounds(coords), { padding: [20, 20] });
             // Update travel time with real road data
             const realDriveMins = Math.round(route.duration / 60);
-            document.getElementById('rt-distance').textContent = `${Math.round(route.distance/1000)} km`;
-            // Depot→pickup driving time (estimate based on ratio)
-            const realTravelMins = Math.round(depotDistKm / (route.distance/1000) * realDriveMins * 0.9);
-            document.getElementById('rt-travel').textContent = realTravelMins < 60 ? `${realTravelMins} min` : `${Math.floor(realTravelMins/60)}h ${realTravelMins%60}m`;
+            const dtEl = document.getElementById('rt-drivetime');
+            if (dtEl) dtEl.textContent = realDriveMins < 60 ? `${realDriveMins} min` : `${Math.floor(realDriveMins/60)}h ${realDriveMins%60}m`;
           }
         })
         .catch(() => { /* OSRM unavailable, keep haversine estimate */ });

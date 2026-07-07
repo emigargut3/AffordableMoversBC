@@ -359,26 +359,26 @@
       <nav class="sidebar-nav">
         <div class="nav-label">Main</div>
         <div class="nav-item active" onclick="showView('overview')">
-          <span class="nav-icon">📊</span> Overview
+          <span class="nav-icon">#</span> Overview
         </div>
         <div class="nav-item" onclick="showView('calendar')">
-          <span class="nav-icon">📅</span> Calendar
+          <span class="nav-icon">Cal</span> Calendar
         </div>
         <div class="nav-item" onclick="showView('bookings')">
-          <span class="nav-icon">📋</span> All Bookings
+          <span class="nav-icon">All</span> All Bookings
         </div>
         <div class="nav-item" onclick="showView('clients')">
-          <span class="nav-icon">👤</span> Clients
+          <span class="nav-icon">Dir</span> Clients
         </div>
         <div class="nav-label">Operations</div>
         <div class="nav-item" onclick="showView('crew')">
-          <span class="nav-icon">👷</span> Crew Schedule
+          <span class="nav-icon">Crew</span> Crew Schedule
         </div>
         <div class="nav-item" onclick="showView('trucks')">
-          <span class="nav-icon">🚛</span> Truck Dispatch
+          <span class="nav-icon">Truck</span> Truck Dispatch
         </div>
         <div class="nav-item owner-only" id="nav-finances" onclick="showView('finances')" style="display:none">
-          <span class="nav-icon">💰</span> Finances
+          <span class="nav-icon">P&L</span> Finances
         </div>
       </nav>
       <div class="sidebar-user">
@@ -405,7 +405,7 @@
           <div class="two-col">
             <div class="panel">
               <div class="panel-header">
-                <div class="panel-title">📅 Upcoming Jobs</div>
+                <div class="panel-title">Upcoming Jobs</div>
                 <div class="legend" id="legend-overview"></div>
               </div>
               <div class="panel-body" id="upcoming-list"></div>
@@ -442,7 +442,7 @@
               </div>
               <div class="panel-body" id="cal-day-bookings">
                 <div class="empty">
-                  <div class="empty-icon">📅</div>
+                  <div class="empty-icon">—</div>
                   <p>Click a day on the calendar to see its bookings.</p>
                 </div>
               </div>
@@ -457,7 +457,7 @@
           </div>
           <div class="panel">
             <div class="panel-header">
-              <div class="panel-title">👤 Client Directory</div>
+              <div class="panel-title">Client Directory</div>
               <div id="client-count" style="font-size:.85rem;color:var(--gray)"></div>
             </div>
             <div class="panel-body" id="clients-list"></div>
@@ -656,9 +656,9 @@ var CREW = [
 
 // ── TRUCKS ─────────────────────────────────────────────────────────────
 var TRUCKS = [
-  { id: 't1', name: 'The Workhorse', size: '16ft Box Truck', cap: '800 cu ft', plate: 'AMB-002', icon: '🚛' },
-  { id: 't2', name: 'Big Blue',      size: '20ft Box Truck', cap: '1,100 cu ft', plate: 'AMB-001', icon: '🚚' },
-  { id: 't3', name: 'The Sprinter',  size: 'Cargo Van',      cap: '250 cu ft',   plate: 'AMB-003', icon: '🚐' },
+  { id: 't1', name: 'The Workhorse', size: '16ft Box Truck', cap: '800 cu ft', plate: 'AMB-002', icon: '[T1]' },
+  { id: 't2', name: 'Big Blue',      size: '20ft Box Truck', cap: '1,100 cu ft', plate: 'AMB-001', icon: '[T2]' },
+  { id: 't3', name: 'The Sprinter',  size: 'Cargo Van',      cap: '250 cu ft',   plate: 'AMB-003', icon: '[VAN]' },
 ];
 
 // ── BOOKINGS KEY ───────────────────────────────────────────────────────
@@ -824,14 +824,14 @@ function renderOverview() {
 
   // Upcoming list (next 6)
   var ul = document.getElementById('upcoming-list');
-  if (!upcoming.length) { ul.innerHTML = '<div class="empty"><div class="empty-icon">🎉</div><p>No upcoming bookings.</p></div>'; }
+  if (!upcoming.length) { ul.innerHTML = '<div class="empty"><div class="empty-icon">—</div><p>No upcoming bookings.</p></div>'; }
   else {
     ul.innerHTML = upcoming.slice(0,6).map(function(b) { return bookingRow(b); }).join('');
   }
 
   // Crew today
   var ct = document.getElementById('crew-today');
-  if (!todayJobs.length) { ct.innerHTML = '<div class="empty"><div class="empty-icon">🌴</div><p>No jobs today.</p></div>'; }
+  if (!todayJobs.length) { ct.innerHTML = '<div class="empty"><div class="empty-icon">—</div><p>No jobs today.</p></div>'; }
   else {
     ct.innerHTML = todayJobs.map(function(b) {
       var cr = getCrewById(b.crewId);
@@ -899,7 +899,7 @@ function renderClients() {
   if (countEl) countEl.textContent = clients.length + ' clients';
 
   if (!clients.length) {
-    document.getElementById('clients-list').innerHTML = '<div class="empty"><div class="empty-icon">👤</div><p>No clients found.</p></div>';
+    document.getElementById('clients-list').innerHTML = '<div class="empty"><div class="empty-icon">—</div><p>No clients found.</p></div>';
     return;
   }
 
@@ -1046,7 +1046,7 @@ function showCalDay(dateStr) {
   document.getElementById('cal-day-title').textContent = label;
   var el = document.getElementById('cal-day-bookings');
   if (!bookings.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">✅</div><p>No bookings this day.</p></div>';
+    el.innerHTML = '<div class="empty"><div class="empty-icon">—</div><p>No bookings this day.</p></div>';
   } else {
     el.innerHTML = bookings.sort(function(a,b){ return a.time.localeCompare(b.time); }).map(bookingRow).join('');
   }
@@ -1080,7 +1080,7 @@ function renderBookingsList() {
   document.getElementById('booking-count').textContent = filtered.length + ' bookings';
   var el = document.getElementById('bookings-list');
   if (!filtered.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">🔍</div><p>No bookings match your filters.</p></div>';
+    el.innerHTML = '<div class="empty"><div class="empty-icon">—</div><p>No bookings match your filters.</p></div>';
   } else {
     el.innerHTML = filtered.map(bookingRow).join('');
   }

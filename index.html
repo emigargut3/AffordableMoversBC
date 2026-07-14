@@ -1946,7 +1946,7 @@
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .nav-links { display: none; }
       .hamburger { display: flex; }
-      .nav-cta a[href*="wa.me"] { display: none; }
+      .nav-cta a[href*="wa.me"], .nav-cta .nav-phone { display: none; }
       .trust-strip .container { gap: 16px; }
       .rs-quotes { display: none; }
     }
@@ -1962,6 +1962,9 @@
       .mobile-sticky-bar { display: flex; }
       .whatsapp-float { display: none; }
       .trust-strip { display: none; }
+      .nav-cta a[href*="wa.me"] { display: none !important; }
+      .nav-cta .nav-phone { display: none !important; }
+      .nav-cta .btn { display: none !important; }
     }
 
     /* ── Mobile Menu ─────────────────────────────────────────────── */

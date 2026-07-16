@@ -1949,6 +1949,8 @@
       .nav-cta a[href*="wa.me"], .nav-cta .nav-phone { display: none; }
       .trust-strip .container { gap: 16px; }
       .rs-quotes { display: none; }
+      #callback .container > div { grid-template-columns: 1fr; gap: 24px; }
+      #callback { padding: 36px 0; }
     }
     @media (max-width: 600px) {
       .section { padding: 56px 0; }
@@ -2485,6 +2487,27 @@
     </div>
   </div>
 </div>
+
+<!-- Lead Capture Strip -->
+<section id="callback" style="background:var(--navy);padding:48px 0;">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+      <div>
+        <h2 style="color:#fff;font-size:1.8rem;font-weight:800;margin:0 0 10px;line-height:1.2;">Want us to contact you?</h2>
+        <p style="color:rgba(255,255,255,.75);font-size:1rem;margin:0;">Leave your info and we'll call you back within 1 hour to give you a free quote — no commitment required.</p>
+      </div>
+      <form id="callback-form" onsubmit="submitCallback(event)" style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <input type="text" id="cb-name" placeholder="Your name" required style="padding:13px 16px;border-radius:8px;border:none;font-size:.95rem;font-family:inherit;background:#fff;color:#1e293b;"/>
+          <input type="tel" id="cb-phone" placeholder="Phone number" required style="padding:13px 16px;border-radius:8px;border:none;font-size:.95rem;font-family:inherit;background:#fff;color:#1e293b;"/>
+        </div>
+        <input type="text" id="cb-date" placeholder="Planned move date (optional)" style="padding:13px 16px;border-radius:8px;border:none;font-size:.95rem;font-family:inherit;background:#fff;color:#1e293b;"/>
+        <button type="submit" style="background:var(--red);color:#fff;border:none;padding:14px;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;">Request a Callback</button>
+        <p id="cb-success" style="display:none;color:#86efac;font-size:.9rem;font-weight:600;text-align:center;margin:0;">We got your info — we'll call you within 1 hour!</p>
+      </form>
+    </div>
+  </div>
+</section>
 
 <!-- Services -->
 <section class="section section--gray" id="services">
@@ -4294,6 +4317,26 @@
   }
 
   /* ── Questions popup ──────────────────────────────────────────── */
+  function submitCallback(e) {
+    e.preventDefault();
+    var name = document.getElementById('cb-name').value;
+    var phone = document.getElementById('cb-phone').value;
+    var date = document.getElementById('cb-date').value || 'Not specified';
+    emailjs.send('service_5jm9nl9', 'template_7ni8mad', {
+      from_name: name,
+      phone: phone,
+      move_date: date,
+      message: 'Callback request from website lead form',
+      to_email: 'info@affordablemoversbc.com'
+    }).catch(function(){});
+    fetch('https://ntfy.sh/ambc-bookings-emi', {
+      method: 'POST',
+      body: 'Callback request: ' + name + ' · ' + phone + ' · Move date: ' + date
+    }).catch(function(){});
+    document.getElementById('cb-success').style.display = 'block';
+    document.getElementById('callback-form').reset();
+  }
+
   function openQPopup() {
     document.getElementById('qpopup-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';

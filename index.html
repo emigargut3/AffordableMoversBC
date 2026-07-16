@@ -2501,7 +2501,10 @@
           <input type="text" id="cb-name" placeholder="Your name" required style="padding:13px 16px;border-radius:8px;border:none;font-size:.95rem;font-family:inherit;background:#fff;color:#1e293b;"/>
           <input type="tel" id="cb-phone" placeholder="Phone number" required style="padding:13px 16px;border-radius:8px;border:none;font-size:.95rem;font-family:inherit;background:#fff;color:#1e293b;"/>
         </div>
-        <input type="text" id="cb-date" placeholder="Planned move date (optional)" style="padding:13px 16px;border-radius:8px;border:none;font-size:.95rem;font-family:inherit;background:#fff;color:#1e293b;"/>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <input type="email" id="cb-email" placeholder="Email address" style="padding:13px 16px;border-radius:8px;border:none;font-size:.95rem;font-family:inherit;background:#fff;color:#1e293b;"/>
+          <input type="text" id="cb-date" placeholder="Planned move date (optional)" style="padding:13px 16px;border-radius:8px;border:none;font-size:.95rem;font-family:inherit;background:#fff;color:#1e293b;"/>
+        </div>
         <button type="submit" style="background:var(--red);color:#fff;border:none;padding:14px;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;">Request a Callback</button>
         <p id="cb-success" style="display:none;color:#86efac;font-size:.9rem;font-weight:600;text-align:center;margin:0;">We got your info — we'll call you within 1 hour!</p>
       </form>

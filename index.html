@@ -2263,174 +2263,48 @@
       </div>
       <div>
         <div class="estimator-wrap">
-          <div style="text-align:center;margin-bottom:10px;">
-            <span style="font-size:.8rem;font-weight:700;color:var(--red);letter-spacing:.08em;text-transform:uppercase;">Get your instant quote below</span>
+          <div style="padding:28px 28px 10px;">
+            <div style="font-size:.75rem;font-weight:700;color:var(--red);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">Free Quote — No Commitment</div>
+            <h3 style="margin:0 0 4px;font-size:1.3rem;font-weight:800;color:var(--navy);line-height:1.2;">Tell us about your move</h3>
+            <p style="margin:0 0 20px;font-size:.88rem;color:var(--gray);">We'll call you back within 1 hour with a personalized quote.</p>
           </div>
-          <!-- Tabs -->
-          <div class="estimator-tabs">
-            <button class="estimator-tab active" onclick="switchTab('home')">Home Move</button>
-            <button class="estimator-tab" onclick="switchTab('office')">Office Move</button>
-            <button class="estimator-tab" onclick="switchTab('specialty')">Specialty</button>
-            <button class="estimator-tab" onclick="switchTab('storage')">Storage</button>
-          </div>
-
-          <div class="estimator-body">
-
-            <!-- Locations -->
-            <div class="est-section-label">Where are you moving?</div>
-            <div class="loc-wrap">
-              <div class="location-row" id="location-row">
-                <div class="location-field">
-                  <span class="loc-pin" style="width:10px;height:10px;border-radius:50%;background:#16a34a;flex-shrink:0;display:inline-block;"></span>
-                  <span class="loc-label">FROM</span>
-                  <input class="loc-input" id="from-input" type="text" placeholder="Enter pickup address or city" autocomplete="off" oninput="showSuggestions('from-input','from-list',this.value)" onfocus="showSuggestions('from-input','from-list',this.value)" onblur="hideSuggestions('from-list')" />
-                </div>
-                <div class="location-field">
-                  <span class="loc-pin" style="width:10px;height:10px;border-radius:50%;background:#D62828;flex-shrink:0;display:inline-block;"></span>
-                  <span class="loc-label">TO</span>
-                  <input class="loc-input" id="to-input" type="text" placeholder="Enter destination address or city" autocomplete="off" oninput="showSuggestions('to-input','to-list',this.value)" onfocus="showSuggestions('to-input','to-list',this.value)" onblur="hideSuggestions('to-list')" />
-                </div>
+          <form id="hero-contact-form" onsubmit="submitHeroContact(event)" style="padding:0 28px 28px;display:flex;flex-direction:column;gap:14px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div>
+                <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Your name *</label>
+                <input type="text" id="hc-name" placeholder="John Smith" required style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
               </div>
-              <div class="autocomplete-list" id="from-list" style="display:none"></div>
-              <div class="autocomplete-list" id="to-list" style="display:none;top:auto"></div>
-            </div>
-            <div class="loc-swap"><button onclick="swapLocations()" title="Swap">⇅</button></div>
-
-            <!-- Home size -->
-            <div id="size-section">
-              <div class="est-section-label">Home / job size</div>
-              <div class="pill-group" id="size-pills">
-                <button class="pill" onclick="selectPill('size-pills',this,'studio')">Studio</button>
-                <button class="pill selected" onclick="selectPill('size-pills',this,'1br')">1 Bedroom</button>
-                <button class="pill" onclick="selectPill('size-pills',this,'2br')">2 Bedrooms</button>
-                <button class="pill" onclick="selectPill('size-pills',this,'3br')">3 Bedrooms</button>
-                <button class="pill" onclick="selectPill('size-pills',this,'4br')">4+ Bedrooms</button>
+              <div>
+                <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Phone number *</label>
+                <input type="tel" id="hc-phone" placeholder="604-555-0100" required style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
               </div>
             </div>
-
-            <!-- Estimated duration -->
-            <div class="est-section-label">Estimated time needed</div>
-            <div class="pill-group" id="dur-pills">
-              <button class="pill" onclick="selectPill('dur-pills',this,'2')">2 hrs</button>
-              <button class="pill selected" onclick="selectPill('dur-pills',this,'3')">3 hrs</button>
-              <button class="pill" onclick="selectPill('dur-pills',this,'4')">4 hrs</button>
-              <button class="pill" onclick="selectPill('dur-pills',this,'5')">5 hrs</button>
-              <button class="pill" onclick="selectPill('dur-pills',this,'6')">6 hrs</button>
-              <button class="pill" onclick="selectPill('dur-pills',this,'8')">8+ hrs</button>
+            <div>
+              <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Email address</label>
+              <input type="email" id="hc-email" placeholder="john@email.com" style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
             </div>
-
-            <!-- Optional add-ons (collapsed) -->
-            <details style="margin-bottom:12px;">
-              <summary style="font-size:.78rem;font-weight:700;color:var(--gray);cursor:pointer;padding:6px 0;list-style:none;display:flex;align-items:center;gap:6px;">
-                <span>Add-ons</span>
-                <span style="font-size:.68rem;color:var(--gray);background:var(--off);padding:2px 8px;border-radius:100px;border:1px solid var(--light);">optional</span>
-              </summary>
-              <div style="padding-top:10px;">
-                <div class="checkbox-grid">
-                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="packing" /> Full packing</label>
-                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="piano" /> Piano / Safe</label>
-                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="assembly" /> Assembly</label>
-                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="junk" /> Junk removal</label>
-                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="storage" /> Storage</label>
-                  <label class="check-item"><input type="checkbox" onchange="estimatePrice()" data-addon="lastmin" /> Same-day</label>
-                </div>
-                <div class="floor-row" style="margin-top:10px;">
-                  <div class="floor-box">
-                    <label>Floor at pickup</label>
-                    <select id="floor-from" onchange="estimatePrice()">
-                      <option value="0">Ground / Elevator</option>
-                      <option value="1">2nd floor (stairs)</option>
-                      <option value="2">3rd floor (stairs)</option>
-                      <option value="3">4th+ floor (stairs)</option>
-                    </select>
-                  </div>
-                  <div class="floor-box">
-                    <label>Floor at destination</label>
-                    <select id="floor-to" onchange="estimatePrice()">
-                      <option value="0">Ground / Elevator</option>
-                      <option value="1">2nd floor (stairs)</option>
-                      <option value="2">3rd floor (stairs)</option>
-                      <option value="3">4th+ floor (stairs)</option>
-                    </select>
-                  </div>
-                </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div>
+                <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Moving from</label>
+                <input type="text" id="hc-from" placeholder="City or neighbourhood" style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
               </div>
-            </details>
-
-            <!-- Calculate button -->
-            <button class="est-calc-btn" id="calc-btn" onclick="estimatePrice()">
-              Get My Price Instantly
+              <div>
+                <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Moving to</label>
+                <input type="text" id="hc-to" placeholder="City or neighbourhood" style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
+              </div>
+            </div>
+            <div>
+              <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Move date</label>
+              <input type="text" id="hc-date" placeholder="e.g. Aug 15, 2026 (flexible?)" style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
+            </div>
+            <button type="submit" id="hc-submit-btn" style="background:var(--red);color:#fff;border:none;border-radius:8px;padding:15px;font-size:1rem;font-weight:800;font-family:inherit;cursor:pointer;letter-spacing:.02em;transition:opacity .2s;">
+              Get My Free Quote
             </button>
-
-            <!-- Price result -->
-            <div class="price-result" id="price-result">
-              <div class="result-label">Your Instant Quote</div>
-              <div class="result-amount" id="result-amount">$—</div>
-              <div class="result-note" id="result-note"></div>
-              <div class="result-breakdown" id="result-breakdown"></div>
-              <div id="transport-notice" style="display:none;margin-top:10px;padding:9px 13px;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;font-size:.8rem;color:#166534;font-weight:600;">
-                Round-trip transportation is included in this price — no hidden fees.
-              </div>
-              <div style="margin-top:10px;font-size:.75rem;color:#94a3b8;text-align:center;">
-                Each additional hour beyond your estimate is billed at your truck's hourly rate.
-              </div>
-            </div>
-
-            <!-- Route map (shows after price) -->
-            <div class="route-map-wrap" id="route-map-wrap">
-              <div id="route-map"></div>
-            </div>
-
-            <!-- Timing strip -->
-            <div class="route-timing" id="route-timing">
-              <div class="rt-cell">
-                <div class="rt-label">Move time</div>
-                <div class="rt-value" id="rt-move">—</div>
-                <div class="rt-sub">estimated on-site</div>
-              </div>
-              <div class="rt-cell">
-                <div class="rt-label">Drive time</div>
-                <div class="rt-value" id="rt-drivetime">—</div>
-                <div class="rt-sub">pickup to drop-off</div>
-              </div>
-            </div>
-
-            <!-- 30/70 deposit split -->
-            <div class="deposit-split" id="deposit-split">
-              <div class="ds-title">How payment works</div>
-              <div class="ds-row">
-                <span class="ds-label">30% deposit today (locks your slot)</span>
-                <span class="ds-amount" id="ds-deposit">$—</span>
-              </div>
-              <div class="ds-row">
-                <span class="ds-label">Remaining 70% on move day</span>
-                <span class="ds-amount" id="ds-remaining">$—</span>
-              </div>
-              <div class="ds-row">
-                <span class="ds-label">Total incl. 5% GST</span>
-                <span class="ds-amount" id="ds-total">$—</span>
-              </div>
-              <div class="ds-note">No surprise charges · 48hr cancellation policy</div>
-            </div>
-
-            <!-- Questions CTA -->
-            <button class="questions-cta" id="questions-cta" onclick="openQPopup()">
-              Any specific questions before booking? <strong>Call us!</strong> &nbsp;→ 604-537-4140
-            </button>
-
-            <!-- Book button -->
-            <div class="result-actions" id="result-book-actions" style="display:none;margin-bottom:8px;">
-              <button class="btn-book-now" style="flex:1;padding:14px;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;border:none;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;" onclick="openBookingModal()">Book This Move</button>
-            </div>
-
-            <a href="tel:+16045374140" class="unhappy-btn" id="unhappy-btn" style="display:none;">
-              Price not right? Call us to negotiate — 604-537-4140
-            </a>
-
-            <div style="text-align:center;margin-top:10px;font-size:.72rem;color:var(--gray);">
-              No personal info needed · Instant price · <strong style="color:var(--red);">$20 off</strong> with a Google review
-            </div>
-          </div>
+            <p id="hc-success" style="display:none;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px 16px;font-size:.88rem;color:#166534;font-weight:600;text-align:center;margin:0;">
+              We got your details — expect a call within 1 hour!
+            </p>
+            <p style="margin:0;font-size:.72rem;color:var(--gray);text-align:center;">No spam · No commitment · We call you</p>
+          </form>
         </div>
       </div>
     </div>
@@ -4331,6 +4205,43 @@
   }
 
   /* ── Questions popup ──────────────────────────────────────────── */
+  function submitHeroContact(e) {
+    e.preventDefault();
+    var name = document.getElementById('hc-name').value;
+    var phone = document.getElementById('hc-phone').value;
+    var email = document.getElementById('hc-email').value || 'Not provided';
+    var from = document.getElementById('hc-from').value || 'Not specified';
+    var to = document.getElementById('hc-to').value || 'Not specified';
+    var date = document.getElementById('hc-date').value || 'Not specified';
+    var btn = document.getElementById('hc-submit-btn');
+    btn.disabled = true;
+    btn.style.opacity = '.6';
+    var msg = 'Hero form: ' + name + ' | ' + phone + ' | ' + email + ' | From: ' + from + ' → To: ' + to + ' | Date: ' + date;
+    emailjs.send('service_5jm9nl9', 'template_7ni8mad', {
+      from_name: name,
+      phone: phone,
+      move_date: date,
+      message: 'HERO CONTACT FORM\nFrom: ' + from + '\nTo: ' + to + '\nEmail: ' + email,
+      to_email: 'info@affordablemoversbc.com'
+    }).catch(function(){});
+    emailjs.send('service_5jm9nl9', 'template_7ni8mad', {
+      from_name: name,
+      phone: phone,
+      move_date: date,
+      message: 'HERO CONTACT FORM\nFrom: ' + from + '\nTo: ' + to + '\nEmail: ' + email,
+      to_email: 'emigargut3@gmail.com'
+    }).catch(function(){});
+    fetch('https://ntfy.sh/ambc-bookings-emi', {
+      method: 'POST',
+      body: msg
+    }).catch(function(){});
+    var leads = JSON.parse(localStorage.getItem('leads') || '[]');
+    leads.unshift({ ts: new Date().toISOString(), name: name, phone: phone, email: email, from: from, to: to, date: date, source: 'hero-form' });
+    localStorage.setItem('leads', JSON.stringify(leads));
+    document.getElementById('hc-success').style.display = 'block';
+    document.getElementById('hero-contact-form').reset();
+  }
+
   function submitCallback(e) {
     e.preventDefault();
     var name = document.getElementById('cb-name').value;

@@ -1971,6 +1971,7 @@
       .sticky-quote { display: none; }
       .mobile-sticky-bar { display: flex; }
       .whatsapp-float { display: none; }
+      .staff-login-btn { display: none !important; }
       .trust-strip { display: none; }
       .nav-cta a[href*="wa.me"] { display: none !important; }
       .nav-cta .nav-phone { display: none !important; }
@@ -2222,6 +2223,7 @@
   <a href="#areas" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Areas</a>
   <a href="#faq" onclick="document.querySelector('.mobile-menu').classList.remove('open')">FAQ</a>
   <a href="#contact" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Get Free Quote →</a>
+  <a href="staff.html" onclick="document.querySelector('.mobile-menu').classList.remove('open')" style="font-size:1rem;opacity:.5;">Staff Login</a>
 </div>
 
 <!-- Trust Strip -->
@@ -4730,8 +4732,8 @@
   <a href="#contact" class="msb-quote">Get Free Quote</a>
 </div>
 
-<!-- Staff Login Button (fixed bottom-left) -->
-<a href="staff.html" style="
+<!-- Staff Login Button (fixed bottom-left, desktop only) -->
+<a href="staff.html" class="staff-login-btn" style="
   position:fixed;
   bottom:20px;
   left:20px;

@@ -1961,12 +1961,12 @@
       #callback { padding: 36px 0; }
     }
     @media (max-width: 600px) {
-      .section { padding: 56px 0; }
+      .section { padding: 48px 0; }
       .process-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
       .topbar .container { justify-content: center; text-align: center; }
       .topbar-links { display: none; }
-      .hero { padding: 60px 0; }
+      .hero { padding: 48px 0; }
       .form-row { grid-template-columns: 1fr; }
       .sticky-quote { display: none; }
       .mobile-sticky-bar { display: flex; }
@@ -1975,6 +1975,27 @@
       .nav-cta a[href*="wa.me"] { display: none !important; }
       .nav-cta .nav-phone { display: none !important; }
       .nav-cta .btn { display: none !important; }
+      /* Pricing & fleet grids */
+      .pricing-grid { grid-template-columns: 1fr !important; }
+      .fleet-grid { grid-template-columns: 1fr !important; }
+      .areas-grid { grid-template-columns: 1fr 1fr !important; }
+      /* Hero contact form inline grids */
+      #hero-contact-form > div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+      /* Callback section form grids */
+      #callback form > div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+      /* Callback two-col layout */
+      #callback .container > div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; gap: 24px !important; }
+      /* Review strip */
+      .rs-grid { grid-template-columns: 1fr !important; }
+      /* Hero stats */
+      .hero-stats { flex-wrap: wrap; gap: 16px !important; }
+      .hero-stat { min-width: 40%; }
+      /* Estimator wrap full width */
+      .estimator-wrap { border-radius: 12px; }
+      .estimator-body { padding: 16px; }
+      /* Font scaling */
+      .hero h1 { font-size: 2rem !important; }
+      .section-title { font-size: 1.6rem !important; }
     }
 
     /* ── Mobile Menu ─────────────────────────────────────────────── */

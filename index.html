@@ -2318,19 +2318,35 @@
               <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Email address</label>
               <input type="email" id="hc-email" placeholder="john@email.com" style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
             </div>
+            <div>
+              <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Type of move *</label>
+              <select id="hc-type" required style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;background:#fff;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'">
+                <option value="" disabled selected>Select type...</option>
+                <option value="Studio Apartment">Studio Apartment</option>
+                <option value="1 Bedroom Apartment">1 Bedroom Apartment</option>
+                <option value="2 Bedroom Apartment">2 Bedroom Apartment</option>
+                <option value="House">House</option>
+                <option value="Office">Office</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
               <div>
-                <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Moving from</label>
-                <input type="text" id="hc-from" placeholder="City or neighbourhood" style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
+                <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Moving from *</label>
+                <input type="text" id="hc-from" placeholder="City or neighbourhood" required style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
               </div>
               <div>
-                <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Moving to</label>
-                <input type="text" id="hc-to" placeholder="City or neighbourhood" style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
+                <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Moving to *</label>
+                <input type="text" id="hc-to" placeholder="City or neighbourhood" required style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
               </div>
             </div>
             <div>
               <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Move date</label>
               <input type="text" id="hc-date" placeholder="e.g. Aug 15, 2026 (flexible?)" style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
+            </div>
+            <div>
+              <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Any specific requests?</label>
+              <textarea id="hc-notes" placeholder="e.g. Piano, fragile items, need packing help..." rows="3" style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;resize:vertical;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'"></textarea>
             </div>
             <button type="submit" id="hc-submit-btn" style="background:var(--red);color:#fff;border:none;border-radius:8px;padding:15px;font-size:1rem;font-weight:800;font-family:inherit;cursor:pointer;letter-spacing:.02em;transition:opacity .2s;">
               Get My Free Quote
@@ -4245,33 +4261,36 @@
     var name = document.getElementById('hc-name').value;
     var phone = document.getElementById('hc-phone').value;
     var email = document.getElementById('hc-email').value || 'Not provided';
+    var type = document.getElementById('hc-type').value || 'Not specified';
     var from = document.getElementById('hc-from').value || 'Not specified';
     var to = document.getElementById('hc-to').value || 'Not specified';
     var date = document.getElementById('hc-date').value || 'Not specified';
+    var notes = document.getElementById('hc-notes').value || 'None';
     var btn = document.getElementById('hc-submit-btn');
     btn.disabled = true;
     btn.style.opacity = '.6';
-    var msg = 'Hero form: ' + name + ' | ' + phone + ' | ' + email + ' | From: ' + from + ' → To: ' + to + ' | Date: ' + date;
+    var msg = 'New lead: ' + name + ' | ' + phone + ' | ' + email + ' | ' + type + ' | From: ' + from + ' → ' + to + ' | Date: ' + date + ' | Notes: ' + notes;
+    var details = 'HERO CONTACT FORM\nType: ' + type + '\nFrom: ' + from + '\nTo: ' + to + '\nDate: ' + date + '\nEmail: ' + email + '\nNotes: ' + notes;
     emailjs.send('service_5jm9nl9', 'template_7ni8mad', {
       from_name: name,
       phone: phone,
       move_date: date,
-      message: 'HERO CONTACT FORM\nFrom: ' + from + '\nTo: ' + to + '\nEmail: ' + email,
+      message: details,
       to_email: 'emigargut3@gmail.com'
     }).catch(function(){});
     emailjs.send('service_5jm9nl9', 'template_7ni8mad', {
       from_name: name,
       phone: phone,
       move_date: date,
-      message: 'HERO CONTACT FORM\nFrom: ' + from + '\nTo: ' + to + '\nEmail: ' + email,
-      to_email: 'emigargut3@gmail.com'
+      message: details,
+      to_email: 'affordabletransport@hotmail.com'
     }).catch(function(){});
     fetch('https://ntfy.sh/ambc-bookings-emi', {
       method: 'POST',
       body: msg
     }).catch(function(){});
     var leads = JSON.parse(localStorage.getItem('leads') || '[]');
-    leads.unshift({ ts: new Date().toISOString(), name: name, phone: phone, email: email, from: from, to: to, date: date, source: 'hero-form' });
+    leads.unshift({ ts: new Date().toISOString(), name: name, phone: phone, email: email, type: type, from: from, to: to, date: date, notes: notes, source: 'hero-form' });
     localStorage.setItem('leads', JSON.stringify(leads));
     document.getElementById('hc-success').style.display = 'block';
     document.getElementById('hero-contact-form').reset();

@@ -4292,6 +4292,13 @@
       message: details,
       to_email: 'affordabletransport@hotmail.com'
     }).catch(function(){});
+    emailjs.send('service_5jm9nl9', 'template_7ni8mad', {
+      from_name: name,
+      phone: phone,
+      move_date: date,
+      message: details,
+      to_email: 'info@affordablemovers.com'
+    }).catch(function(){});
     fetch('https://ntfy.sh/ambc-bookings-emi', {
       method: 'POST',
       body: msg
@@ -4314,6 +4321,13 @@
       move_date: date,
       message: 'Callback request from website lead form',
       to_email: 'emigargut3@gmail.com'
+    }).catch(function(){});
+    emailjs.send('service_5jm9nl9', 'template_7ni8mad', {
+      from_name: name,
+      phone: phone,
+      move_date: date,
+      message: 'Callback request from website lead form',
+      to_email: 'info@affordablemovers.com'
     }).catch(function(){});
     fetch('https://ntfy.sh/ambc-bookings-emi', {
       method: 'POST',

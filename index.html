@@ -2240,8 +2240,8 @@
 <div class="trust-strip">
   <div class="container">
     <div class="trust-item">
-      <span class="trust-stars">★★★★☆</span>
-      <span>4.7 Google Rating</span>
+      <span class="trust-stars">★</span>
+      <span>91 Google Reviews</span>
     </div>
     <div class="trust-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -2283,8 +2283,8 @@
             <span>Moves completed</span>
           </div>
           <div class="hero-stat">
-            <strong>4.7★</strong>
-            <span>Google rating</span>
+            <strong>91</strong>
+            <span>Google reviews</span>
           </div>
           <div class="hero-stat">
             <strong>10+</strong>
@@ -2310,8 +2310,9 @@
                 <input type="text" id="hc-name" placeholder="John Smith" required style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
               </div>
               <div>
-                <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Phone number *</label>
-                <input type="tel" id="hc-phone" placeholder="604-555-0100" required style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
+                <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Phone number <span style="color:var(--red);">*</span></label>
+                <input type="tel" id="hc-phone" placeholder="604-555-0100" required minlength="7" style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
+                <span id="hc-phone-err" style="display:none;font-size:.72rem;color:var(--red);margin-top:3px;">Please enter a phone number so we can reach you.</span>
               </div>
             </div>
             <div>
@@ -2369,10 +2370,10 @@
       <div>
         <div class="rs-google-logo"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div>
         <div style="display:flex;align-items:baseline;gap:6px;margin-top:2px;">
-          <div class="rs-rating">4.7</div>
+          <div class="rs-rating">91</div>
           <div>
-            <div class="rs-stars">★★★★★</div>
-            <div class="rs-count">Based on Google Reviews</div>
+            <div class="rs-stars">★</div>
+            <div class="rs-count">Reviews on Google</div>
           </div>
         </div>
       </div>
@@ -2419,7 +2420,7 @@
     </div>
     <div class="trust-item">
       <div class="icon" style="font-size:1rem;font-weight:800;color:var(--red)">✓</div>
-      <span>5-Star Google Rated</span>
+      <span>Reviewed on Google</span>
     </div>
   </div>
 </div>
@@ -2762,10 +2763,10 @@
           </div>
         </div>
         <div class="why-stat-card">
-          <div class="why-stat-icon" style="font-size:1.2rem;font-weight:800;color:var(--red)">5★</div>
+          <div class="why-stat-icon" style="font-size:1.2rem;font-weight:800;color:var(--red)">★</div>
           <div class="why-stat-text">
-            <strong>4.7 / 5</strong>
-            <span>Average Google rating from real customers</span>
+            <strong>91</strong>
+            <span>Google reviews from real customers across BC</span>
           </div>
         </div>
         <div class="why-stat-card">
@@ -4260,6 +4261,12 @@
     e.preventDefault();
     var name = document.getElementById('hc-name').value;
     var phone = document.getElementById('hc-phone').value;
+    if (!phone || phone.trim().length < 7) {
+      document.getElementById('hc-phone-err').style.display = 'block';
+      document.getElementById('hc-phone').focus();
+      return;
+    }
+    document.getElementById('hc-phone-err').style.display = 'none';
     var email = document.getElementById('hc-email').value || 'Not provided';
     var type = document.getElementById('hc-type').value || 'Not specified';
     var from = document.getElementById('hc-from').value || 'Not specified';

@@ -4231,9 +4231,9 @@
       method: 'POST',
       body: msg
     }).catch(function(){});
-    var leads = JSON.parse(localStorage.getItem('leads') || '[]');
-    leads.unshift({ ts: new Date().toISOString(), name: name, phone: phone, email: email, type: type, from: from, to: to, date: date, notes: notes, source: 'hero-form' });
-    localStorage.setItem('leads', JSON.stringify(leads));
+    var leads = JSON.parse(localStorage.getItem('ambc_quote_requests') || '[]');
+    leads.unshift({ id: 'q-' + Date.now(), ts: new Date().toISOString(), name: name, phone: phone, email: email, serviceType: type, fromVal: from, toVal: to, date: date, notes: notes, status: 'new' });
+    localStorage.setItem('ambc_quote_requests', JSON.stringify(leads));
     document.getElementById('hc-success').style.display = 'block';
     document.getElementById('hero-contact-form').reset();
   }

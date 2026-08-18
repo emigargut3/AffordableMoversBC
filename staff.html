@@ -361,6 +361,9 @@
         <div class="nav-item active" onclick="showView('overview')">
           <span class="nav-icon">#</span> Overview
         </div>
+        <div class="nav-item" onclick="showView('quotes')" id="nav-quotes">
+          <span class="nav-icon">★</span> Quote Requests
+        </div>
         <div class="nav-item" onclick="showView('calendar')">
           <span class="nav-icon">Cal</span> Calendar
         </div>
@@ -416,6 +419,17 @@
               </div>
               <div class="panel-body" id="crew-today"></div>
             </div>
+          </div>
+        </div>
+
+        <!-- ── QUOTE REQUESTS ── -->
+        <div class="view" id="view-quotes">
+          <div class="panel">
+            <div class="panel-header" style="display:flex;align-items:center;justify-content:space-between;">
+              <div class="panel-title">Quote Requests from Website</div>
+              <button onclick="clearAllQuotes()" style="background:#fee2e2;color:#b91c1c;border:none;border-radius:6px;padding:6px 14px;font-size:.8rem;font-weight:700;cursor:pointer;">Clear All</button>
+            </div>
+            <div class="panel-body" id="quotes-list" style="padding:0;"></div>
           </div>
         </div>
 
@@ -723,6 +737,7 @@ document.addEventListener('keydown', function(e) {
 // ── NAVIGATION ─────────────────────────────────────────────────────────
 var viewTitles = {
   overview: 'Overview',
+  quotes:   'Quote Requests',
   calendar: 'Calendar',
   clients:  'Clients',
   bookings: 'All Bookings',
@@ -742,6 +757,7 @@ function showView(name) {
     }
   });
   document.getElementById('view-title').textContent = viewTitles[name];
+  if (name === 'quotes')   renderQuotes();
   if (name === 'bookings') renderBookingsList();
   if (name === 'clients')  renderClients();
   if (name === 'crew') renderCrewSchedule();
@@ -772,6 +788,67 @@ function getTruckById(id) {
 }
 
 // ── OVERVIEW ───────────────────────────────────────────────────────────
+// ── QUOTE REQUESTS ─────────────────────────────────────────────────────
+function getQuotes() {
+  try { return JSON.parse(localStorage.getItem('ambc_quote_requests') || '[]'); } catch { return []; }
+}
+function saveQuotes(list) { localStorage.setItem('ambc_quote_requests', JSON.stringify(list)); }
+
+function renderQuotes() {
+  var list = getQuotes();
+  var el = document.getElementById('quotes-list');
+  if (!list.length) {
+    el.innerHTML = '<div style="padding:32px;text-align:center;color:#94a3b8;">No quote requests yet. They will appear here when clients fill the form on the website.</div>';
+    return;
+  }
+  el.innerHTML = list.map(function(q, i) {
+    var date = q.date ? q.date : 'Not specified';
+    var ts = q.ts ? new Date(q.ts).toLocaleString('en-CA', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' }) : '';
+    var isNew = q.status === 'new';
+    return '<div style="border-bottom:1px solid #f1f5f9;padding:18px 20px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;background:' + (isNew ? '#fffbeb' : '#fff') + ';">' +
+      '<div>' +
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">' +
+          (isNew ? '<span style="background:#fbbf24;color:#78350f;font-size:.68rem;font-weight:800;padding:2px 8px;border-radius:4px;text-transform:uppercase;">New</span>' : '') +
+          '<strong style="font-size:1rem;color:#1e293b;">' + q.name + '</strong>' +
+          '<span style="color:#64748b;font-size:.85rem;">' + ts + '</span>' +
+        '</div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:8px 20px;font-size:.88rem;color:#475569;">' +
+          '<span>📞 <a href="tel:' + q.phone + '" style="color:#D62828;font-weight:700;">' + q.phone + '</a></span>' +
+          (q.email ? '<span>✉ ' + q.email + '</span>' : '') +
+          '<span>🏠 ' + q.serviceType + '</span>' +
+          '<span>📍 ' + q.fromVal + ' → ' + q.toVal + '</span>' +
+          '<span>📅 ' + date + '</span>' +
+        '</div>' +
+        (q.notes ? '<div style="margin-top:6px;font-size:.83rem;color:#64748b;font-style:italic;">Note: ' + q.notes + '</div>' : '') +
+      '</div>' +
+      '<div style="display:flex;flex-direction:column;gap:6px;">' +
+        '<button onclick="markQuoteCalled(' + i + ')" style="background:#dcfce7;color:#166534;border:none;border-radius:6px;padding:6px 12px;font-size:.78rem;font-weight:700;cursor:pointer;">Called</button>' +
+        '<button onclick="deleteQuote(' + i + ')" style="background:#fee2e2;color:#b91c1c;border:none;border-radius:6px;padding:6px 12px;font-size:.78rem;font-weight:700;cursor:pointer;">Delete</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function markQuoteCalled(i) {
+  var list = getQuotes();
+  list[i].status = 'called';
+  saveQuotes(list);
+  renderQuotes();
+}
+
+function deleteQuote(i) {
+  var list = getQuotes();
+  list.splice(i, 1);
+  saveQuotes(list);
+  renderQuotes();
+}
+
+function clearAllQuotes() {
+  if (!confirm('Delete all quote requests?')) return;
+  saveQuotes([]);
+  renderQuotes();
+}
+
 function renderOverview() {
   var all = getBookings();
   var today = new Date().toISOString().slice(0,10);
@@ -796,11 +873,12 @@ function renderOverview() {
   var monthRev = monthJobs.reduce(function(s,b){ return s+(b.totalGST||b.total||0); }, 0);
   var yearRev  = yearJobs.reduce(function(s,b){ return s+(b.totalGST||b.total||0); }, 0);
 
+  var newQuotes = getQuotes().filter(function(q) { return q.status === 'new'; }).length;
   document.getElementById('stats-grid').innerHTML = [
+    newQuotes > 0 ? statCard('New Quote Requests', newQuotes, '<a href="#" onclick="showView(\'quotes\');return false;" style="color:#D62828;font-weight:700;">View & Call Now</a>', 'badge-red') : '',
     statCard('Today\'s Jobs',   todayJobs.length,          'Scheduled today',        'badge-blue'),
     statCard('This Week',       weekJobs.length + ' jobs', '$'+weekRev.toLocaleString()+' revenue', 'badge-green'),
     statCard('This Month',      monthJobs.length + ' jobs','$'+monthRev.toLocaleString()+' revenue','badge-gold'),
-    statCard('This Year',       yearJobs.length + ' jobs', '$'+yearRev.toLocaleString()+' revenue', 'badge-red'),
   ].join('');
 
   // Upcoming list (next 6)

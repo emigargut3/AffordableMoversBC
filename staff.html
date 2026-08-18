@@ -668,27 +668,8 @@ function getBookings() {
   try { return JSON.parse(localStorage.getItem(BOOKING_KEY) || '[]'); } catch { return []; }
 }
 
-// Seed demo bookings if empty
 function seedDemoData() {
-  var existing = getBookings();
-  if (existing.length > 0) return;
-  var today = new Date();
-  function daysFromNow(n) {
-    var d = new Date(today);
-    d.setDate(d.getDate() + n);
-    return d.toISOString().slice(0,10);
-  }
-  var demos = [
-    { date: daysFromNow(0),  time: '9:00 AM',  name: 'Sarah Mitchell',  phone: '604-555-0101', email: 'sarah@email.com', fromVal: 'Vancouver, BC', toVal: 'Burnaby, BC',     serviceTab: 'Home Move',   sizeKey: '2br', hrs: 3, total: 450, totalGST: 475, truck: 't1', crewId: 'c1', status: 'confirmed', notes: 'Has a piano.' },
-    { date: daysFromNow(1),  time: '7:00 AM',  name: 'Derek Chang',     phone: '604-555-0202', email: 'derek@email.com', fromVal: 'Surrey, BC',    toVal: 'Richmond, BC',    serviceTab: 'Office Move', sizeKey: '3br', hrs: 5, total: 845, totalGST: 887, truck: 't2', crewId: 'c2', status: 'confirmed', notes: '' },
-    { date: daysFromNow(2),  time: '11:00 AM', name: 'Maria Lopez',     phone: '604-555-0303', email: 'maria@email.com', fromVal: 'Coquitlam, BC', toVal: 'Langley, BC',     serviceTab: 'Home Move',   sizeKey: '1br', hrs: 2, total: 299, totalGST: 314, truck: 't3', crewId: 'c3', status: 'confirmed', notes: '' },
-    { date: daysFromNow(3),  time: '1:00 PM',  name: 'Tom Baker',       phone: '604-555-0404', email: 'tom@email.com',   fromVal: 'North Van, BC', toVal: 'Vancouver, BC',   serviceTab: 'Specialty',   sizeKey: '1br', hrs: 3, total: 549, totalGST: 576, truck: 't1', crewId: 'c4', status: 'pending',   notes: 'Piano + 2 art pieces.' },
-    { date: daysFromNow(5),  time: '9:00 AM',  name: 'Priya Nair',      phone: '604-555-0505', email: 'priya@email.com', fromVal: 'Abbotsford, BC',toVal: 'Vancouver, BC',   serviceTab: 'Home Move',   sizeKey: '3br', hrs: 6, total: 1014,totalGST:1065, truck: 't2', crewId: 'c1', status: 'confirmed', notes: '' },
-    { date: daysFromNow(7),  time: '7:00 AM',  name: 'James O\'Brien',  phone: '604-555-0606', email: 'james@email.com', fromVal: 'Vancouver, BC', toVal: 'Kelowna, BC',     serviceTab: 'Storage',     sizeKey: '2br', hrs: 4, total: 720, totalGST: 756, truck: 't1', crewId: 'c2', status: 'confirmed', notes: 'Long distance.' },
-    { date: daysFromNow(8),  time: '3:00 PM',  name: 'Linda Wu',        phone: '604-555-0707', email: 'linda@email.com', fromVal: 'Burnaby, BC',   toVal: 'Burnaby, BC',     serviceTab: 'Junk Removal',sizeKey: 'studio',hrs:2,total:299, totalGST:314, truck: 't3', crewId: 'c5', status: 'confirmed', notes: '' },
-    { date: daysFromNow(10), time: '11:00 AM', name: 'Ahmed Hassan',    phone: '604-555-0808', email: 'ahmed@email.com', fromVal: 'Richmond, BC',  toVal: 'Surrey, BC',      serviceTab: 'Home Move',   sizeKey: '4br', hrs: 8, total: 1512,totalGST:1588,truck: 't2', crewId: 'c1', status: 'confirmed', notes: '' },
-  ];
-  localStorage.setItem(BOOKING_KEY, JSON.stringify(demos));
+  // No demo data — portal starts empty and collects real leads only
 }
 
 // ── CURRENT USER ───────────────────────────────────────────────────────

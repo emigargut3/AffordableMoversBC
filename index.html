@@ -2299,58 +2299,59 @@
       <div>
         <div class="estimator-wrap">
           <div style="padding:28px 28px 10px;">
-            <div style="font-size:.75rem;font-weight:700;color:var(--red);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">Free Quote — No Commitment</div>
-            <h3 style="margin:0 0 4px;font-size:1.3rem;font-weight:800;color:var(--navy);line-height:1.2;">Tell us about your move</h3>
-            <p style="margin:0 0 20px;font-size:.88rem;color:var(--gray);">We'll call you back within 1 hour with a personalized quote.</p>
+            <h3 style="margin:0 0 4px;font-size:1.4rem;font-weight:800;color:var(--navy);line-height:1.2;">Request a Free Quote</h3>
+            <p style="margin:0 0 20px;font-size:.88rem;color:var(--gray);">Fill out the form and we'll get back to you with a detailed quote — usually same day.</p>
           </div>
-          <form id="hero-contact-form" onsubmit="submitHeroContact(event)" style="padding:0 28px 28px;display:flex;flex-direction:column;gap:14px;">
+          <form id="hero-contact-form" onsubmit="submitHeroContact(event)" style="padding:0 28px 28px;display:flex;flex-direction:column;gap:16px;">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
               <div>
-                <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Your name *</label>
-                <input type="text" id="hc-name" placeholder="John Smith" required style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
+                <label style="font-size:.82rem;font-weight:700;color:var(--navy);display:block;margin-bottom:6px;">Full Name *</label>
+                <input type="text" id="hc-name" placeholder="Jane Smith" required style="width:100%;padding:13px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;background:#f8fafc;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)';this.style.background='#fff'" onblur="this.style.borderColor='#e2e8f0';this.style.background='#f8fafc'" />
               </div>
               <div>
-                <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Phone number <span style="color:var(--red);">*</span></label>
-                <input type="tel" id="hc-phone" placeholder="604-555-0100" required minlength="7" style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
-                <span id="hc-phone-err" style="display:none;font-size:.72rem;color:var(--red);margin-top:3px;">Please enter a phone number so we can reach you.</span>
+                <label style="font-size:.82rem;font-weight:700;color:var(--navy);display:block;margin-bottom:6px;">Phone Number *</label>
+                <input type="tel" id="hc-phone" placeholder="604-555-0100" required minlength="7" style="width:100%;padding:13px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;background:#f8fafc;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)';this.style.background='#fff'" onblur="this.style.borderColor='#e2e8f0';this.style.background='#f8fafc'" />
+                <span id="hc-phone-err" style="display:none;font-size:.72rem;color:var(--red);margin-top:3px;">Please enter your phone number.</span>
               </div>
             </div>
             <div>
-              <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Email address</label>
-              <input type="email" id="hc-email" placeholder="john@email.com" style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
-            </div>
-            <div>
-              <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Type of move *</label>
-              <select id="hc-type" required style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;background:#fff;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'">
-                <option value="" disabled selected>Select type...</option>
-                <option value="Studio Apartment">Studio Apartment</option>
-                <option value="1 Bedroom Apartment">1 Bedroom Apartment</option>
-                <option value="2 Bedroom Apartment">2 Bedroom Apartment</option>
-                <option value="House">House</option>
-                <option value="Office">Office</option>
-                <option value="Other">Other</option>
-              </select>
+              <label style="font-size:.82rem;font-weight:700;color:var(--navy);display:block;margin-bottom:6px;">Email Address</label>
+              <input type="email" id="hc-email" placeholder="jane@email.com" style="width:100%;padding:13px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;background:#f8fafc;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)';this.style.background='#fff'" onblur="this.style.borderColor='#e2e8f0';this.style.background='#f8fafc'" />
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
               <div>
-                <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Moving from *</label>
-                <input type="text" id="hc-from" placeholder="City or neighbourhood" required style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
+                <label style="font-size:.82rem;font-weight:700;color:var(--navy);display:block;margin-bottom:6px;">Moving From *</label>
+                <input type="text" id="hc-from" placeholder="Vancouver, BC" required style="width:100%;padding:13px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;background:#f8fafc;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)';this.style.background='#fff'" onblur="this.style.borderColor='#e2e8f0';this.style.background='#f8fafc'" />
               </div>
               <div>
-                <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Moving to *</label>
-                <input type="text" id="hc-to" placeholder="City or neighbourhood" required style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
+                <label style="font-size:.82rem;font-weight:700;color:var(--navy);display:block;margin-bottom:6px;">Moving To *</label>
+                <input type="text" id="hc-to" placeholder="Burnaby, BC" required style="width:100%;padding:13px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;background:#f8fafc;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)';this.style.background='#fff'" onblur="this.style.borderColor='#e2e8f0';this.style.background='#f8fafc'" />
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div>
+                <label style="font-size:.82rem;font-weight:700;color:var(--navy);display:block;margin-bottom:6px;">Service Type</label>
+                <select id="hc-type" style="width:100%;padding:13px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;background:#f8fafc;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)';this.style.background='#fff'" onblur="this.style.borderColor='#e2e8f0';this.style.background='#f8fafc'">
+                  <option value="Residential Moving">Residential Moving</option>
+                  <option value="Studio Apartment">Studio Apartment</option>
+                  <option value="1 Bedroom Apartment">1 Bedroom Apartment</option>
+                  <option value="2 Bedroom Apartment">2 Bedroom Apartment</option>
+                  <option value="House">House</option>
+                  <option value="Office Move">Office Move</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size:.82rem;font-weight:700;color:var(--navy);display:block;margin-bottom:6px;">Preferred Move Date</label>
+                <input type="date" id="hc-date" style="width:100%;padding:13px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;background:#f8fafc;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)';this.style.background='#fff'" onblur="this.style.borderColor='#e2e8f0';this.style.background='#f8fafc'" />
               </div>
             </div>
             <div>
-              <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Move date</label>
-              <input type="text" id="hc-date" placeholder="e.g. Aug 15, 2026 (flexible?)" style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'" />
+              <label style="font-size:.82rem;font-weight:700;color:var(--navy);display:block;margin-bottom:6px;">Additional Details</label>
+              <textarea id="hc-notes" placeholder="Tell us about your move: home size, elevator access, special items, etc." rows="3" style="width:100%;padding:13px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;background:#f8fafc;resize:vertical;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)';this.style.background='#fff'" onblur="this.style.borderColor='#e2e8f0';this.style.background='#f8fafc'"></textarea>
             </div>
-            <div>
-              <label style="font-size:.75rem;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;">Any specific requests?</label>
-              <textarea id="hc-notes" placeholder="e.g. Piano, fragile items, need packing help..." rows="3" style="width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--navy);outline:none;box-sizing:border-box;resize:vertical;transition:border-color .2s;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--light)'"></textarea>
-            </div>
-            <button type="submit" id="hc-submit-btn" style="background:var(--red);color:#fff;border:none;border-radius:8px;padding:15px;font-size:1rem;font-weight:800;font-family:inherit;cursor:pointer;letter-spacing:.02em;transition:opacity .2s;">
-              Get My Free Quote
+            <button type="submit" id="hc-submit-btn" style="background:var(--red);color:#fff;border:none;border-radius:10px;padding:16px;font-size:1.05rem;font-weight:800;font-family:inherit;cursor:pointer;letter-spacing:.02em;transition:opacity .2s;">
+              Send My Quote Request &rarr;
             </button>
             <p id="hc-success" style="display:none;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px 16px;font-size:.88rem;color:#166534;font-weight:600;text-align:center;margin:0;">
               We got your details — expect a call within 1 hour!
@@ -2792,103 +2793,30 @@
 <section class="section section--gray" id="pricing">
   <div class="container">
     <div class="section-head">
-      <span class="tag">Transparent Rates</span>
-      <h2>Simple, Honest Pricing</h2>
-      <p>No hidden fees, no bait-and-switch. These are real estimates — your final quote is confirmed before we start.</p>
+      <span class="tag">How It Works</span>
+      <h2>Get Your Custom Quote in Minutes</h2>
+      <p>Every move is different. Fill out the form and we'll call you back with a personalized quote — no automated prices, no surprises.</p>
     </div>
-    <!-- Small & Medium Moves -->
-    <div style="text-align:center;margin-bottom:18px;">
-      <span style="font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);">Small &amp; Medium Moves</span>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:860px;margin:0 auto;">
+      <div style="background:#fff;border-radius:14px;padding:28px 24px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.06);">
+        <div style="font-size:2rem;margin-bottom:12px;">📋</div>
+        <h3 style="font-size:1rem;font-weight:800;color:var(--navy);margin:0 0 8px;">1. Fill the Form</h3>
+        <p style="font-size:.87rem;color:var(--gray);margin:0;">Tell us about your move — takes under 2 minutes.</p>
+      </div>
+      <div style="background:#fff;border-radius:14px;padding:28px 24px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.06);">
+        <div style="font-size:2rem;margin-bottom:12px;">📞</div>
+        <h3 style="font-size:1rem;font-weight:800;color:var(--navy);margin:0 0 8px;">2. We Call You</h3>
+        <p style="font-size:.87rem;color:var(--gray);margin:0;">Our team calls you within 1 hour with a real, personalized quote.</p>
+      </div>
+      <div style="background:#fff;border-radius:14px;padding:28px 24px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.06);">
+        <div style="font-size:2rem;margin-bottom:12px;">✅</div>
+        <h3 style="font-size:1rem;font-weight:800;color:var(--navy);margin:0 0 8px;">3. Book Your Move</h3>
+        <p style="font-size:.87rem;color:var(--gray);margin:0;">2-hour minimum + travel fee. No hidden charges, ever.</p>
+      </div>
     </div>
-    <div class="pricing-grid">
-
-      <div class="price-card">
-        <h3>1 Ton Truck</h3>
-        <div class="price">$120<span>/hr + travel</span></div>
-        <div class="desc">2 Movers · 2-hr minimum</div>
-        <ul class="price-features">
-          <li>Recommended for small 1 Bedroom apt.</li>
-          <li>Furniture blanket wrapping included</li>
-          <li>Loading & unloading included</li>
-          <li>Furniture assembly included</li>
-          <li>Same-day availability</li>
-        </ul>
-        <a href="#contact" class="btn btn-outline" style="color:var(--navy);border-color:var(--navy);width:100%;justify-content:center;">Get a Quote</a>
-      </div>
-
-      <div class="price-card featured">
-        <div class="popular-badge">Most Popular</div>
-        <h3>2 Ton Truck</h3>
-        <div class="price">$130<span>/hr + travel</span></div>
-        <div class="desc">2 Movers · 2-hr minimum</div>
-        <ul class="price-features">
-          <li>Recommended for large 1 Bedroom apt.</li>
-          <li>Recommended for small 2 Bedroom apt.</li>
-          <li>Packing materials included</li>
-          <li>Furniture disassembly & assembly</li>
-          <li>Blanket wrapping for all furniture</li>
-          <li>Loading & unloading included</li>
-        </ul>
-        <a href="#contact" class="btn btn-primary" style="width:100%;justify-content:center;">Get a Quote</a>
-      </div>
-
-      <div class="price-card">
-        <h3>3 Ton Truck</h3>
-        <div class="price">$140<span>/hr + travel</span></div>
-        <div class="desc">2 Movers · 3-hr minimum</div>
-        <ul class="price-features">
-          <li>Recommended for large 2 Bedroom</li>
-          <li>Recommended for small 3 Bedroom</li>
-          <li>Packing materials included</li>
-          <li>Furniture disassembly & assembly</li>
-          <li>Blanket wrapping for all furniture</li>
-          <li>Loading & unloading included</li>
-        </ul>
-        <a href="#contact" class="btn btn-outline" style="color:var(--navy);border-color:var(--navy);width:100%;justify-content:center;">Get a Quote</a>
-      </div>
-
+    <div style="text-align:center;margin-top:32px;">
+      <a href="#contact" class="btn btn-primary">Get My Free Quote</a>
     </div>
-
-    <!-- Large & XL Moves -->
-    <div style="text-align:center;margin:32px 0 18px;">
-      <span style="font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);">Large &amp; XL Moves</span>
-    </div>
-    <div class="pricing-grid" style="max-width:740px;margin:0 auto;">
-
-      <div class="price-card">
-        <h3>5 Ton Truck</h3>
-        <div class="price">$150<span>/hr + travel</span></div>
-        <div class="desc">2 Movers · 3-hr minimum</div>
-        <ul class="price-features">
-          <li>Recommended for 3 Bedroom house</li>
-          <li>Specialty item handling</li>
-          <li>Complete packing service available</li>
-          <li>Storage drop-off available</li>
-          <li>Long-distance rates available</li>
-        </ul>
-        <a href="#contact" class="btn btn-outline" style="color:var(--navy);border-color:var(--navy);width:100%;justify-content:center;">Get a Quote</a>
-      </div>
-
-      <div class="price-card">
-        <h3>7 Ton Truck</h3>
-        <div class="price">$160<span>/hr + travel</span></div>
-        <div class="desc">2 Movers · 4-hr minimum</div>
-        <ul class="price-features">
-          <li>Recommended for large 3–5 Bedroom house</li>
-          <li>Specialty & oversized item handling</li>
-          <li>Complete packing service available</li>
-          <li>Storage drop-off available</li>
-          <li>Long-distance rates available</li>
-        </ul>
-        <a href="#contact" class="btn btn-outline" style="color:var(--navy);border-color:var(--navy);width:100%;justify-content:center;">Get a Quote</a>
-      </div>
-
-    </div>
-    <p style="text-align:center;margin-top:28px;font-size:.85rem;color:var(--gray);">
-      All prices + 5% GST · PST exempt on moving services in BC · Prices may vary during peak season (May–Sep) ·
-      <strong style="color:var(--red);">Travel time is included</strong> in your final quote
-      <br><span style="font-size:.8rem;color:#94a3b8;">Each additional hour beyond your estimate is billed at your truck's hourly rate to cover the crew's time.</span>
-    </p>
   </div>
 </section>
 
@@ -4276,8 +4204,8 @@
     var btn = document.getElementById('hc-submit-btn');
     btn.disabled = true;
     btn.style.opacity = '.6';
-    var msg = 'New lead: ' + name + ' | ' + phone + ' | ' + email + ' | ' + type + ' | From: ' + from + ' → ' + to + ' | Date: ' + date + ' | Notes: ' + notes;
-    var details = 'HERO CONTACT FORM\nType: ' + type + '\nFrom: ' + from + '\nTo: ' + to + '\nDate: ' + date + '\nEmail: ' + email + '\nNotes: ' + notes;
+    var msg = 'NEW QUOTE REQUEST - CALL NOW: ' + phone + ' | ' + name + ' | ' + type + ' | ' + from + ' → ' + to + ' | Date: ' + date;
+    var details = '📞 CALL NOW: ' + phone + '\n\nClient: ' + name + '\nEmail: ' + email + '\n\nService: ' + type + '\nFrom: ' + from + '\nTo: ' + to + '\nDate: ' + (date || 'Not specified') + '\n\nAdditional details:\n' + notes;
     emailjs.send('service_5jm9nl9', 'template_7ni8mad', {
       from_name: name,
       phone: phone,

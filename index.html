@@ -4204,6 +4204,7 @@
     var btn = document.getElementById('hc-submit-btn');
     btn.disabled = true;
     btn.style.opacity = '.6';
+    setTimeout(function() { btn.disabled = false; btn.style.opacity = '1'; }, 4000);
     var msg = 'NEW QUOTE REQUEST - CALL NOW: ' + phone + ' | ' + name + ' | ' + type + ' | ' + from + ' → ' + to + ' | Date: ' + date;
     var details = '📞 CALL NOW: ' + phone + '\n\nClient: ' + name + '\nEmail: ' + email + '\n\nService: ' + type + '\nFrom: ' + from + '\nTo: ' + to + '\nDate: ' + (date || 'Not specified') + '\n\nAdditional details:\n' + notes;
     emailjs.send('service_5jm9nl9', 'template_7ni8mad', {

@@ -683,6 +683,12 @@ function getBookings() {
 }
 
 function seedDemoData() {
+  // One-time clear of old demo bookings
+  if (!localStorage.getItem('ambc_demos_cleared_v2')) {
+    localStorage.removeItem('ambc_bookings');
+    localStorage.setItem('ambc_demos_cleared_v2', '1');
+  }
+
   // Pre-load real quote requests received by email
   var existing = JSON.parse(localStorage.getItem('ambc_quote_requests') || '[]');
   var seeded = JSON.parse(localStorage.getItem('ambc_quotes_seeded') || '[]');

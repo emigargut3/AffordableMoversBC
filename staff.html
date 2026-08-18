@@ -683,7 +683,21 @@ function getBookings() {
 }
 
 function seedDemoData() {
-  // No demo data — portal starts empty and collects real leads only
+  // Pre-load real quote requests received by email
+  var existing = JSON.parse(localStorage.getItem('ambc_quote_requests') || '[]');
+  var seeded = JSON.parse(localStorage.getItem('ambc_quotes_seeded') || '[]');
+  var realLeads = [
+    { id: 'q-seed-1', ts: '2026-08-17T17:02:00Z', name: 'Unknown (no name given)', phone: 'Not provided', email: 'kadsthilakarathna@gmail.com', serviceType: 'Studio Apartment', fromVal: 'New Westminster', toVal: 'Downtown Vancouver', date: '2026-08-30', notes: 'Contact via email — phone not provided', status: 'new' },
+    { id: 'q-seed-2', ts: '2026-08-14T01:53:00Z', name: 'Unknown (no name given)', phone: 'Not provided', email: 'bkmike9911@outlook.com', serviceType: 'House', fromVal: '19251 76 Ave, Surrey BC', toVal: '24733 16th Ave, Langley BC', date: '2026-08-15', notes: 'Date may have passed — follow up via email. Phone not provided', status: 'new' },
+  ];
+  realLeads.forEach(function(lead) {
+    if (seeded.indexOf(lead.id) === -1 && !existing.find(function(e){ return e.id === lead.id; })) {
+      existing.unshift(lead);
+      seeded.push(lead.id);
+    }
+  });
+  localStorage.setItem('ambc_quote_requests', JSON.stringify(existing));
+  localStorage.setItem('ambc_quotes_seeded', JSON.stringify(seeded));
 }
 
 // ── CURRENT USER ───────────────────────────────────────────────────────

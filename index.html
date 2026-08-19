@@ -4232,9 +4232,20 @@
       method: 'POST',
       body: msg
     }).catch(function(){});
-    var leads = JSON.parse(localStorage.getItem('ambc_quote_requests') || '[]');
-    leads.unshift({ id: 'q-' + Date.now(), ts: new Date().toISOString(), name: name, phone: phone, email: email, serviceType: type, fromVal: from, toVal: to, date: date, notes: notes, status: 'new' });
-    localStorage.setItem('ambc_quote_requests', JSON.stringify(leads));
+    var newLead = { id: 'q-' + Date.now(), ts: new Date().toISOString(), name: name, phone: phone, email: email, serviceType: type, fromVal: from, toVal: to, date: date, notes: notes, status: 'new' };
+    var JBIN_KEY = 'JSONBIN_API_KEY';
+    var JBIN_BIN = 'JSONBIN_BIN_ID';
+    fetch('https://api.jsonbin.io/v3/b/' + JBIN_BIN, { headers: { 'X-Master-Key': JBIN_KEY } })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        var list = Array.isArray(data.record) ? data.record : [];
+        list.unshift(newLead);
+        return fetch('https://api.jsonbin.io/v3/b/' + JBIN_BIN, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'X-Master-Key': JBIN_KEY },
+          body: JSON.stringify(list)
+        });
+      }).catch(function(){});
     document.getElementById('hc-success').style.display = 'block';
     document.getElementById('hero-contact-form').reset();
   }
